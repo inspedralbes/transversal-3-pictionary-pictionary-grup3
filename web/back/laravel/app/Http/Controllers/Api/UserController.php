@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 use Cookie;
 
 class UserController extends Controller
@@ -40,9 +41,13 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('token')->plainTextToken;
-            $cookie = cookie('cookie_token', $token, 60 * 24);
-            return response()->json(["login" => true, "token" => $token, "user" => $user], Response::HTTP_OK)->withCookie($cookie);
+            if ($user->verified) {
+                $token = $user->createToken('token')->plainTextToken;
+                $cookie = cookie('cookie_token', $token, 60 * 24);
+                return response()->json(["login" => true, "token" => $token, "user" => $user], Response::HTTP_OK)->withCookie($cookie);
+            } else {
+                return response()->json(["login" => false], Response::HTTP_OK);
+            }
         }
     }
 
