@@ -24,4 +24,9 @@ class CategoryController extends Controller
             return response()->json($category->id, Response::HTTP_CREATED);
         }
     }
+
+    public function listCategories() {
+        $categoriesList = DB::table('categories')->pluck('category', 'idUser', 'id');
+        return response()->json(["categoriesList" => $categoriesList], Response::HTTP_OK);
+    }
 }
