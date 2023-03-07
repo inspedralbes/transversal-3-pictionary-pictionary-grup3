@@ -8,7 +8,7 @@ const CreateGame = () => {
   const [users, setUsers] = useState(5);
 
   useEffect(() => {
-    codeGenerator(10);
+    codeGenerator(4);
   }, []);
 
   function codeGenerator(long) {

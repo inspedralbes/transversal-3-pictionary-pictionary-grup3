@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
-            if (element.lobby == data.lobby_code) {
+            if (element.lobby_code == data.lobby_code) {
                 lobby_exists = true;
             }
         });
