@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class WordController extends Controller
 {
@@ -29,5 +30,10 @@ class WordController extends Controller
         if ($word->save()) {
             return response()->json($word->id, Response::HTTP_CREATED);
         }
+    }
+
+    public function listWords(Request $request) {
+        $wordsList = DB::select(DB::raw('SELECT id FROM words'));
+        return response()->json(["wordsList" => $wordsList], Response::HTTP_OK);
     }
 }
