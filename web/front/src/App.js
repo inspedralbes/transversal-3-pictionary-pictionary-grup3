@@ -1,5 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+
+import './style/App.css';
+import Landing from './pages/Landing';
+import Login from './components/teacher/Login';
+import Register from './components/teacher/Register';
+import CreateGame from './components/teacher/CreateGame';
 
 export const router = createBrowserRouter([
   {
@@ -21,22 +27,7 @@ export const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import JoinGame from './students/JoinGame';
+import JoinGame from '../components/students/JoinGame';
 
 const Landing = () => {
     const [isStudent, setIsStudent] = useState(true);
