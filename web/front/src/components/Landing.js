@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Login from './teacher/Login';
-import Register from './teacher/Register';
 import JoinGame from './students/JoinGame';
 
 const Landing = () => {
@@ -16,7 +14,8 @@ const Landing = () => {
         <JoinGame />
       ) : (
         <>
-          <Login /> <Register />
+          <a href='/login'>Login</a>
+          <a href='/register'>Register</a>
         </>
       )}
     </div>
