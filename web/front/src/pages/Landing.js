@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import JoinGame from '../components/students/JoinGame';
+import React, { useState } from "react";
+import "../style/landing.css";
+import Header from "../components/Header"
 
 const Landing = () => {
-    return (
-        <div>
-            <>
-                <a href='/login'>Login</a>
-                <a href='/register'>Register</a>
-                <a href='/createGame'>Game</a>
-            </>
-        </div>
-    );
+  return (
+    <Header></Header>
+  );
 };
 
 export default Landing;
