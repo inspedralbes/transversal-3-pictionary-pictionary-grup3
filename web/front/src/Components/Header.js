@@ -3,17 +3,17 @@ import logoSmall from "../style/logoPictoboom small.png";
 
 export default function Header() {
   return (
-    <header>
-      <nav class="flex items-center justify-between flex-wrap p-6 bg-gradient-to-r from-pink-500  to-orange-500">
-        <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <a href="http://localhost:3000/" className="-m-1.5 p-1.5">
+<header>
+      <nav className="flex items-center justify-between flex-wrap p-6 bg-gradient-to-r from-pink-500  to-orange-500">
+        <div className="flex items-center flex-shrink-0 text-white mr-6">
+          <a href="/" className="-m-1.5 p-1.5">
             <img className="h-12 w-auto" src={logoSmall} alt="" />
-        </a>
+          </a>
         </div>
-        <div class="block lg:hidden">
-          <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+        <div className="block lg:hidden">
+          <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
             <svg
-              class="fill-current h-3 w-3"
+              className="fill-current h-3 w-3"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -22,26 +22,25 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div class="text-sm lg:flex-grow">
-            <a
-              href="#responsive-header"
-              class="block mt-4 lg:inline-block lg:mt-0 hover:text-white mr-4 font-bold text-red-100"
-            >
-              Home
-            </a>
-            <a
-              href="#responsive-header"
-              class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4 text-red-100"
-            >
-              Alumnes
-            </a>
-            <a
-              href="#responsive-header"
-              class="block mt-4 lg:inline-block lg:mt-0 hover:text-white text-red-100"
-            >
-              Professors
-            </a>
+        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+          <div className="text-sm lg:flex-grow">
+            <ul className="flex">
+              <li className="mr-6">
+                <a className="text-red-100 hover:text-white font-bold" href="/login">
+                  Login
+                </a>
+              </li>
+              <li className="mr-6">
+                <a className="text-red-100 hover:text-white font-bold" href="/register">
+                  Register
+                </a>
+              </li>
+              <li className="mr-6">
+                <a className="text-red-100 hover:text-white font-bold" href="/CreateGame">
+                    Create Game
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
