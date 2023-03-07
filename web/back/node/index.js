@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const port = 7000;
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
@@ -13,16 +12,18 @@ let lobbies = [];
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:" + port,
+        origin: "http://localhost:3000/",
         methods: ["GET", "POST"],
     },
 });
 
 io.on("connection", (socket) => {
+    console.log("connected");
     let socketId = socket.id;
     socket.data.current_lobby = null;
 
     socket.on("new lobby", (data) => {
+        console.log("hola");
         let loby_exists = false;
         lobbies.forEach((element) => {
             if (element.lobby == data.lobby_code) {
@@ -64,6 +65,6 @@ io.on("connection", (socket) => {
 
 });
 
-server.listen(port, () => {
-    console.log("Listening on port: " + port);
+server.listen(7500, () => {
+    console.log("Listening on port: 7500");
 });
