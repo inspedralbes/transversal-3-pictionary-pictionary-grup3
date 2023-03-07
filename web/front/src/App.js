@@ -25,13 +25,16 @@ export const router = createBrowserRouter([
 ]);
 function App() {
   return (
-  <div>
-  <NavbarMenu></NavbarMenu>
-  <RouterProvider router={router} />;
-  </div>
+    <div>
+      <NavbarMenu></NavbarMenu>
+      <RouterProvider router={router} />
+      <footer>
+        <p>&copy; 2023 Pinturillo</p>
+      </footer>
+    </div>
   )
-  
-  
+
+
 }
 
 export default App;
