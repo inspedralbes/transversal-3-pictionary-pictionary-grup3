@@ -1,7 +1,12 @@
 import React from 'react';
 
 const JoinGame = () => {
-  return <div>Join Game</div>;
+  return (
+    <div>
+      <label>Enter lobby code</label>
+      <input></input>
+    </div>
+  );
 };
 
 export default JoinGame;

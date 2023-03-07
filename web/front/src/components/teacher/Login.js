@@ -5,19 +5,54 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    //Aqui anire el endpoint per a pujar les dades a la BD
+    // fetch(`http://127.0.0.1:8000/api/login`, {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'post',
+    //   body: JSON.stringify({
+    //     username: username,
+    //     password: password,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
+    console.log(username, password);
+  };
+
+  const handlerChangeUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlerChangePassword = (e) => {
+    setPassword(e.target.value);
   };
 
   return (
     <div>
+      <a href='/'>Main</a>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='username'>Usuario:</label>
-        <input type='text' id='username' name='username' value={username} />
+        <label htmlFor='username'>User:</label>
+        <input
+          type='text'
+          id='username'
+          name='username'
+          value={username}
+          onChange={handlerChangeUsername}
+        />
 
-        <label htmlFor='password'>Contraseña:</label>
-        <input type='password' id='password' name='password' value={password} />
+        <label htmlFor='password'>Password:</label>
+        <input
+          type='password'
+          id='password'
+          name='password'
+          value={password}
+          onChange={handlerChangePassword}
+        />
 
-        <button type='submit'>Iniciar sesión</button>
+        <button type='submit'>Login</button>
       </form>
     </div>
   );
