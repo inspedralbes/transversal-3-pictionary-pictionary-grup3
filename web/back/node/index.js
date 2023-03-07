@@ -12,7 +12,7 @@ let lobbies = [];
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000/",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST"],
     },
 });
@@ -23,14 +23,13 @@ io.on("connection", (socket) => {
     socket.data.current_lobby = null;
 
     socket.on("new lobby", (data) => {
-        console.log("hola");
-        let loby_exists = false;
+        let lobby_exists = false;
         lobbies.forEach((element) => {
             if (element.lobby == data.lobby_code) {
-                loby_exists = true;
+                lobby_exists = true;
             }
         });
-        if (!loby_exists) {
+        if (!lobby_exists) {
             lobbies.push({
                 lobby_code: data.lobby_code,
                 maxUsers: data.maxUsers,
