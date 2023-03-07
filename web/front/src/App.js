@@ -3,6 +3,7 @@ import Landing from './components/Landing';
 import Login from './components/teacher/Login';
 import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
+import NavbarMenu from './components/NavbarMenu';
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,14 @@ export const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+  <div>
+  <NavbarMenu></NavbarMenu>
+  <RouterProvider router={router} />;
+  </div>
+  )
+  
+  
 }
 
 export default App;

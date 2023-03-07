@@ -3,9 +3,9 @@ import React from 'react';
 const CreateGame = () => {
 
     function codeGenerator(long) {
-        var items = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var code = "";
-        for (var i = 0; i < long; i++) {
+        let items = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let code = "";
+        for (let i = 0; i < long; i++) {
             code += items.charAt(Math.floor(Math.random() * items.length));
         }
         return code;
