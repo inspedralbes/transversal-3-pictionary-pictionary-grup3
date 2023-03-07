@@ -9,6 +9,8 @@ Alguns dels punts que han de quedar explicats:
     * Unir-se a una partida com alumne
     * Dibuixar una paraula com alumne
     * Encertar una paraula com alumne
+    * Creació disseny inicial
+    * El professor pugui afegir categories i paraules
  * Arquitectura bàsica
    * Frontend: React
    * Backend: Laravel (crear i logejar usuari), node (sockets)
