@@ -1,9 +1,11 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Landing from './components/Landing';
+import React from 'react';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+
+import './style/App.css';
+import Landing from './pages/Landing';
 import Login from './components/teacher/Login';
 import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
-import NavbarMenu from './components/NavbarMenu';
 
 export const router = createBrowserRouter([
   {
@@ -25,16 +27,8 @@ export const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <div>
-      <NavbarMenu></NavbarMenu>
-      <RouterProvider router={router} />
-      <footer>
-        <p>&copy; 2023 Pinturillo</p>
-      </footer>
-    </div>
-  )
-
-
+    <RouterProvider router={router} />
+  );
 }
 
 export default App;
