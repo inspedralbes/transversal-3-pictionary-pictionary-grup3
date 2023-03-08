@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const CreateGame = ({socket}) => {
-  const [room, setRoom] = useState(0);
+  const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(5);
 
   const codeGenerator = () => {
@@ -11,6 +11,7 @@ const CreateGame = ({socket}) => {
 
   const createNewLobby = () => {
     codeGenerator()
+    console.log(room)
     socket.emit('new lobby', { lobby_code: room, maxUsers: users, category: 'Info'});
   };
 
