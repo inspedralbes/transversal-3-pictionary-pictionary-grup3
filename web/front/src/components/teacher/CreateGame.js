@@ -4,21 +4,13 @@ const CreateGame = ({socket}) => {
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState(5);
 
-  useEffect(() => {
-    codeGenerator(4);
-  }, []);
-
-  function codeGenerator(long) {
-    let items =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let code = '';
-    for (let i = 0; i < long; i++) {
-      code += items.charAt(Math.floor(Math.random() * items.length));
-    }
-    setRoom(code);
+  const codeGenerator = () => {
+    const randomCode = Math.floor(Math.random() * (100000 - 999999 + 1) + 999999);
+    setRoom(randomCode);
   }
 
   const createNewLobby = () => {
+    codeGenerator()
     socket.emit('new lobby', { lobby_code: room, maxUsers: users });
   };
 
