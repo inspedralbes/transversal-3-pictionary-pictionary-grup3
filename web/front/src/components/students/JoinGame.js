@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {v4 as uuidv4 } from 'uuid';
 
 const JoinGame = ({socket}) => {
   const [nameUser, setNameUser] = useState('');
@@ -15,7 +16,7 @@ const JoinGame = ({socket}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ lobby_code: lobbyCode, name: nameUser })
-    socket.emit('join room', { name: nameUser, userId: 1, lobby_code: lobbyCode})
+    socket.emit('join room', { name: nameUser, userId: uuidv4(), lobby_code: lobbyCode})
    }
 
   return (
