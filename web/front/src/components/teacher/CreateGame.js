@@ -11,7 +11,7 @@ const CreateGame = ({socket}) => {
 
   const createNewLobby = () => {
     codeGenerator()
-    socket.emit('new lobby', { lobby_code: room, maxUsers: users });
+    socket.emit('new lobby', { lobby_code: room, maxUsers: users, category: 'Info'});
   };
 
   return (
