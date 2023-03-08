@@ -6,7 +6,7 @@ const CreateGame = ({socket}) => {
 
   const codeGenerator = () => {
     const randomCode = Math.floor(Math.random() * (100000 - 999999 + 1) + 999999);
-    setRoom(randomCode);
+    setRoom(parseInt(randomCode));
   }
 
   const createNewLobby = () => {
