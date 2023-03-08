@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 const CreateGame = ({socket}) => {
-  const [room, setRoom] = useState('');
+  const [room, setRoom] = useState(0);
   const [users, setUsers] = useState(5);
 
   const codeGenerator = () => {
     const randomCode = Math.floor(Math.random() * (100000 - 999999 + 1) + 999999);
-    setRoom(parseInt(randomCode));
+    setRoom(randomCode);
   }
 
   const createNewLobby = () => {
