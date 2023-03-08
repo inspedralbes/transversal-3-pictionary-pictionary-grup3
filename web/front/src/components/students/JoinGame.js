@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
-import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:7500');
-
-const JoinGame = () => {
-
+const JoinGame = ({socket}) => {
   const [nameUser, setNameUser] = useState('');
   const [lobbyCode, setLobbyCode] = useState('');
 
