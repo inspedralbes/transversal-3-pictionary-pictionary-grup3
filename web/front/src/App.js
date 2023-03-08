@@ -1,3 +1,5 @@
+import socketIO from 'socket.io-client';
+
 import React from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
@@ -8,10 +10,12 @@ import Register from './Components/teacher/Register';
 import CreateGame from './Components/teacher/CreateGame';
 import JoinGame from './Components/students/JoinGame';
 
+const socket = socketIO.connect('http://localhost:7500');
+
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Landing />,
+    element: <Landing />
   },
   {
     path: '/login',
@@ -32,7 +36,7 @@ export const router = createBrowserRouter([
 ]);
 function App() {
   return (
-    <RouterProvider router={router} />
+    <RouterProvider router={router} socket={socket} />
   );
 }
 
