@@ -15,7 +15,7 @@ const JoinGame = ({socket}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ lobby_code: lobbyCode, name: nameUser })
-    socket.emit('join room', { lobby_code: lobbyCode, name: nameUser })
+    socket.emit('join room', { name: nameUser, userId: 1, lobby_code: lobbyCode})
    }
 
   return (
