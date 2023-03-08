@@ -19,9 +19,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     console.log("connected");
-    let socketId = socket.id;
     socket.data.current_lobby = null;
-
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -45,24 +43,78 @@ io.on("connection", (socket) => {
                 if (lobby.users.length < lobby.maxUsers) {
                     let available = true;
                     lobby.users.forEach(user => {
-                        if (user.nom == socket.data.name) {
+                        if (user.nom == data.name) {
                             available = false;
                         }
                     });
                     if (available) {
                         lobby.users.push({
-                            name: socket.data.name,
+                            name: data.name,
                             idUser: socket.data.userId,
                         });
                     }
+                    console.log(socket.data.userId);
                 }
             }
         });
         socket.join(data.lobby_code);
         socket.data.current_lobby = data.lobby_code;
+        sendUserList(data.lobby_code);
+        sendLobbyList();
+        console.log(lobbies);
     });
 
+    // socket.on("leave lobby", (lobby_code) => {
+    //     leaveLobby(socket);
+    //     sendUserList(lobby_code);
+    //     sendLobbyList();
+    // });
+
+    // socket.on("disconnect", () => {
+    //     leaveLobby(socket);
+    // });
+
 });
+
+async function leaveLobby(socket) {
+    lobbies.forEach((lobby, ind_lobby) => {
+        if (lobby.lobby_code == socket.data.current_lobby) {
+            lobby.users.forEach((member, index) => {
+                if (member.nom == socket.data.name) {
+                    lobby.users.splice(index, 1);
+                }
+            });
+        }
+        if (lobby.users.length == 0) {
+            lobbies.splice(ind_lobby, 1);
+        }
+    });
+
+    socket.leave(socket.data.current_lobby);
+    socket.data.current_lobby = null
+    io.to(socket.id).emit("YOU_LEFT_LOBBY")
+    sendLobbyList();
+}
+
+async function sendLobbyList() {
+    await io.emit("lobbies list", lobbies);
+}
+
+async function sendUserList(room) {
+    let list = [];
+    const sockets = await io.in(room).fetchSockets();
+
+    sockets.forEach((element) => {
+        list.push({
+            name: io.sockets.sockets.get(element.id).data.name,
+        });
+    });
+
+    io.to(room).emit("lobby user list", {
+        list: list,
+        message: "user list",
+    });
+}
 
 server.listen(7500, () => {
     console.log("Listening on port: 7500");

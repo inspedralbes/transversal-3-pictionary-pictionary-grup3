@@ -1,12 +1,12 @@
 import React from 'react';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import './style/App.css';
 import Landing from './pages/Landing';
-import Login from './Components/teacher/Login';
-import Register from './Components/teacher/Register';
-import CreateGame from './Components/teacher/CreateGame';
-import JoinGame from './Components/students/JoinGame';
+import Login from './components/teacher/Login';
+import Register from './components/teacher/Register';
+import CreateGame from './components/teacher/CreateGame';
+import JoinGame from './components/students/JoinGame';
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
     element: <CreateGame />,
   },
   {
-    path: '/joinGame', 
+    path: '/joinGame',
     element: <JoinGame />,
   }
 ]);
