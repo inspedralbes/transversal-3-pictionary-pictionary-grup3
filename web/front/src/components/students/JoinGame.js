@@ -16,20 +16,22 @@ const JoinGame = () => {
     setNameUser(e.target.value);    
   }
 
-  const joinLobby = () => {
-    socket.emit('join room', { lobby_code: lobbyCode, user: nameUser })
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ lobby_code: lobbyCode, name: nameUser })
+    socket.emit('join room', { lobby_code: lobbyCode, name: nameUser })
    }
 
   return (
     <div>
-    <form>
+    <form onSubmit={handleSubmit}>
       <label>Enter lobby code
       <input type="text" value={lobbyCode} onChange={handleChangeLobbyCode}></input>
       </label>
       <label>Enter your name
       <input type="text" value={nameUser} onChange={handleChangeUserName}></input>
       </label>
-      <button type='submit' onClick={joinLobby}>Send</button>
+      <button type='submit'>Send</button>
     </form>
     </div>
       
