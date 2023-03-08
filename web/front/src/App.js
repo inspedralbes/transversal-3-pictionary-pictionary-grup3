@@ -3,9 +3,9 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import './style/App.css';
 import Landing from './pages/Landing';
-import Login from './components/teacher/Login';
-import Register from './components/teacher/Register';
-import CreateGame from './components/teacher/CreateGame';
+import Login from './Components/teacher/Login';
+import Register from './Components/teacher/Register';
+import CreateGame from './Components/teacher/CreateGame';
 
 export const router = createBrowserRouter([
   {

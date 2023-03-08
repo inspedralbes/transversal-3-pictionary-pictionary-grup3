@@ -3,6 +3,7 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const drawings = [];
 
 app.use(cors());
 
@@ -37,6 +38,13 @@ io.on("connection", (socket) => {
             });
         }
         console.log(lobbies);
+    });
+
+    socket.emit('drawings', drawings);
+
+    socket.on('draw', function(data) {
+      drawings.push(data);
+      io.emit('draw', data);
     });
 
     socket.on("join room", (data) => {
