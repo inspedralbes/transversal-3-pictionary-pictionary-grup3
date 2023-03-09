@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import io from 'socket.io-client';
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(5);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     codeGenerator();
@@ -32,6 +34,12 @@ const CreateGame = ({ socket }) => {
       });
     });
   };
+
+  function wipe() {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
   return (
     <div>
