@@ -4,7 +4,7 @@ import bgImage from "../style/webBackground.png"
 
 export default function bodyLanding(){
     return(
-        <div className="relative px-6 lg:px-8">
+        <div className="relative px-6 lg:px-8 bg-[url('../style/webBackground.png')]">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-10">
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             </div>
@@ -16,7 +16,7 @@ export default function bodyLanding(){
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
                   href="/joinGame"
-                  className="default-button text-sm font-semibold text-orange-500 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600"
+                  className="default-button text-sm font-semibold text-gray-100 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600"
                 >
                   Play now!
                 </a>
