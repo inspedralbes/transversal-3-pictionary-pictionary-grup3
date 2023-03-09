@@ -25,11 +25,21 @@ const CreateGame = ({ socket }) => {
     });
   };
 
+  const getLobby = () => {
+    socket.emit('get lobbies', () => {
+      socket.on('lobbies list', (data) => {
+        console.log(data);
+      });
+    });
+  };
+
   return (
     <div>
       <label>Here's the code to your lobby! Have FUN!</label>
       <p id='code'>{room}</p>
       <button onClick={createNewLobby}>Create a new lobby</button>
+      <hr></hr>
+      <button onClick={getLobby}>Get Lobby</button>
     </div>
   );
 };
