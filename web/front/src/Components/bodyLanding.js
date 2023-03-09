@@ -1,5 +1,6 @@
 import logo from "../style/logoPictoboom.png";
-import logoSmall from "../style/logoPictoboom small.png"
+import logoSmall from "../style/logoPictoboom small.png";
+import bgImage from "../style/webBackground.png"
 
 export default function bodyLanding(){
     return(
@@ -14,12 +15,12 @@ export default function bodyLanding(){
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
-                  href="/CreateGame"
-                  className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-orange-500 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline outline-2 outline-orange-600"
+                  href="/joinGame"
+                  className="default-button text-sm font-semibold text-orange-500 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600"
                 >
                   Play now!
                 </a>
-                <a href="/login" className="text-sm font-semibold text-gray-900 rounded-md px-3.5 py-2.5 outline outline-2 hover:bg-gray-900 hover:text-gray-100 hover:outline-none">
+                <a href="/login" className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none">
                   Are you the teacher?
                 </a>
               </div>
