@@ -56,21 +56,12 @@ const CreateGame = ({socket}) => {
     console.log(room)
     socket.emit('new lobby', { lobby_code: room, maxUsers: users, category: 'Info'});
   };
-
-  function wipe() {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
+  
   return (
     <div>
       <label>Here's the code to your lobby! Have FUN!</label>
       <p id='code'>{room}</p>
       <button onClick={createNewLobby}>Create a new lobby</button>
-      <br></br>
-      <button onClick={wipe}>Wipe</button>
-      <canvas ref={canvasRef} width="900px" height="900px"></canvas>
     </div>
   );
 };
