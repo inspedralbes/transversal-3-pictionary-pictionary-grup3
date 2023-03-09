@@ -19,6 +19,11 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     socket.data.current_lobby = null;
+
+    socket.on("get lobbies", () => {
+        sendLobbyList();
+    });
+
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -36,7 +41,7 @@ io.on("connection", (socket) => {
                 painter_index: 0,
             });
         }
-        console.log(data.lobby_code);
+        sendLobbyList();
     });
 
     socket.on("join room", (data) => {
@@ -65,27 +70,27 @@ io.on("connection", (socket) => {
         sendUserList(data.lobby_code);
     });
 
-    // socket.on("leave lobby", (lobby_code) => {
-    //     leaveLobby(socket);
-    //     sendUserList(lobby_code);
-    //     sendLobbyList();
-    // });
+    socket.on("leave lobby", (lobby_code) => {
+        leaveLobby(socket);
+        sendUserList(lobby_code);
+        sendLobbyList();
+    });
 
-    // socket.on("disconnect", () => {
-    //     leaveLobby(socket);
-    // });
+    socket.on("disconnect", () => {
+        leaveLobby(socket);
+    });
 
 });
 
-async function sendUserList(room) {
+async function sendUserList(lobby_code) {
     let list = [];
-    const sockets = await io.in(room).fetchSockets();
+    const sockets = await io.in(lobby_code).fetchSockets();
     sockets.forEach((element) => {
         list.push({
             name: io.sockets.sockets.get(element.id).data.name,
         });
     });
-    io.to(room).emit("lobby user list", {
+    io.to(lobby_code).emit("lobby user list", {
         list: list,
     });
 }
@@ -115,5 +120,5 @@ async function sendLobbyList() {
 }
 
 server.listen(7500, () => {
-    console.log("Listening on port: 7500");
+    console.log("Listening on port 7500");
 });
