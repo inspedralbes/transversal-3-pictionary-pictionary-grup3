@@ -29,7 +29,7 @@ const JoinGame = ({socket}) => {
       <input type="text" value={nameUser} onChange={handleChangeUserName}></input>
       </label>
       <button type='submit'>Send</button>
-      <a href="/playGame"></a>
+      <a href="/playGame">Play</a>
     </form>
     </div>
       
