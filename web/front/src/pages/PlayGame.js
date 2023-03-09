@@ -5,6 +5,8 @@ const CreateGame = ({socket}) => {
   const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(5);
   const canvasRef = useRef(null);
+  const colorCanva = "black";
+  const nameUser = "";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,8 +21,9 @@ const CreateGame = ({socket}) => {
     });
 
     canvas.addEventListener('mousedown', function(event) {
+        var mousePos = getMousePos(canvas, event);
         isDrawing = true;
-        socket.emit('draw', { x: event.clientX, y: event.clientY,  action:'i'});
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y,  action:'i'});
         // data = {
         //   x:0,
         //   y:0,
@@ -31,8 +34,10 @@ const CreateGame = ({socket}) => {
     });
 
     canvas.addEventListener('mousemove', function(event) {
+        var mousePos = getMousePos(canvas, event);
+        console.log(mousePos.x + ',' + mousePos.y);
         if (isDrawing) {
-            socket.emit('draw', { x: event.clientX, y: event.clientY,  action:'p'});
+            socket.emit('draw', { x: mousePos.x, y: mousePos.y,  action:'p'});
         }
     });
 
@@ -49,7 +54,7 @@ const CreateGame = ({socket}) => {
     function draw(x, y) {
       context.beginPath();
       context.arc(x, y, 10, 0, 2 * Math.PI);
-      context.fillStyle = 'black';
+      context.fillStyle = colorCanva;
       context.fill();
     }
   }, []);
@@ -71,11 +76,26 @@ const CreateGame = ({socket}) => {
     socket.emit('draw', { x: null, y: null,  action:'b'});
   }
 
+  function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
+
+  function userName(){
+    nameUser = document.getElementById("nameUser");
+  }
+
   return (
     <div>
       <label>Here's the code to your lobby! Have FUN!</label>
       <p id='code'>{room}</p>
       <button onClick={createNewLobby}>Create a new lobby</button>
+      <label>Put your name on the cursor!</label>
+      <input id = "nameUser"></input>
+      <button onClick={userName}>Save It</button>
       <br></br>
       <button onClick={wipe}>Wipe</button>
       <canvas ref={canvasRef} width="900px" height="900px"></canvas>
