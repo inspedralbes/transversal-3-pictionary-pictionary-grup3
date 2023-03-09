@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import io from 'socket.io-client';
 
 const CreateGame = ({socket}) => {
-  const [room, setRoom] = useState(null);
-  const [users, setUsers] = useState(5);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -44,7 +41,6 @@ const CreateGame = ({socket}) => {
         draw(data.x, data.y);
     });
 
-    codeGenerator(4);
     
     function draw(x, y) {
       context.beginPath();
@@ -53,16 +49,6 @@ const CreateGame = ({socket}) => {
       context.fill();
     }
   }, []);
-  const codeGenerator = () => {
-    const randomCode = Math.floor(Math.random() * (100000 - 999999 + 1) + 999999);
-    setRoom(randomCode);
-  }
-
-  const createNewLobby = () => {
-    codeGenerator()
-    console.log(room)
-    socket.emit('new lobby', { lobby_code: room, maxUsers: users, category: 'Info'});
-  };
 
   function wipe() {
     const canvas = canvasRef.current;
@@ -73,10 +59,6 @@ const CreateGame = ({socket}) => {
 
   return (
     <div>
-      <label>Here's the code to your lobby! Have FUN!</label>
-      <p id='code'>{room}</p>
-      <button onClick={createNewLobby}>Create a new lobby</button>
-      <br></br>
       <button onClick={wipe}>Wipe</button>
       <canvas ref={canvasRef} width="900px" height="900px"></canvas>
     </div>
