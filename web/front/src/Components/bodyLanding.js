@@ -2,6 +2,7 @@ import logo from "../style/logoPictoboom.png";
 
 export default function bodyLanding(){
     return(
+      <div>
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-10">
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
@@ -13,7 +14,7 @@ export default function bodyLanding(){
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <a
-                  href="/CreateGame"
+                  href="/joinGame"
                   className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-pink-500 to-orange-500 hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                 >
                   Play now!
@@ -49,6 +50,7 @@ export default function bodyLanding(){
               </defs>
             </svg>
           </div>
+        </div>
         </div>
     )
 }

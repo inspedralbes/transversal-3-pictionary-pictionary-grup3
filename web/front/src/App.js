@@ -1,11 +1,12 @@
 import React from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-
 import './style/App.css';
 import Landing from './pages/Landing';
 import Login from './components/teacher/Login';
 import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
+import JoinGame from './components/students/JoinGame';
+import Header from './components/Header';
 
 export const router = createBrowserRouter([
   {
@@ -24,10 +25,18 @@ export const router = createBrowserRouter([
     path: '/createGame',
     element: <CreateGame />,
   },
+  {
+    path: '/joinGame',
+    element: <JoinGame />,
+  }
+
 ]);
 function App() {
   return (
+    <div>
+    <Header></Header>
     <RouterProvider router={router} />
+    </div>
   );
 }
 

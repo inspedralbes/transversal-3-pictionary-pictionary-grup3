@@ -3,7 +3,7 @@ import React from 'react';
 const JoinGame = () => {
   return (
     <div>
-      <label>Enter lobby code</label>
+      <label>Enter lobby code:</label>
       <input></input>
     </div>
   );

@@ -53,6 +53,8 @@ const Login = () => {
         />
 
         <button type='submit'>Login</button>
+
+        <a href='/createGame'><p>CREATE GAME</p></a>
       </form>
     </div>
   );
