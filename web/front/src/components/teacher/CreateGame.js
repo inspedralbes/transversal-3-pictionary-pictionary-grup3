@@ -56,7 +56,7 @@ const CreateGame = ({socket}) => {
     console.log(room)
     socket.emit('new lobby', { lobby_code: room, maxUsers: users, category: 'Info'});
   };
-  
+
   return (
     <div>
       <label>Here's the code to your lobby! Have FUN!</label>
