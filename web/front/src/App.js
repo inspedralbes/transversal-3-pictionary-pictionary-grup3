@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
-import './style/App.css';
+import './style/style.css';
 import Landing from './pages/Landing';
 import Login from './components/teacher/Login';
 import Register from './components/teacher/Register';

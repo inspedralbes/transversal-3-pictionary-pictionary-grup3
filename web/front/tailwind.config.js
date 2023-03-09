@@ -6,7 +6,11 @@ module.exports = {
     "./src/pages/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      margin: {
+        'auto': 'auto',
+      }
+    },
   },
   plugins: [],
 }
