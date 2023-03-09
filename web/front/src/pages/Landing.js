@@ -5,8 +5,8 @@ import Body from "../Components/bodyLanding";
 
 const Landing = () => {
   return (
-    <>    
-        <Body></Body>
+    <>
+      <Body></Body>
     </>
 
   );

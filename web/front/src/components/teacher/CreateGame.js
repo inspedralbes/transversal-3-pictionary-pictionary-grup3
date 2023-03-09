@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 
-const socket = io.connect('http://localhost:7500');
-
-const CreateGame = () => {
-  const [room, setRoom] = useState('');
+const CreateGame = ({socket}) => {
+  const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(5);
   const canvasRef = useRef(null);
 
@@ -47,20 +45,16 @@ const CreateGame = () => {
       context.fillStyle = 'black';
       context.fill();
     }
-
-    function codeGenerator(long) {
-      let items =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let code = '';
-      for (let i = 0; i < long; i++) {
-        code += items.charAt(Math.floor(Math.random() * items.length));
-      }
-      setRoom(code);
-    }
   }, []);
+  const codeGenerator = () => {
+    const randomCode = Math.floor(Math.random() * (100000 - 999999 + 1) + 999999);
+    setRoom(randomCode);
+  }
 
   const createNewLobby = () => {
-    socket.emit('new lobby', { lobby_code: room, maxUsers: users });
+    codeGenerator()
+    console.log(room)
+    socket.emit('new lobby', { lobby_code: room, maxUsers: users, category: 'Info'});
   };
 
   return (
