@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
-const drawings = [];
+let drawings = [];
 
 app.use(cors());
 
@@ -43,7 +43,18 @@ io.on("connection", (socket) => {
     socket.emit('drawings', drawings);
 
     socket.on('draw', function(data) {
-      drawings.push(data);
+        switch(data.action) {
+            case 'i': drawings.push(data);
+                break;
+            case 'p': drawings.push(data);
+                break;
+            case 'b': drawings = [];
+            console.log(drawings);
+                break;
+            default:
+                break;
+        }
+      
       io.emit('draw', data);
     });
 

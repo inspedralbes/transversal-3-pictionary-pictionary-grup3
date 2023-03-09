@@ -20,12 +20,19 @@ const CreateGame = ({socket}) => {
 
     canvas.addEventListener('mousedown', function(event) {
         isDrawing = true;
-        socket.emit('draw', { x: event.clientX, y: event.clientY });
+        socket.emit('draw', { x: event.clientX, y: event.clientY,  action:'i'});
+        // data = {
+        //   x:0,
+        //   y:0,
+        //   t: null,//como la accion es pintar, no necessito este.
+        //   c: null,//como la accion es pintar, no necessito este.
+        //   action:'p'// 'p' = pintar , 'b' = borrar, 'i' = inició de trazo, 't' = tamanyo de pinzel, 'c' = color
+        // }
     });
 
     canvas.addEventListener('mousemove', function(event) {
         if (isDrawing) {
-            socket.emit('draw', { x: event.clientX, y: event.clientY });
+            socket.emit('draw', { x: event.clientX, y: event.clientY,  action:'p'});
         }
     });
 
@@ -61,6 +68,7 @@ const CreateGame = ({socket}) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
+    socket.emit('draw', { x: null, y: null,  action:'b'});
   }
 
   return (
