@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../style/landing.css';
+import '../style/style.css';
 import Header from '../components/Header';
 import Body from '../components/bodyLanding';
 
