@@ -1,5 +1,6 @@
 import "../../style/style.css";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from 'react-router-dom';
 
@@ -34,8 +35,7 @@ const JoinGame = ({ socket }) => {
             <input
               type="text"
               value={lobbyCode}
-              onChange={handleChangeLobbyCode}
-            ></input>
+              onChange={handleChangeLobbyCode}></input>
           </label>
           <label>
             Enter your name
@@ -45,7 +45,7 @@ const JoinGame = ({ socket }) => {
               onChange={handleChangeUserName}
             ></input>
           </label>
-          <button type="submit" className="default-button">
+          <Link to="/playGame" type="submit" className="default-button">
             Send
           </button>
           <Link to="/playGame">Play Game</Link>
