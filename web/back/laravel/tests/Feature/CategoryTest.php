@@ -23,7 +23,7 @@ class CategoryTest extends TestCase
     public function testListCategories(): void
     {
         $token = "9|rWOYH1OtWIMQWI3kwDJ6cpmSjPmJVKgwd5mcjuZT";
-        $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->get('list-categories');
+        $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->get('/api/list-categories');
         $response->assertStatus(200);
     }
 }

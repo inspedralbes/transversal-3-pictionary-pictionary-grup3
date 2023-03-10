@@ -61,7 +61,7 @@ class UserTest extends TestCase
     public function testUserProfile(): void
     {
         $token = "9|rWOYH1OtWIMQWI3kwDJ6cpmSjPmJVKgwd5mcjuZT";
-        $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->get('user-profile');
+        $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->get('/api/user-profile');
         $response->assertStatus(200);
     }
 }
