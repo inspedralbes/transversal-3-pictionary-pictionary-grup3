@@ -32,8 +32,10 @@ class WordController extends Controller
         }
     }
 
-    public function listWords(Request $request) {
-        $wordsList = DB::select(DB::raw('SELECT id FROM words'));
-        return response()->json(["wordsList" => $wordsList], Response::HTTP_OK);
+    public function listWords(Request $request)
+    {
+        $category = DB::table('categories')->where('id', $request->idCategory)->select('category')->get();
+        $wordsList = DB::table('words')->where('idCategory', $request->idCategory)->select('word', 'description', 'word_ca', 'description_ca')->get();
+        return response()->json(["category" => $category[0]->category, "words" => $wordsList], Response::HTTP_OK);
     }
 }
