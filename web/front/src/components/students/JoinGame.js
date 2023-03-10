@@ -25,8 +25,8 @@ const JoinGame = ({ socket }) => {
   };
 
   return (
-    <div className="relative px-6 lg:px-8 bg-[url('../style/webBackground.png')] h-screen">
-      <div className="m-[auto] border-2 w-128">
+    <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
+      <div className="m-[auto] border-2 w-112 ">
         <form onSubmit={handleSubmit}>
           <label>
             Enter lobby code
