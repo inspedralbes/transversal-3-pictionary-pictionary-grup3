@@ -4,12 +4,12 @@ import bgImage from "../style/webBackground.png"
 
 export default function bodyLanding(){
     return(
-        <div className="relative px-6 lg:px-8 bg-[url('../style/webBackground.png')]">
+        <div className="relative px-6 lg:px-8 bg-[url('../style/webBackground.png')] h-screen">
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-10">
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             </div>
             <div className="text-center ">
-            <img className="h-256 m-[auto]" src={logoSmall} alt="Logo" />
+            <img className="w-96 m-[auto] mt-40" src={logoSmall} alt="Logo" />
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 ¡PictoBoom, where your drawings come alive!<br></br>
               </p>
