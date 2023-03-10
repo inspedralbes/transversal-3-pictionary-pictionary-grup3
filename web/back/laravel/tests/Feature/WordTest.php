@@ -33,5 +33,6 @@ class WordTest extends TestCase
             ]
         );
         $response->assertStatus(200);
+        $response->assertJsonFragment(["word" => "Test word"]);
     }
 }

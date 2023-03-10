@@ -25,5 +25,6 @@ class CategoryTest extends TestCase
         $token = "9|rWOYH1OtWIMQWI3kwDJ6cpmSjPmJVKgwd5mcjuZT";
         $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->get('/api/list-categories');
         $response->assertStatus(200);
+        $response->assertJsonFragment(["category" => "Test category"]);
     }
 }
