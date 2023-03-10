@@ -3,12 +3,12 @@ import logoSmall from "../style/logoPictoboom small.png";
 
 export default function Header() {
   return (
-<header>
+    <header>
       <nav className="flex items-center justify-between flex-wrap p-6 bg-gradient-to-r from-pink-500  to-orange-500">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <a href="/" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             <img className="h-12 w-auto" src={logoSmall} alt="" />
-          </a>
+          </Link>
         </div>
         <div className="block lg:hidden">
           <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -26,19 +26,19 @@ export default function Header() {
           <div className="text-sm lg:flex-grow">
             <ul className="flex">
               <li className="mr-6">
-                <a className="text-red-100 hover:text-white font-bold" href="/login">
+                <Link className="text-red-100 hover:text-white font-bold" to="/login">
                   Login
-                </a>
+                </Link>
               </li>
               <li className="mr-6">
-                <a className="text-red-100 hover:text-white font-bold" href="/register">
+                <Link className="text-red-100 hover:text-white font-bold" to="/register">
                   Register
-                </a>
+                </Link>
               </li>
               <li className="mr-6">
-                <a className="text-red-100 hover:text-white font-bold" href="/CreateGame">
-                    Create Game
-                </a>
+                <Link className="text-red-100 hover:text-white font-bold" to="/CreateGame">
+                  Create Game
+                </Link>
               </li>
             </ul>
           </div>

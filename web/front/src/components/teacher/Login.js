@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -32,7 +33,7 @@ const Login = () => {
 
   return (
     <div>
-      <a href='/'>Main</a>
+      <Link to='/'>Main</Link>
       <form onSubmit={handleSubmit}>
         <label htmlFor='username'>User:</label>
         <input
