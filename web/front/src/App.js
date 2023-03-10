@@ -1,32 +1,30 @@
+import socketIO from 'socket.io-client';
+
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
-import './style/App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './style/style.css';
 import Landing from './pages/Landing';
-import Login from './Components/teacher/Login';
-import Register from './Components/teacher/Register';
-import CreateGame from './Components/teacher/CreateGame';
+import Login from './components/teacher/Login';
+import Register from './components/teacher/Register';
+import CreateGame from './components/teacher/CreateGame';
+import JoinGame from './components/students/JoinGame';
+import PlayGame from './pages/PlayGame';
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Landing />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/createGame',
-    element: <CreateGame />,
-  },
-]);
+const socket = socketIO.connect('http://localhost:7500');
+
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Router>
+      <Routes>
+        <Route path='/' element={<Landing socket={socket} />} />
+        <Route path='/login' element={<Login socket={socket} />} />
+        <Route path='/register' element={<Register socket={socket} />} />
+        <Route path='/createGame' element={<CreateGame socket={socket} />} />
+        <Route path='/joinGame' element={<JoinGame socket={socket} />} />
+        <Route path='/playGame' element={<PlayGame socket={socket} />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

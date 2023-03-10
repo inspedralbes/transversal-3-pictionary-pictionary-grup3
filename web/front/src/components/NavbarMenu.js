@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const NavbarMenu = () => {
   return (
     <header>
       <div className="logo">
-        <h1><a href='/'>Pinturillo</a></h1>
+        <h1><Link to='/'>Pinturillo</Link></h1>
       </div>
       <nav>
         <ul>
-          <li><a href='/login'>Login</a></li>
-          <li><a href='/register'>Register</a></li>
-          <li><a href='/createGame'>Game</a></li>
+          <li><Link to='/login'>Login</Link></li>
+          <li><Link to='/register'>Register</Link></li>
+          <li><Link to='/createGame'>Game</Link></li>
         </ul>
       </nav>
     </header>

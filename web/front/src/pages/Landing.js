@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../style/landing.css';
-import Header from '../Components/Header';
-import Body from '../Components/bodyLanding';
+import '../style/style.css';
+import Header from '../components/Header';
+import Body from '../components/bodyLanding';
 
 const Landing = () => {
   return (
