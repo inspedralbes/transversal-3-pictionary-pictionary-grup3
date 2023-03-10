@@ -1,5 +1,5 @@
 import logo from "../style/logoPictoboom.png";
-import Link from "react-router-dom";
+import { Link } from "react-router-dom";
 import logoSmall from "../style/logoPictoboom small.png"
 
 export default function bodyLanding() {
