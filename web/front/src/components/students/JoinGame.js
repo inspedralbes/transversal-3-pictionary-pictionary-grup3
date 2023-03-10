@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-import '../../style/style.css';
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
-=======
 import "../../style/style.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Link } from 'react-router-dom';
->>>>>>> 68cab35c71821339fd4be632a62662d0468b34ef
 
 const JoinGame = ({ socket }) => {
   const [nameUser, setNameUser] = useState('');
