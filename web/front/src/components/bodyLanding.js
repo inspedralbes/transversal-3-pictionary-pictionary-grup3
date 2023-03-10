@@ -1,6 +1,7 @@
 import logo from "../style/logoPictoboom.png";
 import logoSmall from "../style/logoPictoboom small.png";
 import bgImage from "../style/webBackground.png"
+import { Link } from "react-router-dom";
 
 export default function bodyLanding(){
     return(
@@ -14,15 +15,15 @@ export default function bodyLanding(){
                 ¡PictoBoom, where your drawings come alive!<br></br>
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                  href="/joinGame"
+                <Link
+                  to="/joinGame"
                   className="default-button text-sm font-semibold text-gray-100 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600"
                 >
                   Play now!
-                </a>
-                <a href="/login" className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none">
+                </Link>
+                <Link to="/login" className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none">
                   Are you the teacher?
-                </a>
+                </Link>
               </div>
             </div>
           </div>
