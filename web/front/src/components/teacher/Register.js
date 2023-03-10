@@ -28,7 +28,7 @@ const Register = () => {
         <button type='submit'>Login</button>
       </form> */}
 
-      <div className="flex h-50 w-1/2 py-12 px-4 sm:px-6 lg:px-8 m-[auto] border-rose-600 rounded-lg bg-rose-50 shadow-2xl">
+      <div className="flex mt-20 h-50 w-1/2 py-12 px-4 sm:px-6 lg:px-8 m-[auto]  border-rose-600 rounded-lg bg-rose-50 shadow-2xl">
         <div className="w-full max-w-md space-y-8 m-[auto]">
             <div>
                 <a href='/'><img className="mx-auto h-20 w-auto" src={logo} alt="Your Company"></img></a>
