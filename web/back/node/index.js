@@ -3,7 +3,6 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
-let drawings = [];
 
 app.use(cors());
 
@@ -40,27 +39,41 @@ io.on("connection", (socket) => {
                 users: [],
                 current_round: 0,
                 painter_index: 0,
+                drawings: []
             });
         }
         sendLobbyList();
     });
 
-    socket.emit('drawings', drawings);
+    socket.on('drawings', function () {
+        lobbies.forEach((lobby) => {
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                let drawings = lobby.drawings;
+            }
+        });
+        io.to(socket.data.current_lobby).emit("drawings", {
+            drawings,
+        });
+    });
 
-    socket.on('draw', function(data) {
-        switch(data.action) {
-            case 'i': drawings.push(data);
-                break;
-            case 'p': drawings.push(data);
-                break;
-            case 'b': drawings = [];
-            console.log(drawings);
-                break;
-            default:
-                break;
-        }
-      
-      io.emit('draw', data);
+    socket.on('draw', function (data) {
+        lobbies.forEach((lobby) => {
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                switch (data.action) {
+                    case 'i': lobby.drawings.push(data);
+                        break;
+                    case 'p': lobby.drawings.push(data);
+                        break;
+                    case 'b': lobby.drawings = [];
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        io.to(socket.data.current_lobby).emit("draw", {
+            data
+        });
     });
 
     socket.on("join room", (data) => {
@@ -127,10 +140,10 @@ async function leaveLobby(socket) {
             lobbies.splice(ind_lobby, 1);
         }
     });
-
+    let lobby_code = socket.data.current_lobby;
     socket.leave(socket.data.current_lobby);
     socket.data.current_lobby = null
-    io.to(socket.id).emit("YOU_LEFT_LOBBY")
+    sendUserList(lobby_code);
     sendLobbyList();
 }
 
