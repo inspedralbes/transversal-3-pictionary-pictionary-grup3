@@ -8,22 +8,26 @@ import Login from './components/teacher/Login';
 import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
 import JoinGame from './components/students/JoinGame';
+// import Header from './components/Header';
 import PlayGame from './pages/PlayGame';
 
 const socket = socketIO.connect('http://localhost:7500');
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Landing socket={socket} />} />
-        <Route path='/login' element={<Login socket={socket} />} />
-        <Route path='/register' element={<Register socket={socket} />} />
-        <Route path='/createGame' element={<CreateGame socket={socket} />} />
-        <Route path='/joinGame' element={<JoinGame socket={socket} />} />
-        <Route path='/playGame' element={<PlayGame socket={socket} />} />
-      </Routes>
-    </Router>
+    <div>
+      {/* <Header></Header> */}
+      <Router>
+        <Routes>
+          <Route path='/' element={<Landing socket={socket} />} />
+          <Route path='/login' element={<Login socket={socket} />} />
+          <Route path='/register' element={<Register socket={socket} />} />
+          <Route path='/createGame' element={<CreateGame socket={socket} />} />
+          <Route path='/joinGame' element={<JoinGame socket={socket} />} />
+          <Route path='/playGame' element={<PlayGame socket={socket} />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

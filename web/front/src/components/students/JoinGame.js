@@ -12,7 +12,7 @@ const JoinGame = ({ socket }) => {
 
   const handleChangeUserName = (e) => {
     setNameUser(e.target.value);
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
