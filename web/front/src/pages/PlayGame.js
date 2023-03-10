@@ -76,13 +76,6 @@ const CreateGame = ({socket}) => {
 
   return (
     <div>
-      <label>Here's the code to your lobby! Have FUN!</label>
-      <p id='code'>{room}</p>
-      <button onClick={createNewLobby}>Create a new lobby</button>
-      <label>Put your name on the cursor!</label>
-      <input id = "nameUser"></input>
-      <button onClick={userName}>Save It</button>
-      <br></br>
       <button onClick={wipe}>Wipe</button>
       <canvas ref={canvasRef} width="900px" height="900px"></canvas>
     </div>
