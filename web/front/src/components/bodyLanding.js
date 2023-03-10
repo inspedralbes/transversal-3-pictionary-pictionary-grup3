@@ -10,7 +10,7 @@ export default function bodyLanding() {
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center ">
           <img className="w-96 m-[auto]" src={logoSmall} alt="Logo" />
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-slate-700 font-semibold">
             ¡PictoBoom, where your drawings come alive!<br></br>
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
