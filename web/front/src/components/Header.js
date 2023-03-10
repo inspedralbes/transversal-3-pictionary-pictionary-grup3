@@ -1,5 +1,6 @@
 import logo from "../style/logoPictoboom.png";
 import logoSmall from "../style/logoPictoboom small.png";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
