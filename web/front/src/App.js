@@ -8,11 +8,25 @@ import Landing from './pages/Landing';
 import Login from './components/teacher/Login';
 import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
-import JoinGame from './components/students/JoinGame';
-import PlayGame from './pages/PlayGame';
 
-const socket = socketIO.connect('http://localhost:7500');
-
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Landing />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/createGame',
+    element: <CreateGame />,
+  },
+]);
 function App() {
   return (
     <Router>
