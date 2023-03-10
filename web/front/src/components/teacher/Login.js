@@ -4,35 +4,30 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
-    // fetch(`http://127.0.0.1:8000/api/login`, {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   method: 'post',
-    //   body: JSON.stringify({
-    //     username: username,
-    //     password: password,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //   });
-    console.log(username, password);
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      username: username,
+      password: password,
+    };
 
-  const handlerChangeUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlerChangePassword = (e) => {
-    setPassword(e.target.value);
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const json = await response.json();
+      console.log('Response:', json);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
     <div>
-      <a href='/'>Main</a>
       <form onSubmit={handleSubmit}>
         <label htmlFor='username'>User:</label>
         <input
@@ -40,7 +35,7 @@ const Login = () => {
           id='username'
           name='username'
           value={username}
-          onChange={handlerChangeUsername}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor='password'>Password:</label>
@@ -49,7 +44,7 @@ const Login = () => {
           id='password'
           name='password'
           value={password}
-          onChange={handlerChangePassword}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <button type='submit'>Login</button>
