@@ -32,39 +32,32 @@ const Register = () => {
   };
 
   return (
-    <div className='flex h-50 w-1/2 py-12 px-4 sm:px-6 lg:px-8 m-[auto] border-rose-600 rounded-lg bg-rose-50 shadow-2xl'>
-      <div className='w-full max-w-md space-y-8 m-[auto]'>
-        <div>
-          <a href='/'>
-            <img
-              className='mx-auto h-20 w-auto'
-              src={logo}
-              alt='Your Company'
-            ></img>
-          </a>
-          <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
-            Register your account
-          </h2>
-        </div>
-        <form className='mt-8 space-y-6' action='#' onSubmit={handleSubmit}>
-          <input type='hidden' name='remember' value='true'></input>
-          <div className='-space-y-px rounded-md shadow-sm'>
-            <div>
-              <label htmlFor='username' className='sr-only'>
-                Username
-              </label>
-              <input
-                id='username'
-                name='username'
-                type='username'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                className='relative block w-full border-0 py-1.5 p-3 rounded-md text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                placeholder='Username'
-                autocomplete='off'
-              ></input>
-            </div>
+    <div>
+      {/* <a href='/'>Main</a>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor='username'>User:</label>
+        <input
+          type='text'
+          id='username'
+          name='username'
+          value={username}
+          onChange={handlerChangeUsername}
+        />
+
+        <label htmlFor='password'>Password:</label>
+        <input
+          type='password'
+          id='password'
+          name='password'
+          value={password}
+          onChange={handlerChangePassword}
+        />
+
+        <button type='submit'>Login</button>
+      </form> */}
+
+      <div className="flex h-50 w-1/2 py-12 mt-20 px-4 sm:px-6 lg:px-8 m-[auto] border-rose-600 rounded-lg bg-rose-50 shadow-2xl">
+        <div className="w-full max-w-md space-y-8 m-[auto]">
             <div>
               <label htmlFor='email-address' className='sr-only'>
                 Email
