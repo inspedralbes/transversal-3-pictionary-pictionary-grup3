@@ -45,7 +45,7 @@ const JoinGame = ({ socket }) => {
               onChange={handleChangeUserName}
             ></input>
           </label>
-          <Link to="/playGame" type="submit" className="default-button">
+          <button to="/playGame" type="submit" className="default-button">
             Send
           </button>
           <Link to="/playGame">Play Game</Link>
