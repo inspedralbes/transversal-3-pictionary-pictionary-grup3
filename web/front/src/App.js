@@ -19,12 +19,12 @@ function App() {
     <Header></Header>
     <Router>
       <Routes>
-        <Route path='/' element={<Landing  socket={socket} />} />
-        <Route path='/login' element={<Login  socket={socket}/>  }/>
-        <Route path='/register' element={<Register socket={socket} /> }/>
-        <Route path='/createGame' element={<CreateGame socket={socket} /> }/>
-        <Route path='/joinGame' element={<JoinGame socket={socket} />  }/>
-        <Route path='/playGame' element={<PlayGame socket={socket} />  }/>
+        <Route path='/' element={<Landing socket={socket} />} />
+        <Route path='/login' element={<Login socket={socket} />} />
+        <Route path='/register' element={<Register socket={socket} />} />
+        <Route path='/createGame' element={<CreateGame socket={socket} />} />
+        <Route path='/joinGame' element={<JoinGame socket={socket} />} />
+        <Route path='/playGame' element={<PlayGame socket={socket} />} />
       </Routes>
     </Router>
     </div>
