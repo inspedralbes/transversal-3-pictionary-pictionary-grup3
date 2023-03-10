@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div>
-      <div className='flex mt-20 h-50 w-1/2 py-12 px-4 sm:px-6 lg:px-8 m-[auto]  border-rose-600 rounded-lg bg-rose-50 shadow-2xl'>
+      <div className='flex py-12 px-4 h-screen bg-rose-50 shadow-2xl lg:mt-20 lg:h-full lg:w-1/2 lg:px-8 lg:m-[auto] lg:rounded-lg'>
         <div className='w-full max-w-md space-y-8 m-[auto]'>
           <div>
             <a href='/'>
