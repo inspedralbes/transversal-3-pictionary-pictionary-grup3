@@ -1,7 +1,8 @@
 import socketIO from 'socket.io-client';
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import './style/App.css';
 import Landing from './pages/Landing';
 import Login from './components/teacher/Login';
