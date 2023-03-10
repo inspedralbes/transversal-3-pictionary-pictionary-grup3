@@ -6,7 +6,7 @@ import Body from '../components/bodyLanding';
 const Landing = () => {
   return (
     <>
-      <Header></Header>
+      {/* <Header></Header> */}
       <Body></Body>
     </>
   );
