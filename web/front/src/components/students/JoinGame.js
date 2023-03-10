@@ -1,6 +1,7 @@
 import "../../style/style.css";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from 'react-router-dom';
 
 const JoinGame = ({ socket }) => {
   const [nameUser, setNameUser] = useState("");
@@ -47,6 +48,7 @@ const JoinGame = ({ socket }) => {
           <button type="submit" className="default-button">
             Send
           </button>
+          <Link to="/playGame">Play Game</Link>
         </form>
       </div>
     </div>

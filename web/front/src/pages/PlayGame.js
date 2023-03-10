@@ -58,19 +58,17 @@ const CreateGame = ({ socket }) => {
     });
 
     socket.on('draw', function (data) {
-      draw(data.x, data.y);
+      draw(data.data.x, data.data.y);
     });
+
     function draw(x, y) {
-
       context.beginPath();
-        context.arc(x, y, 10, 0, 2 * Math.PI);
-        context.fillStyle = colorCanva;
-        context.fill();
-        context.lineCap = 'round'
-        context.lineJoin = 'round'
+      context.arc(x, y, 10, 0, 2 * Math.PI);
+      context.fillStyle = colorCanva;
+      context.fill();
+      context.lineCap = 'round'
+      context.lineJoin = 'round'
       context.stroke();
-
-      
     }
   }, []);
 
