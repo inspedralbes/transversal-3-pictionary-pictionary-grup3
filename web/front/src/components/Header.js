@@ -41,6 +41,16 @@ export default function Header() {
                   Create Game
                 </Link>
               </li>
+              <li className="mr-6">
+                <a className="text-red-100 hover:text-white font-bold" href="/joinGame">
+                    Join Game
+                </a>
+              </li>
+              <li className="mr-6">
+                <a className="text-red-100 hover:text-white font-bold" href="/playGame">
+                    Canva Test
+                </a>
+              </li>
             </ul>
           </div>
         </div>
