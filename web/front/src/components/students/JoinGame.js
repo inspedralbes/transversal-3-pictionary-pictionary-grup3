@@ -1,5 +1,6 @@
 import "../../style/style.css";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const JoinGame = ({ socket }) => {
