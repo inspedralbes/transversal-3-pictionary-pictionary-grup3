@@ -38,7 +38,7 @@ class UserTest extends TestCase
         $token = "9|rWOYH1OtWIMQWI3kwDJ6cpmSjPmJVKgwd5mcjuZT";
         $response = $this->withHeaders(
             [
-                'Authorization' => "Bearer $token"
+                'Authorization' => "Bearer " . $token
             ]
         )->get('/api/logout');
         $response->assertStatus(200);
@@ -47,7 +47,7 @@ class UserTest extends TestCase
     public function testUpdateProfile(): void
     {
         $token = "9|rWOYH1OtWIMQWI3kwDJ6cpmSjPmJVKgwd5mcjuZT";
-        $response = $this->withHeaders(['Authorization' => "Bearer $token"])->post(
+        $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->post(
             '/api/update-profile',
             [
                 "email" => "admin@inspedralbes.cat",
@@ -61,7 +61,7 @@ class UserTest extends TestCase
     public function testUserProfile(): void
     {
         $token = "9|rWOYH1OtWIMQWI3kwDJ6cpmSjPmJVKgwd5mcjuZT";
-        $response = $this->withHeaders(['Authorization' => "Bearer $token"])->get('user-profile');
+        $response = $this->withHeaders(['Authorization' => "Bearer " . $token])->get('user-profile');
         $response->assertStatus(200);
     }
 }
