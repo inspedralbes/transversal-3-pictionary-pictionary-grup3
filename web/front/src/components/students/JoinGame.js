@@ -13,12 +13,12 @@ const JoinGame = ({ socket }) => {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    setFullLobby(false);
     e.preventDefault();
     if (nameUser != '') {
       setCorrectName(true);
       checkCodeRoom();
     } else {
+      setFullLobby(false);
       setCorrectName(false);
       console.log('nombreVacio');
     }
@@ -29,6 +29,8 @@ const JoinGame = ({ socket }) => {
     socket.emit('get lobbies', {});
     socket.on('lobbies list', function (data) {
       lobbies = data;
+      setFullLobby(false);
+      let fullLobbyAux = false;
 
       for (let i = 0; i < lobbies.length; i++) {
         if (lobbies[i].lobby_code === parseInt(lobbyCode)) {
@@ -37,6 +39,7 @@ const JoinGame = ({ socket }) => {
           console.log(lobbies[i].users.length > lobbies[i].maxUsers);
 
           if (lobbies[i].users.length >= lobbies[i].maxUsers) {
+            fullLobbyAux = true;
             setFullLobby(true);
           } else {
             socket.emit('join room', {
@@ -49,7 +52,9 @@ const JoinGame = ({ socket }) => {
         }
       }
 
-      setCorrectLobby(false);
+      if (fullLobbyAux == false) {
+        setCorrectLobby(false);
+      }
     });
   };
 
