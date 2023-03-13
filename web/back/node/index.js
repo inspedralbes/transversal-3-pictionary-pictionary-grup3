@@ -55,7 +55,6 @@ io.on("connection", (socket) => {
         sendUserList(socket);
     });
 
-
     socket.on('draw', function (data) {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
