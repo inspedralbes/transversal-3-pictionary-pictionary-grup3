@@ -24,7 +24,7 @@ const CreateGame = ({ socket }) => {
       var mousePos = getMousePos(canvas, event);
       isDrawing = true;
       [lastX, lastY] = [event.offsetX, event.offsetY];
-      socket.emit('draw', { x: mousePos.x, y: mousePos.y, action: 'i' });
+      socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
       // data = {
       //   x:0,
       //   y:0,
@@ -38,7 +38,7 @@ const CreateGame = ({ socket }) => {
       var mousePos = getMousePos(canvas, event);
       console.log(lastX, lastY);
       if (isDrawing) {
-        socket.emit('draw', { x: mousePos.x, y: mousePos.y, action: 'p' });
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
       }
     });
 
@@ -51,17 +51,17 @@ const CreateGame = ({ socket }) => {
     });
 
     socket.on('draw', function (data) {
-      draw(data.x, data.y);
+      draw(data.x, data.y, data.b, data.c);
     });
-    function draw(x, y) {
-
+    function draw(x, y, b, c) {
+      console.log(b,c)
       context.beginPath();
         context.moveTo(lastX, lastY);
         lastX = x;
         lastY = y;
         context.lineTo(x, y);
-        context.strokeStyle = colorCanva;
-        context.lineWidth = brushSize;
+        context.strokeStyle = c;
+        context.lineWidth = b;
         context.lineCap = 'round';
         context.fill();
         context.stroke();
