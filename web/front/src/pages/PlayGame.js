@@ -15,6 +15,8 @@ const CreateGame = ({ socket }) => {
     let isDrawing = false;
 
     socket.on('drawings', function (data) {
+      console.log(data);
+
       data.forEach(function (drawing) {
         draw(drawing.x, drawing.y);
       });
@@ -51,6 +53,12 @@ const CreateGame = ({ socket }) => {
     });
 
     socket.on('draw', function (data) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d');
+      
+      if(data.data.action == 'b') {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
       draw(data.data.x, data.data.y);
     });
 
