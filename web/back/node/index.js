@@ -46,9 +46,10 @@ io.on("connection", (socket) => {
     });
 
     socket.on('drawings', function () {
+        let drawings;
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
-                let drawings = lobby.drawings;
+                drawings = lobby.drawings;
             }
         });
         io.to(socket.data.current_lobby).emit("drawings", {
