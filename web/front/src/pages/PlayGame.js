@@ -95,6 +95,9 @@ const CreateGame = ({ socket }) => {
 
   return (
     <div>
+      <label>Enter your name please!</label>
+      <input type="text" id="nameUser" />
+      <button onClick={userName}>Submit</button>
       <button onClick={wipe}>Wipe</button>
       <canvas ref={canvasRef} width="900px" height="900px"></canvas>
     </div>
