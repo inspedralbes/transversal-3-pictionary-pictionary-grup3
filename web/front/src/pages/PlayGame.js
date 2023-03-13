@@ -55,10 +55,10 @@ const CreateGame = ({ socket }) => {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
       console.log(data);
-      if(data.data.action == 'b') {
+      if(data.action == 'b') {
         context.clearRect(0, 0, canvas.width, canvas.height);
       }else{
-        draw(data.data.x, data.data.y, data.data.b, data.data.c);
+        draw(data.x, data.y, data.b, data.c);
       }
       
       
