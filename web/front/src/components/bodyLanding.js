@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function bodyLanding() {
   return (
-    <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
+    <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover bg-center items-center">
       <div className="mx-auto max-w-2xl">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center ">
