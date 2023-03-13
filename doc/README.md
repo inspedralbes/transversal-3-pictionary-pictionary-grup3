@@ -4,13 +4,20 @@ Alguns dels punts que han de quedar explicats:
   * Sprint 1:
     * Registrar-se com professor
     * Logejar-se com professor
-    * Crear partides com professor    
+    * Crear partides 
     * Canviar la contrasenya com professor
-    * Unir-se a una partida com alumne
+    * Unir-se a una partida
     * Dibuixar una paraula com alumne
     * Encertar una paraula com alumne
     * Creació disseny inicial
     * El professor pugui afegir categories i paraules
+  * Sprint 2:
+    * Canviar la contrasenya com professor
+    * Unir-se a una partida com alumne
+    * Dibuixar una paraula com alumne
+    * Encertar una paraula com alumne
+    * Cada Canvas te la seva sala
+    * Disseny Mobile First
  * Arquitectura bàsica
    * Frontend: React
    * Backend: Laravel (crear i logejar usuari), node (sockets)
