@@ -45,7 +45,7 @@ const JoinGame = ({ socket }) => {
             <input
               type='text'
               value={lobbyCode}
-              onChange={handleChangeLobbyCode}
+              onChange={(e) => setLobbyCode(e.target.value)}
             ></input>
           </label>
           <label>
@@ -53,7 +53,7 @@ const JoinGame = ({ socket }) => {
             <input
               type='text'
               value={nameUser}
-              onChange={handleChangeUserName}
+              onChange={(e) => setNameUser(e.target.value)}
             ></input>
           </label>
           <button type="submit" className="default-button">
