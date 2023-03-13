@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../../style/style.css';
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);

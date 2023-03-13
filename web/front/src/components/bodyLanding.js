@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function bodyLanding() {
   return (
-    <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
       <div className="mx-auto max-w-2xl">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center ">
@@ -16,7 +16,7 @@ export default function bodyLanding() {
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
               to="/joinGame"
-              className="default-button text-sm font-semibold text-gray-100 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600"
+              className="default-button text-sm font-semibold text-gray-100 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600 animate-bounce"
             >
               Play now!
             </Link>

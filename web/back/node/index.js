@@ -41,28 +41,11 @@ io.on("connection", (socket) => {
         sendLobbyList();
     });
 
-    socket.on("get lobbies", () => {
-        sendLobbyList();
-    });
-
-    socket.on("join room", (data) => {
-        let available = true;
+    socket.on('drawings', function () {
+        let drawings;
         lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == data.lobby_code) {
-                if (lobby.users.length < lobby.maxUsers) {
-                    lobby.users.forEach(user => {
-                        if (user.name == data.name) {
-                            available = false;
-                        }
-                    });
-                    if (available) {
-                        lobby.users.push({
-                            name: data.name,
-                            userId: data.userId,
-                            score: 0,
-                        });
-                    }
-                }
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                drawings = lobby.drawings;
             }
         });
         socket.join(data.lobby_code);
