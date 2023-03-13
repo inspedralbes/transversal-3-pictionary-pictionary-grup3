@@ -20,10 +20,6 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     socket.data.current_lobby = null;
 
-    socket.on("get lobbies", () => {
-        sendLobbyList();
-    });
-
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -37,25 +33,45 @@ io.on("connection", (socket) => {
                 category: data.category,
                 maxUsers: data.maxUsers,
                 users: [],
-                current_round: 0,
-                painter_index: 0,
+                round: 0,
+                painter: null,
                 drawings: []
             });
         }
         sendLobbyList();
     });
 
-    socket.on('drawings', function () {
-        let drawings;
+    socket.on("get lobbies", () => {
+        sendLobbyList();
+    });
+
+    socket.on("join room", (data) => {
+        let available = true;
         lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == socket.data.current_lobby) {
-                drawings = lobby.drawings;
+            if (lobby.lobby_code == data.lobby_code) {
+                if (lobby.users.length < lobby.maxUsers) {
+                    lobby.users.forEach(user => {
+                        if (user.name == data.name) {
+                            available = false;
+                        }
+                    });
+                    if (available) {
+                        lobby.users.push({
+                            name: data.name,
+                            userId: data.userId,
+                            score: 0,
+                        });
+                    }
+                }
             }
         });
-        io.to(socket.data.current_lobby).emit("drawings", {
-            drawings,
-        });
+        socket.join(data.lobby_code);
+        socket.data.current_lobby = data.lobby_code;
+        socket.data.name = data.name;
+        socket.data.userId = data.userId;
+        sendUserList(socket);
     });
+
 
     socket.on('draw', function (data) {
         lobbies.forEach((lobby) => {
@@ -77,37 +93,20 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("join room", (data) => {
+    socket.on('drawings', function () {
+        let drawings;
         lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == data.lobby_code) {
-                if (lobby.users.length < lobby.maxUsers) {
-                    let available = true;
-                    lobby.users.forEach(user => {
-                        if (user.nom == data.name) {
-                            available = false;
-                        }
-                    });
-                    if (available) {
-                        lobby.users.push({
-                            name: data.name,
-                            userId: data.userId,
-                            score: 0,
-                        });
-                    }
-                }
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                drawings = lobby.drawings;
             }
         });
-        socket.join(data.lobby_code);
-        socket.data.current_lobby = data.lobby_code;
-        socket.data.name = data.name;
-        socket.data.userId = data.userId;
-        socket.data.score = data.score;
-        sendUserList(data.lobby_code);
+        io.to(socket.data.current_lobby).emit("drawings", {
+            drawings,
+        });
     });
 
-    socket.on("leave lobby", (lobby_code) => {
+    socket.on("leave lobby", () => {
         leaveLobby(socket);
-        sendUserList(lobby_code);
         sendLobbyList();
     });
 
@@ -117,42 +116,37 @@ io.on("connection", (socket) => {
 
 });
 
-async function sendUserList(lobby_code) {
-    let list = [];
-    const sockets = await io.in(lobby_code).fetchSockets();
-    sockets.forEach((element) => {
-        list.push({
-            name: io.sockets.sockets.get(element.id).data.name,
-            score: io.sockets.sockets.get(element.id).data.score,
+function sendUserList(socket) {
+    let list;
+    if (socket) {
+        lobbies.forEach((lobby) => {
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                list = lobby.users;
+            }
         });
-    });
-    io.to(lobby_code).emit("lobby user list", {
-        list: list,
-    });
+        io.to(socket.data.current_lobby).emit("lobby user list", {
+            list: list,
+        });
+    }
 }
 
-async function leaveLobby(socket) {
-    lobbies.forEach((lobby, ind_lobby) => {
+function leaveLobby(socket) {
+    lobbies.forEach((lobby) => {
         if (lobby.lobby_code == socket.data.current_lobby) {
             lobby.users.forEach((member, index) => {
-                if (member.nom == socket.data.name) {
+                if (member.name == socket.data.name) {
                     lobby.users.splice(index, 1);
                 }
             });
         }
-        if (lobby.users.length == 0) {
-            lobbies.splice(ind_lobby, 1);
-        }
     });
-    let lobby_code = socket.data.current_lobby;
     socket.leave(socket.data.current_lobby);
+    sendUserList(socket);
     socket.data.current_lobby = null
-    sendUserList(lobby_code);
-    sendLobbyList();
 }
 
-async function sendLobbyList() {
-    await io.emit("lobbies list", lobbies);
+function sendLobbyList() {
+    io.emit("lobbies list", lobbies);
 }
 
 server.listen(7500, () => {
