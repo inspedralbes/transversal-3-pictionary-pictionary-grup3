@@ -1,27 +1,40 @@
 import "../../style/style.css";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 const JoinGame = ({ socket }) => {
-  const [nameUser, setNameUser] = useState("");
-  const [lobbyCode, setLobbyCode] = useState("");
+  const [nameUser, setNameUser] = useState('');
+  const [lobbyCode, setLobbyCode] = useState('');
+  const [lobbies, setLobbies] = useState([]);
 
-  const handleChangeLobbyCode = (e) => {
-    setLobbyCode(e.target.value);
-  };
-
-  const handleChangeUserName = (e) => {
-    setNameUser(e.target.value);
-  }
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ lobby_code: lobbyCode, name: nameUser });
-    socket.emit("join room", {
+    socket.emit('join room', {
       name: nameUser,
       userId: uuidv4(),
       lobby_code: lobbyCode,
     });
+    checkCodeRoom();
+  };
+
+  const checkCodeRoom = () => {
+    socket.emit('get lobbies', {});
+    socket.on('lobbies list', function (data) {
+      setLobbies(data);
+    });
+
+    for (let i = 0; i < lobbies.length; i++) {
+      if (lobbies[i].lobby_code === parseInt(lobbyCode)) {
+        if (lobbies[i].users.length < lobbies[i].maxUsers) {
+          navigate('/playGame');
+        } else {
+          alert('lobby llena');
+        }
+      }
+    }
   };
 
   return (
@@ -29,17 +42,16 @@ const JoinGame = ({ socket }) => {
       <div className="m-[auto] border-2 w-112 ">
         <form onSubmit={handleSubmit}>
           <label>
-            Enter lobby code
             <input
-              type="text"
+              type='text'
               value={lobbyCode}
               onChange={handleChangeLobbyCode}
             ></input>
           </label>
           <label>
-            Enter your name
+            
             <input
-              type="text"
+              type='text'
               value={nameUser}
               onChange={handleChangeUserName}
             ></input>
@@ -47,6 +59,7 @@ const JoinGame = ({ socket }) => {
           <button type="submit" className="default-button">
             Send
           </button>
+          <Link to="/playGame">Play Game</Link>
         </form>
       </div>
     </div>
