@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 const CreateGame = ({ socket }) => {
   const canvasRef = useRef(null);
   let colorCanva = "black";
+  let brushSize = 3;
   let nameUser = "";
   let lastX = 0;
   let lastY = 0;
@@ -22,6 +23,7 @@ const CreateGame = ({ socket }) => {
     canvas.addEventListener('mousedown', function (event) {
       var mousePos = getMousePos(canvas, event);
       isDrawing = true;
+      [lastX, lastY] = [event.offsetX, event.offsetY];
       socket.emit('draw', { x: mousePos.x, y: mousePos.y, action: 'i' });
       // data = {
       //   x:0,
@@ -34,16 +36,7 @@ const CreateGame = ({ socket }) => {
 
     canvas.addEventListener('mousemove', function (event) {
       var mousePos = getMousePos(canvas, event);
-      /*context.beginPath();
-            context.arc(mousePos.x, mousePos.y, 10, 0, 2 * Math.PI);
-            context.fill();
-            context.clearRect(lastX, lastY, canvas.width, canvas.height);
-        context.stroke();
-      context.font="10pt Verdana";
-      context.fillStyle = "green";
-      context.fillText(nameUser, mousePos.x + 20,mousePos.y + 20);
-      lastX = mousePos.x;
-      lastY = mousePos.y;*/
+      console.log(lastX, lastY);
       if (isDrawing) {
         socket.emit('draw', { x: mousePos.x, y: mousePos.y, action: 'p' });
       }
@@ -63,12 +56,16 @@ const CreateGame = ({ socket }) => {
 
     function draw(x, y) {
       context.beginPath();
-      context.arc(x, y, 10, 0, 2 * Math.PI);
-      context.fillStyle = colorCanva;
-      context.fill();
-      context.lineCap = 'round'
-      context.lineJoin = 'round'
-      context.stroke();
+        context.moveTo(lastX, lastY);
+        lastX = x;
+        lastY = y;
+        context.lineTo(x, y);
+        context.strokeStyle = colorCanva;
+        context.lineWidth = brushSize;
+        context.lineCap = 'round';
+        context.fill();
+        context.stroke();
+      context.beginPath();
     }
   }, []);
 
@@ -91,8 +88,24 @@ const CreateGame = ({ socket }) => {
     nameUser = document.getElementById("nameUser").value;
   }
 
+  function changeColor() {
+    colorCanva = document.getElementById("colorPicker").value;
+  }
+
+  function changeBrush() {
+    brushSize = document.getElementById("brushSize").value;
+    document.getElementById("brushText").innerHTML = "Brush Size: " + brushSize ;
+  }
+
   return (
     <div>
+      <label>Enter your name please!</label>
+      <input type="text" id="nameUser" />
+      <button onClick={userName}>Submit</button>
+      <input onChange={changeColor} type="color" id="colorPicker"/>
+
+      <input onClick = {changeBrush} type="range" min="1" max="20" id="brushSize"/>
+      <label id="brushText">Brush Size: {brushSize} </label>
       <button onClick={wipe}>Wipe</button>
       <canvas ref={canvasRef} width="900px" height="900px"></canvas>
     </div>

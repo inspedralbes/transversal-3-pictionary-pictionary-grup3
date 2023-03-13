@@ -8,6 +8,10 @@
     }
 
     .default-button{
-        @apply rounded-md px-3.5 py-2.5 outline outline-2
+        @apply rounded-lg px-3.5 py-2.5 outline outline-2
+    }
+
+    .input-join{
+        @apply rounded-lg p-1 block m-2 ml-0
     }
 }

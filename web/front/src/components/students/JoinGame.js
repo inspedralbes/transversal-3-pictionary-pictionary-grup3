@@ -39,25 +39,24 @@ const JoinGame = ({ socket }) => {
 
   return (
     <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
-      <div className='m-[auto] border-2 w-112 '>
+      <div className="m-[auto] border-2 w-112 ">
         <form onSubmit={handleSubmit}>
           <label>
-            Enter lobby code
             <input
               type='text'
               value={lobbyCode}
-              onChange={(e) => setLobbyCode(e.target.value)}
+              onChange={handleChangeLobbyCode}
             ></input>
           </label>
           <label>
-            Enter your name
+            
             <input
               type='text'
               value={nameUser}
-              onChange={(e) => setNameUser(e.target.value)}
+              onChange={handleChangeUserName}
             ></input>
           </label>
-          <button to="/playGame" type="submit" className="default-button">
+          <button type="submit" className="default-button">
             Send
           </button>
           <Link to="/playGame">Play Game</Link>
