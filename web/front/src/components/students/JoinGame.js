@@ -20,7 +20,6 @@ const JoinGame = ({ socket }) => {
     } else {
       setFullLobby(false);
       setCorrectName(false);
-      console.log('nombreVacio');
     }
   };
 
@@ -34,10 +33,6 @@ const JoinGame = ({ socket }) => {
 
       for (let i = 0; i < lobbies.length; i++) {
         if (lobbies[i].lobby_code === parseInt(lobbyCode)) {
-          console.log(lobbies[i].maxUsers);
-          console.log(lobbies[i].users.length);
-          console.log(lobbies[i].users.length > lobbies[i].maxUsers);
-
           if (lobbies[i].users.length >= lobbies[i].maxUsers) {
             fullLobbyAux = true;
             setFullLobby(true);
