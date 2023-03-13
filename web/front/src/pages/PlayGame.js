@@ -54,11 +54,14 @@ const CreateGame = ({ socket }) => {
     socket.on('draw', function (data) {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
+      console.log(data);
       
       if(data.data.action == 'b') {
         context.clearRect(0, 0, canvas.width, canvas.height);
+      }else{
+        draw(data.data.x, data.data.y);
       }
-      draw(data.data.x, data.data.y);
+      
     });
 
     function draw(x, y) {
