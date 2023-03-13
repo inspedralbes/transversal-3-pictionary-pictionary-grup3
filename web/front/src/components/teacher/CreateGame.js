@@ -49,26 +49,46 @@ const CreateGame = ({ socket }) => {
       <div>
         <label>Here's the code to your lobby! Have FUN!</label>
         <p id="code">{room}</p>
-        <button onClick={createNewLobby}>Create a new lobby</button>
-        <hr></hr>
-        <button onClick={getLobby}>Get Lobby</button>
-        <hr></hr>
-        <button onClick={showLobby}>Show Lobby</button>
+        <div className="grid grid-cols-3 gap-10">
+          <button
+            onClick={createNewLobby}
+            className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
+          >
+            Create a new lobby
+          </button>
+          <button
+            onClick={getLobby}
+            className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
+          >
+            Get Lobby
+          </button>
+          <button
+            onClick={showLobby}
+            className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
+          >
+            Show Lobby
+          </button>
+        </div>
       </div>
-      <div className="grid grid-cols-3 gap-2 items-center justify-center">
+      <div className="grid grid-cols-5 gap-3 items-center justify-center p-8">
         {lobbies.map((lobby, index) => (
-        <div className="h-36 w-full rounded-md pink-to-orange-gr p-1" key={index}>
-          <div className="h-full w-full bg-gray-200 back">
-            <div className="max-w-sm rounded overflow-hidden" key={index}>
-              <div className="">
-                <div className="font-bold text-gray-800 text-xl">{lobby.lobby_code}</div>
-                <p className="text-gray-800 text-base">{lobby.category}</p>
+          <div
+            className="h-36 w-80 rounded-md pink-to-orange-gr p-1"
+            key={index}
+          >
+            <div className="h-full w-full bg-white back p-2">
+              <div className="max-w-sm rounded overflow-hidden" key={index}>
+                <div className="">
+                  <div className="font-bold text-gray-800 text-xl">
+                    {lobby.lobby_code}
+                  </div>
+                  <p className="text-gray-800 text-base">{lobby.category}</p>
                 </div>
                 <div className="">
                   {lobby.users.map((user, index) => (
-                  <span className="users" key={index}>
-                    {user.name}
-                  </span>
+                    <span className="users" key={index}>
+                      {user.name}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -76,8 +96,8 @@ const CreateGame = ({ socket }) => {
           </div>
         ))}
       </div>
-          
-            {/* <div classNameName="lobby-list text-gray-100">
+
+      {/* <div classNameName="lobby-list text-gray-100">
               {lobbies.map((lobby, index) => (
                 <div classNameName="lobby" key={index}>
                   <h2>{lobby.lobby_code}</h2>
@@ -91,7 +111,6 @@ const CreateGame = ({ socket }) => {
                     </div>
                     ))}
                   </div> */}
-
     </>
   );
 };
