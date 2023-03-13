@@ -26,7 +26,7 @@ const CreateGame = ({ socket }) => {
       var mousePos = getMousePos(canvas, event);
       isDrawing = true;
       [lastX, lastY] = [event.offsetX, event.offsetY];
-      socket.emit('draw', { x: mousePos.x, y: mousePos.y, action: 'i' });
+      socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
       // data = {
       //   x:0,
       //   y:0,
@@ -39,7 +39,7 @@ const CreateGame = ({ socket }) => {
     canvas.addEventListener('mousemove', function (event) {
       var mousePos = getMousePos(canvas, event);
       if (isDrawing) {
-        socket.emit('draw', { x: mousePos.x, y: mousePos.y, action: 'p' });
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
       }
     });
 
@@ -52,29 +52,30 @@ const CreateGame = ({ socket }) => {
     });
 
     socket.on('draw', function (data) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
+      // const canvas = canvasRef.current;
+      // const context = canvas.getContext('2d');
       console.log(data);
-      
       if(data.data.action == 'b') {
         context.clearRect(0, 0, canvas.width, canvas.height);
       }else{
-        draw(data.data.x, data.data.y);
+        draw(data.data.x, data.data.y, data.data.b, data.data.c);
       }
       
+      
     });
-
-    function draw(x, y) {
+    
+    function draw(x, y, b, c) {
+      console.log(b,c)
       context.beginPath();
-      context.moveTo(lastX, lastY);
-      lastX = x;
-      lastY = y;
-      context.lineTo(x, y);
-      context.strokeStyle = colorCanva;
-      context.lineWidth = brushSize;
-      context.lineCap = 'round';
-      context.fill();
-      context.stroke();
+        context.moveTo(lastX, lastY);
+        lastX = x;
+        lastY = y;
+        context.lineTo(x, y);
+        context.strokeStyle = c;
+        context.lineWidth = b;
+        context.lineCap = 'round';
+        context.fill();
+        context.stroke();
       context.beginPath();
     }
   }, []);
