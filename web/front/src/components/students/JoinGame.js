@@ -1,7 +1,7 @@
-import "../../style/style.css";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import '../../style/style.css';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const JoinGame = ({ socket }) => {
   const [nameUser, setNameUser] = useState('');
@@ -39,27 +39,25 @@ const JoinGame = ({ socket }) => {
 
   return (
     <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
-      <div className="m-[auto] border-2 w-112 ">
+      <div className='m-[auto] border-2 w-112 '>
         <form onSubmit={handleSubmit}>
           <label>
             <input
               type='text'
               value={lobbyCode}
-              onChange={handleChangeLobbyCode}
+              onChange={(e) => setLobbyCode(e.target.value)}
             ></input>
           </label>
           <label>
-            
             <input
               type='text'
               value={nameUser}
-              onChange={handleChangeUserName}
+              onChange={(e) => setNameUser(e.target.value)}
             ></input>
           </label>
-          <button type="submit" className="default-button">
+          <button type='submit' className='default-button'>
             Send
           </button>
-          <Link to="/playGame">Play Game</Link>
         </form>
       </div>
     </div>
