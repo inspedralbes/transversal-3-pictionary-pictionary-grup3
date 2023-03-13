@@ -90,6 +90,7 @@ io.on("connection", (socket) => {
                         lobby.users.push({
                             name: data.name,
                             userId: data.userId,
+                            score: 0,
                         });
                     }
                 }
@@ -99,6 +100,7 @@ io.on("connection", (socket) => {
         socket.data.current_lobby = data.lobby_code;
         socket.data.name = data.name;
         socket.data.userId = data.userId;
+        socket.data.score = data.score;
         sendUserList(data.lobby_code);
     });
 
@@ -120,6 +122,7 @@ async function sendUserList(lobby_code) {
     sockets.forEach((element) => {
         list.push({
             name: io.sockets.sockets.get(element.id).data.name,
+            score: io.sockets.sockets.get(element.id).data.score,
         });
     });
     io.to(lobby_code).emit("lobby user list", {
