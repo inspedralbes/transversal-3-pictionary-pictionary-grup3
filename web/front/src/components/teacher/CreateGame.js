@@ -3,16 +3,15 @@ import '../../style/style.css';
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState(5);
   const [lobbies, setLobbies] = useState([]);
 
   useEffect(() => {
     codeGenerator();
-    userGenerator();
   }, []);
 
   const userGenerator = () => {
-    const randomUsers = Math.floor(Math.random() * (5 - 1 + 1) + 1);
+    const randomUsers = Math.floor(Math.random() * (5 - 4 + 4) + 4);
     setUsers(randomUsers);
   };
 
@@ -25,12 +24,13 @@ const CreateGame = ({ socket }) => {
 
   const createNewLobby = () => {
     codeGenerator();
-    userGenerator();
     socket.emit('new lobby', {
       lobby_code: room,
       maxUsers: users,
       category: 'Info',
     });
+    getLobby();
+    showLobby();
   };
 
   const getLobby = () => {
@@ -48,12 +48,8 @@ const CreateGame = ({ socket }) => {
     <>
       <div>
         <label>Here's the code to your lobby! Have FUN!</label>
-        <p id='code'>{room}</p>
+        <hr></hr>
         <button onClick={createNewLobby}>Create a new lobby</button>
-        <hr></hr>
-        <button onClick={getLobby}>Get Lobby</button>
-        <hr></hr>
-        <button onClick={showLobby}>Show Lobby</button>
       </div>
       <div className='lobby-list'>
         {lobbies.map((lobby, index) => (
@@ -62,7 +58,7 @@ const CreateGame = ({ socket }) => {
             <p>{lobby.category}</p>
             {lobby.users.map((user, index) => (
               <span className='users' key={index}>
-                USUARIO: {user.name}
+                {user.name}
               </span>
             ))}
             <p>{lobby.maxUsers}</p>
