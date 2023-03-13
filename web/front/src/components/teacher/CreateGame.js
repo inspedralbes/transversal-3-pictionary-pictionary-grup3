@@ -4,10 +4,62 @@ const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(5);
   const [lobbies, setLobbies] = useState([]);
+  const [isSelected, setIsSelected] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [words, setWords] = useState([]);
+  const [idCategory, setIdCategory] = useState(1);
 
   useEffect(() => {
     codeGenerator();
+    getCollection();
   }, []);
+
+  const handleSubmit = () => {
+    setIsSelected(true);
+  };
+
+  const getWords = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'post',
+        body: JSON.stringify({
+          id: idCategory,
+        }),
+      });
+
+      const data = await response.json();
+      setWords(data);
+      setLoading(false);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getCollection = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/list-categories`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
+          },
+          method: 'get',
+        }
+      );
+
+      const data = await response.json();
+      setCategories(data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const userGenerator = () => {
     const randomUsers = Math.floor(Math.random() * (5 - 4 + 4) + 4);
@@ -45,25 +97,45 @@ const CreateGame = ({ socket }) => {
 
   return (
     <>
-      <div>
-        <label>Here's the code to your lobby! Have FUN!</label>
-        <hr></hr>
-        <button onClick={createNewLobby}>Create a new lobby</button>
-      </div>
-      <div className='lobby-list'>
-        {lobbies.map((lobby, index) => (
-          <div className='lobby' key={index}>
-            <h2>{lobby.lobby_code}</h2>
-            <p>{lobby.category}</p>
-            {lobby.users.map((user, index) => (
-              <span className='users' key={index}>
-                {user.name}
-              </span>
+      {!isSelected ? (
+        <div>
+          {loading ? (
+            'Loading'
+          ) : (
+            <>
+              <form onSubmit={handleSubmit}>
+                <button type='submit'>Send</button>
+              </form>
+              {categories.categoriesList.map((category) => (
+                <button type='text' key={category.id} value={category.category}>
+                  {category.category}
+                </button>
+              ))}
+              <button onClick={getWords}>Coger palabras</button>
+            </>
+          )}
+        </div>
+      ) : (
+        <>
+          <label>Here's the code to your lobby! Have FUN!</label>
+          <hr></hr>
+          <button onClick={createNewLobby}>Create a new lobby</button>
+          <div className='lobby-list'>
+            {lobbies.map((lobby, index) => (
+              <div className='lobby' key={index}>
+                <h2>{lobby.lobby_code}</h2>
+                <p>{lobby.category}</p>
+                {lobby.users.map((user, index) => (
+                  <span className='users' key={index}>
+                    {user.name}
+                  </span>
+                ))}
+                <p>{lobby.maxUsers}</p>
+              </div>
             ))}
-            <p>{lobby.maxUsers}</p>
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </>
   );
 };
