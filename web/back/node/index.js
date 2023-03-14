@@ -20,6 +20,10 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     socket.data.current_lobby = null;
 
+    socket.on("get lobbies", () => {
+        sendLobbyList();
+    });
+
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -28,6 +32,21 @@ io.on("connection", (socket) => {
             }
         });
         if (!lobby_exists) {
+            let words = [];
+            fetch(`http://127.0.0.1:8000/api/list-words`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'post',
+                body: JSON.stringify({
+                    idCategory: data.category,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // words = data;
+                    console.log(data);
+                });
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
@@ -35,10 +54,11 @@ io.on("connection", (socket) => {
                 users: [],
                 round: 0,
                 painter: null,
-                drawings: []
+                drawings: [],
+                // words: words,
             });
+            sendLobbyList();
         }
-        sendLobbyList();
     });
 
     socket.on("join room", (data) => {
