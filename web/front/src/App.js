@@ -9,6 +9,7 @@ import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
 import JoinGame from './components/students/JoinGame';
 import PlayGame from './pages/PlayGame';
+import WaitingRoom from './components/students/WaitingRoom';
 import Test from './pages/Test';
 
 const socket = socketIO.connect('http://localhost:7500');
@@ -25,6 +26,10 @@ function App() {
           <Route path='/joinGame' element={<JoinGame socket={socket} />} />
           <Route path='/playGame' element={<PlayGame socket={socket} />} />
           <Route path='/test' element={<Test socket={socket} />} />
+          <Route
+            path='/waitingRoom'
+            element={<WaitingRoom socket={socket} />}
+          />
         </Routes>
       </Router>
     </div>
