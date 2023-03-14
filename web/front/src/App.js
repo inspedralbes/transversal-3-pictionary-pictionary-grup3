@@ -4,10 +4,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './style/style.css';
 import Landing from './pages/Landing';
-import Login from './components/teacher/Login';
-import Register from './components/teacher/Register';
-import CreateGame from './components/teacher/CreateGame';
-import JoinGame from './components/students/JoinGame';
+import Login from './components/Login';
+import Register from './components/Register';
+import CreateGame from './components/CreateGame';
+import JoinGame from './components/JoinGame';
 import PlayGame from './pages/PlayGame';
 import Test from './pages/Test';
 

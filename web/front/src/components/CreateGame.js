@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import '../../style/style.css';
+import '../style/style.css';
+import { useDispatch } from 'react-redux';
+import { setWordList } from '../../features/wordSlice';
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
@@ -10,6 +12,8 @@ const CreateGame = ({ socket }) => {
   const [categories, setCategories] = useState([]);
   const [words, setWords] = useState([]);
   const [idCategory, setIdCategory] = useState(1);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     codeGenerator();
@@ -40,6 +44,7 @@ const CreateGame = ({ socket }) => {
         }),
       });
       const data = await response.json();
+      dispatch(setWordList(data));
       setWords(data);
       setLoading(false);
       console.log(data);
