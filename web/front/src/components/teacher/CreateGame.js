@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "../../style/style.css";
+import React, { useEffect, useState } from 'react';
+import '../../style/style.css';
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
-  const [users, setUsers] = useState(5);
+  const [users, setUsers] = useState(null);
   const [lobbies, setLobbies] = useState([]);
   const [isSelected, setIsSelected] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -81,15 +81,16 @@ const CreateGame = ({ socket }) => {
     socket.emit('new lobby', {
       lobby_code: room,
       maxUsers: users,
-      category: "Info",
+      category: idCategory,
+      words: words,
     });
     getLobby();
     showLobby();
   };
 
   const getLobby = () => {
-    socket.emit("get lobbies", {});
-    socket.on("lobbies list", function (data) {
+    socket.emit('get lobbies', {});
+    socket.on('lobbies list', function (data) {
       setLobbies(data);
     });
   };
@@ -119,6 +120,15 @@ const CreateGame = ({ socket }) => {
                   {category.category}
                 </button>
               ))}
+              <label>Numero usuarios por sala</label>
+              <input
+                id='users'
+                name='users'
+                type='users'
+                value={users}
+                onChange={(e) => setUsers(e.target.value)}
+                required
+              />
             </>
           )}
         </div>
@@ -126,21 +136,31 @@ const CreateGame = ({ socket }) => {
         <>
           <label>Here's the code to your lobby! Have FUN!</label>
           <hr></hr>
-          <button onClick={createNewLobby} className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1">Create a new lobby</button>
+          <button
+            onClick={createNewLobby}
+            className='default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1'
+          >
+            Create a new lobby
+          </button>
           <div className='grid grid-cols-5 gap-3 items-center justify-center p-8'>
             {lobbies.map((lobby, index) => (
-              <div className='h-36 w-80 rounded-md pink-to-orange-gr p-1' key={index}>
-                <div className="h-full w-full bg-white back p-2">
-                  <div className="max-w-sm rounded overflow-hidden" key={index}>
-                    <div className="">
-                      <div className="font-bold text-gray-800 text-xl">
+              <div
+                className='h-36 w-80 rounded-md pink-to-orange-gr p-1'
+                key={index}
+              >
+                <div className='h-full w-full bg-white back p-2'>
+                  <div className='max-w-sm rounded overflow-hidden' key={index}>
+                    <div className=''>
+                      <div className='font-bold text-gray-800 text-xl'>
                         {lobby.lobby_code}
                       </div>
-                      <p className="text-gray-800 text-base">{lobby.category}</p>
+                      <p className='text-gray-800 text-base'>
+                        {lobby.category}
+                      </p>
                     </div>
-                    <div className="">
+                    <div className=''>
                       {lobby.users.map((user, index) => (
-                        <span className="users" key={index}>
+                        <span className='users' key={index}>
                           {user.name}
                         </span>
                       ))}
