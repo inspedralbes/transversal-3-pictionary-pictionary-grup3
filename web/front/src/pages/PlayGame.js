@@ -103,9 +103,6 @@ const CreateGame = ({ socket }) => {
 
   return (
     <div>
-      <label>Enter your name please!</label>
-      <input type='text' id='nameUser' />
-      <button onClick={userName}>Submit</button>
       <input onChange={changeColor} type='color' id='colorPicker' />
 
       <input
