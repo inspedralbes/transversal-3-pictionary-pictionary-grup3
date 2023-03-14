@@ -105,22 +105,30 @@ const CreateGame = ({ socket }) => {
   }
 
   return (
-    <div>
-      <label>Enter your name please!</label>
-      <input type='text' id='nameUser' />
-      <button onClick={userName}>Submit</button>
-      <input onChange={changeColor} type='color' id='colorPicker' />
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
+      <div className="w-screen flex items-center justify-center">
+        <div className='w-fit'>
+          <div className="flex items-center">
+            <label>Enter your name please!</label>
+            <input type='text' id='nameUser' />
+            <button onClick={userName}>Submit</button>
+            <input onChange={changeColor} type='color' id='colorPicker' />
 
-      <input
-        onClick={changeBrush}
-        type='range'
-        min='1'
-        max='20'
-        id='brushSize'
-      />
-      <label id='brushText'>Brush Size: {brushSize} </label>
-      <button onClick={wipe}>Wipe</button>
-      <canvas ref={canvasRef} width='900px' height='900px'></canvas>
+            <input
+              onClick={changeBrush}
+              type='range'
+              min='1'
+              max='20'
+              id='brushSize'
+            />
+            <label id='brushText'>Brush Size: {brushSize} </label>
+            <button onClick={wipe}>Wipe</button>
+          </div>
+          <div>
+            <canvas ref={canvasRef} width='600px' height='600px' className='bg-white'></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
