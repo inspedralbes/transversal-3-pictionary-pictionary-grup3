@@ -21,7 +21,23 @@ const CreateGame = ({ socket }) => {
       data.forEach(function (drawing) {
         draw(drawing.x, drawing.y);
       });
-    });
+    }); 
+
+    getParaula();
+
+    var tiempoRestante = 100;
+
+    function actualizarContador() {
+      document.getElementById("contador").innerHTML = tiempoRestante;
+      tiempoRestante--;
+
+      if (tiempoRestante < 0) {
+        clearInterval(intervalID);
+        alert("¡Tiempo terminado!");
+      }
+    }
+
+    var intervalID = setInterval(actualizarContador, 1000);
 
     canvas.addEventListener('mousedown', function (event) {
       var mousePos = getMousePos(canvas, event);
@@ -91,8 +107,8 @@ const CreateGame = ({ socket }) => {
     };
   }
 
-  function userName() {
-    nameUser = document.getElementById('nameUser').value;
+  function getParaula() {
+    console.log("hola");
   }
 
   function changeColor() {
@@ -106,9 +122,10 @@ const CreateGame = ({ socket }) => {
 
   return (
     <div>
-      <label>Enter your name please!</label>
-      <input type='text' id='nameUser' />
-      <button onClick={userName}>Submit</button>
+      <div>Time: 
+        <div id="contador">
+        </div>
+      </div>
       <input onChange={changeColor} type='color' id='colorPicker' />
 
       <input
