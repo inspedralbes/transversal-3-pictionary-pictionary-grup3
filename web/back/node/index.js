@@ -33,20 +33,20 @@ io.on("connection", (socket) => {
         });
         if (!lobby_exists) {
             let words = [];
-            fetch(`http://127.0.0.1:8000/api/list-words`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: 'post',
-                body: JSON.stringify({
-                    idCategory: data.category,
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    // words = data;
-                    console.log(data);
-                });
+            // fetch(`http://127.0.0.1:8000/api/list-words`, {
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     method: 'post',
+            //     body: JSON.stringify({
+            //         idCategory: data.category,
+            //     }),
+            // })
+            //     .then((response) => response.json())
+            //     .then((data) => {
+            //         // words = data;
+            //         console.log(data);
+            //     });
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
