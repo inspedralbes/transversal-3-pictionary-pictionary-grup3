@@ -117,20 +117,24 @@ const CreateGame = ({ socket }) => {
       <div className="w-screen flex items-center justify-center">
         <div className='w-fit'>
           <div className="flex items-center">
-            <div id="contador"></div>
             <div>
-              <input onChange={changeColor} type='color' id='colorPicker' />
-              <input
-                onClick={changeBrush}
-                type='range'
-                min='1'
-                max='20'
-                id='brushSize'
-              />
-              <label id='brushText'>Brush Size: {brushSize} </label>
-              <button onClick={wipe}>Wipe</button>
+              <div id="contador"></div>
+              <div>
+                <input onChange={changeColor} type='color' id='colorPicker' />
+                <input
+                  onClick={changeBrush}
+                  type='range'
+                  min='1'
+                  max='20'
+                  id='brushSize'
+                />
+                <label id='brushText'>Brush Size: {brushSize} </label>
+                <button onClick={wipe}>Wipe</button>
+              </div>
+              <div>
+                <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+              </div>
             </div>
-            <canvas ref={canvasRef} width='900px' height='900px'></canvas>
           </div>
         </div>
       </div>
