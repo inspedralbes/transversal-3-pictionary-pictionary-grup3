@@ -36,7 +36,6 @@ io.on("connection", (socket) => {
             }
         });
         if (!lobby_exists) {
-            // let words = getWords(data.category);
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
@@ -45,7 +44,7 @@ io.on("connection", (socket) => {
                 round: 0,
                 painter: null,
                 drawings: [],
-                // words: words,
+                words: "words",
             });
             sendLobbyList();
         }
@@ -110,6 +109,10 @@ io.on("connection", (socket) => {
         });
     });
 
+    socket.on("ready lobby", () => {
+        
+    });
+
     socket.on("leave lobby", () => {
         leaveLobby(socket);
         sendLobbyList();
@@ -152,23 +155,6 @@ function leaveLobby(socket) {
 
 function sendLobbyList() {
     io.emit("lobbies list", lobbies);
-}
-
-async function getWords(category) {
-    // const res = await fetch('https://dogs.com/api/breeds/list/all');
-    // const json = await res.json();
-    // console.log(json);
-    // const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     method: 'post',
-    //     body: JSON.stringify({
-    //         idCategory: 1,
-    //     }),
-    // });
-    // const data = await response.json();
-    // return data;
 }
 
 server.listen(7500, () => {
