@@ -32,21 +32,7 @@ io.on("connection", (socket) => {
             }
         });
         if (!lobby_exists) {
-            let words = [];
-            // fetch(`http://127.0.0.1:8000/api/list-words`, {
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     method: 'post',
-            //     body: JSON.stringify({
-            //         idCategory: data.category,
-            //     }),
-            // })
-            //     .then((response) => response.json())
-            //     .then((data) => {
-            //         // words = data;
-            //         console.log(data);
-            //     });
+            // let words = getWords(data.category);
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
@@ -162,6 +148,23 @@ function leaveLobby(socket) {
 
 function sendLobbyList() {
     io.emit("lobbies list", lobbies);
+}
+
+async function getWords(category) {
+    await fetch(`http://127.0.0.1:8000/api/list-words`, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        method: 'post',
+        body: JSON.stringify({
+            idCategory: category,
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            return data;
+        });
 }
 
 server.listen(7500, () => {
