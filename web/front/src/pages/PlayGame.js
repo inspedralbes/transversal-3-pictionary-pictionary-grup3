@@ -7,7 +7,6 @@ const CreateGame = ({ socket }) => {
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
-  let nameUser = '';
   let lastX = 0;
   let lastY = 0;
 
@@ -23,18 +22,27 @@ const CreateGame = ({ socket }) => {
       });
     });
 
+    getParaula();
+
+    var tiempoRestante = 100;
+
+    function actualizarContador() {
+      document.getElementById("contador").innerHTML = tiempoRestante;
+      tiempoRestante--;
+
+      if (tiempoRestante < 0) {
+        clearInterval(intervalID);
+        alert("¡Tiempo terminado!");
+      }
+    }
+
+    var intervalID = setInterval(actualizarContador, 1000);
+
     canvas.addEventListener('mousedown', function (event) {
       var mousePos = getMousePos(canvas, event);
       isDrawing = true;
       [lastX, lastY] = [event.offsetX, event.offsetY];
       socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
-      // data = {
-      //   x:0,
-      //   y:0,
-      //   t: null,//como la accion es pintar, no necessito este.
-      //   c: null,//como la accion es pintar, no necessito este.
-      //   action:'p'// 'p' = pintar , 'b' = borrar, 'i' = inició de trazo, 't' = tamanyo de pinzel, 'c' = color
-      // }
     });
 
     canvas.addEventListener('mousemove', function (event) {
@@ -91,8 +99,8 @@ const CreateGame = ({ socket }) => {
     };
   }
 
-  function userName() {
-    nameUser = document.getElementById('nameUser').value;
+  function getParaula() {
+    console.log("hola");
   }
 
   function changeColor() {
@@ -109,23 +117,20 @@ const CreateGame = ({ socket }) => {
       <div className="w-screen flex items-center justify-center">
         <div className='w-fit'>
           <div className="flex items-center">
-            <label>Enter your name please!</label>
-            <input type='text' id='nameUser' />
-            <button onClick={userName}>Submit</button>
-            <input onChange={changeColor} type='color' id='colorPicker' />
-
-            <input
-              onClick={changeBrush}
-              type='range'
-              min='1'
-              max='20'
-              id='brushSize'
-            />
-            <label id='brushText'>Brush Size: {brushSize} </label>
-            <button onClick={wipe}>Wipe</button>
-          </div>
-          <div>
-            <canvas ref={canvasRef} width='600px' height='600px' className='bg-white'></canvas>
+            <div id="contador"></div>
+            <div>
+              <input onChange={changeColor} type='color' id='colorPicker' />
+              <input
+                onClick={changeBrush}
+                type='range'
+                min='1'
+                max='20'
+                id='brushSize'
+              />
+              <label id='brushText'>Brush Size: {brushSize} </label>
+              <button onClick={wipe}>Wipe</button>
+            </div>
+            <canvas ref={canvasRef} width='900px' height='900px'></canvas>
           </div>
         </div>
       </div>
