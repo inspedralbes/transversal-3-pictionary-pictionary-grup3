@@ -112,16 +112,7 @@ const CreateGame = ({ socket }) => {
   }
 
   return (
-    <div>
-      <label>Enter your name please!</label>
-      <input type="text" id="nameUser" />
-      <button onClick={userName}>Submit</button>
-      <input onChange={changeColor} type='color' id='colorPicker' />
-
-      <input onClick = {changeBrush} type="range" min="1" max="20" id="brushSize"/>
-      <label id="brushText">Brush Size: {brushSize} </label>
-      <button onClick={wipe}>Wipe</button> */}
-        
+    <div>     
         <div className='flex h-50 py-5 px-4 border-4 border-rose-300 bg-rose-100 shadow-2xl lg:h-1/3 lg:w-1/2 lg:mt-20 lg:py-12 lg:px-8 m-[auto]'>
             <label>
                 <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
@@ -152,26 +143,11 @@ const CreateGame = ({ socket }) => {
                     </p>
                 </label>
             </label>
-
-      
         </div>
-
-        <canvas 
+        <canvas
             ref={canvasRef} 
-            className="w-screen h-screen border-2 bg-gray-100" 
-            // style={{backgroundColor:"green"}}
-        >
-        </canvas>
-      <input
-        onClick={changeBrush}
-        type='range'
-        min='1'
-        max='20'
-        id='brushSize'
-      />
-      <label id='brushText'>Brush Size: {brushSize} </label>
-      <button onClick={wipe}>Wipe</button>
-      <canvas ref={canvasRef} width='900px' height='900px'></canvas>
+            className="w-screen h-screen border-2 bg-gray-100"
+        ></canvas>
     </div>
   );
 };
