@@ -41,10 +41,6 @@ io.on("connection", (socket) => {
         sendLobbyList();
     });
 
-    socket.on("get lobbies", () => {
-        sendLobbyList();
-    });
-
     socket.on("join room", (data) => {
         let available = true;
         lobbies.forEach((lobby) => {
@@ -71,7 +67,6 @@ io.on("connection", (socket) => {
         socket.data.userId = data.userId;
         sendUserList(socket);
     });
-
 
     socket.on('draw', function (data) {
         lobbies.forEach((lobby) => {
@@ -142,7 +137,7 @@ function leaveLobby(socket) {
     });
     socket.leave(socket.data.current_lobby);
     sendUserList(socket);
-    socket.data.current_lobby = null
+    socket.data.current_lobby = null;
 }
 
 function sendLobbyList() {
