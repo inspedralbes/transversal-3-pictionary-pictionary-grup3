@@ -24,10 +24,6 @@ io.on("connection", (socket) => {
         sendLobbyList();
     });
 
-    socket.on("get user list", () => {
-        sendUserList(socket);
-    });
-
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -78,6 +74,10 @@ io.on("connection", (socket) => {
         sendUserList(socket);
     });
 
+    socket.on("get user list", () => {
+        sendUserList(socket);
+    });
+
     socket.on('draw', function (data) {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
@@ -116,6 +116,7 @@ io.on("connection", (socket) => {
                 lobby.round = 1;
                 lobby.painter = lobby.users[0].name;
                 lobby.word = lobby.words[0].word;
+                sendLobbyList();
                 io.to(socket.data.current_lobby).emit("start game", { lobby });
             }
         });
