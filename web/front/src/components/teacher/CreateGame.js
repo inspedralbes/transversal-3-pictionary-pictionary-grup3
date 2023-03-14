@@ -148,9 +148,9 @@ const CreateGame = ({ socket }) => {
                       <div className='font-bold text-gray-800 text-xl'>
                         {lobby.lobby_code}
                       </div>
-                      {/* <p className='text-gray-800 text-base'>
-                        {lobby.category}
-                      </p> */}
+                      <p className='text-gray-800 text-base'>
+                        {words.category}
+                      </p>
                     </div>
                     <div className=''>
                       {lobby.users.map((user, index) => (
