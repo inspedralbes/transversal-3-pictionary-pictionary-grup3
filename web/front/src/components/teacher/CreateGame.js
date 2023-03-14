@@ -3,7 +3,7 @@ import '../../style/style.css';
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState(0);
   const [lobbies, setLobbies] = useState([]);
   const [isSelected, setIsSelected] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,11 +20,11 @@ const CreateGame = ({ socket }) => {
     getWords();
   }, [idCategory]);
 
-  const handleSubmit = () => {
+  const handleClick = () => {
     setIsSelected(true);
   };
 
-  const handleClick = (e) => {
+  const handleSelect = (e) => {
     setIdCategory(e.target.value);
   };
 
@@ -107,19 +107,13 @@ const CreateGame = ({ socket }) => {
             'Loading'
           ) : (
             <>
-              <form onSubmit={handleSubmit}>
-                <button type='submit'>Send</button>
-              </form>
-              {categories.categoriesList.map((category) => (
-                <button
-                  type='text'
-                  key={category.id}
-                  value={category.id}
-                  onClick={handleClick}
-                >
-                  {category.category}
-                </button>
-              ))}
+              <select onChange={handleSelect}>
+                {categories.categoriesList.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.category}
+                  </option>
+                ))}
+              </select>
               <label>Numero usuarios por sala</label>
               <input
                 id='users'
@@ -127,8 +121,8 @@ const CreateGame = ({ socket }) => {
                 type='users'
                 value={users}
                 onChange={(e) => setUsers(e.target.value)}
-                required
               />
+              <button onClick={handleClick}>Continue</button>
             </>
           )}
         </div>
@@ -154,9 +148,9 @@ const CreateGame = ({ socket }) => {
                       <div className='font-bold text-gray-800 text-xl'>
                         {lobby.lobby_code}
                       </div>
-                      <p className='text-gray-800 text-base'>
+                      {/* <p className='text-gray-800 text-base'>
                         {lobby.category}
-                      </p>
+                      </p> */}
                     </div>
                     <div className=''>
                       {lobby.users.map((user, index) => (
