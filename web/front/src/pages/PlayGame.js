@@ -7,7 +7,6 @@ const CreateGame = ({ socket }) => {
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
-  let nameUser = '';
   let lastX = 0;
   let lastY = 0;
 
@@ -44,13 +43,6 @@ const CreateGame = ({ socket }) => {
       isDrawing = true;
       [lastX, lastY] = [event.offsetX, event.offsetY];
       socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
-      // data = {
-      //   x:0,
-      //   y:0,
-      //   t: null,//como la accion es pintar, no necessito este.
-      //   c: null,//como la accion es pintar, no necessito este.
-      //   action:'p'// 'p' = pintar , 'b' = borrar, 'i' = inició de trazo, 't' = tamanyo de pinzel, 'c' = color
-      // }
     });
 
     canvas.addEventListener('mousemove', function (event) {
@@ -122,9 +114,7 @@ const CreateGame = ({ socket }) => {
 
   return (
     <div>
-      <div>Time: 
-        <div id="contador">
-        </div>
+      <div id="contador">
       </div>
       <input onChange={changeColor} type='color' id='colorPicker' />
 
