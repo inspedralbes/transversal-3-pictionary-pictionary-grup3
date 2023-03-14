@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
+import logo from '../style/logoPictoboom small.png'
+import '../style/style.css';
+import { Link } from 'react-router-dom';
 
 const CreateGame = ({ socket }) => {
   const canvasRef = useRef(null);
@@ -103,6 +106,9 @@ const CreateGame = ({ socket }) => {
 
   return (
     <div>
+      <label>Enter your name please!</label>
+      <input type='text' id='nameUser' />
+      <button onClick={userName}>Submit</button>
       <input onChange={changeColor} type='color' id='colorPicker' />
 
       <input
