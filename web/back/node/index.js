@@ -24,6 +24,10 @@ io.on("connection", (socket) => {
         sendLobbyList();
     });
 
+    socket.on("get user list", () => {
+        sendUserList(socket);
+    });
+
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -151,20 +155,20 @@ function sendLobbyList() {
 }
 
 async function getWords(category) {
-    await fetch(`http://127.0.0.1:8000/api/list-words`, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        method: 'post',
-        body: JSON.stringify({
-            idCategory: category,
-        }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            return data;
-        });
+    // const res = await fetch('https://dogs.com/api/breeds/list/all');
+    // const json = await res.json();
+    // console.log(json);
+    // const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     method: 'post',
+    //     body: JSON.stringify({
+    //         idCategory: 1,
+    //     }),
+    // });
+    // const data = await response.json();
+    // return data;
 }
 
 server.listen(7500, () => {
