@@ -15,8 +15,16 @@ const CreateGame = ({ socket }) => {
     getCollection();
   }, []);
 
+  useEffect(() => {
+    getWords();
+  }, [idCategory]);
+
   const handleSubmit = () => {
     setIsSelected(true);
+  };
+
+  const handleClick = (e) => {
+    setIdCategory(e.target.value);
   };
 
   const getWords = async () => {
@@ -27,10 +35,9 @@ const CreateGame = ({ socket }) => {
         },
         method: 'post',
         body: JSON.stringify({
-          id: idCategory,
+          idCategory: idCategory,
         }),
       });
-
       const data = await response.json();
       setWords(data);
       setLoading(false);
@@ -59,11 +66,6 @@ const CreateGame = ({ socket }) => {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const userGenerator = () => {
-    const randomUsers = Math.floor(Math.random() * (5 - 4 + 4) + 4);
-    setUsers(randomUsers);
   };
 
   const codeGenerator = () => {
@@ -107,11 +109,15 @@ const CreateGame = ({ socket }) => {
                 <button type='submit'>Send</button>
               </form>
               {categories.categoriesList.map((category) => (
-                <button type='text' key={category.id} value={category.category}>
+                <button
+                  type='text'
+                  key={category.id}
+                  value={category.id}
+                  onClick={handleClick}
+                >
                   {category.category}
                 </button>
               ))}
-              <button onClick={getWords}>Coger palabras</button>
             </>
           )}
         </div>
