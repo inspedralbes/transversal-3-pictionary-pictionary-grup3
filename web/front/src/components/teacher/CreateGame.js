@@ -3,16 +3,15 @@ import "../../style/style.css";
 
 const CreateGame = ({ socket }) => {
   const [room, setRoom] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState(5);
   const [lobbies, setLobbies] = useState([]);
 
   useEffect(() => {
     codeGenerator();
-    userGenerator();
   }, []);
 
   const userGenerator = () => {
-    const randomUsers = Math.floor(Math.random() * (5 - 1 + 1) + 1);
+    const randomUsers = Math.floor(Math.random() * (5 - 4 + 4) + 4);
     setUsers(randomUsers);
   };
 
@@ -25,12 +24,13 @@ const CreateGame = ({ socket }) => {
 
   const createNewLobby = () => {
     codeGenerator();
-    userGenerator();
-    socket.emit("new lobby", {
+    socket.emit('new lobby', {
       lobby_code: room,
       maxUsers: users,
       category: "Info",
     });
+    getLobby();
+    showLobby();
   };
 
   const getLobby = () => {
@@ -47,8 +47,8 @@ const CreateGame = ({ socket }) => {
   return (
     <>
       <div>
-        <label>Here's the code to your lobby! Have FUN!</label>
-        <p id="code">{room}</p>
+        <label>Here's your lobbies! Have FUN!</label>
+        {/* <p id="code">{room}</p> */}
         <div className="grid grid-cols-3 gap-10">
           <button
             onClick={createNewLobby}
@@ -56,7 +56,7 @@ const CreateGame = ({ socket }) => {
           >
             Create a new lobby
           </button>
-          <button
+          {/* <button
             onClick={getLobby}
             className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
           >
@@ -67,7 +67,7 @@ const CreateGame = ({ socket }) => {
             className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
           >
             Show Lobby
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="grid grid-cols-5 gap-3 items-center justify-center p-8">
