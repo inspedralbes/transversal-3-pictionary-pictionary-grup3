@@ -56,7 +56,7 @@ const CreateGame = ({ socket }) => {
           >
             Create a new lobby
           </button>
-          <button
+          {/* <button
             onClick={getLobby}
             className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
           >
@@ -67,7 +67,7 @@ const CreateGame = ({ socket }) => {
             className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
           >
             Show Lobby
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="grid grid-cols-5 gap-3 items-center justify-center p-8">
