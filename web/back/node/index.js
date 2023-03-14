@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
     socket.on("get lobbies", () => {
         sendLobbyList();
     });
-
+    
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
