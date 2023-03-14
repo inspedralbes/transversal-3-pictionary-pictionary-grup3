@@ -15,8 +15,6 @@ const CreateGame = ({ socket }) => {
     let isDrawing = false;
 
     socket.on('drawings', function (data) {
-      console.log(data);
-
       data.forEach(function (drawing) {
         draw(drawing.x, drawing.y);
       });
@@ -51,33 +49,28 @@ const CreateGame = ({ socket }) => {
       isDrawing = false;
     });
 
-    socket.on('draw', function (data) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-      console.log(data);
-      if(data.action == 'b') {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }else{
-        draw(data.x, data.y, data.b, data.c);
-      }
-      
-      
-    });
-    
     function draw(x, y, b, c) {
-      console.log(b,c)
+      console.log(b, c)
       context.beginPath();
-        context.moveTo(lastX, lastY);
-        lastX = x;
-        lastY = y;
-        context.lineTo(x, y);
-        context.strokeStyle = c;
-        context.lineWidth = b;
-        context.lineCap = 'round';
-        context.fill();
-        context.stroke();
+      context.moveTo(lastX, lastY);
+      lastX = x;
+      lastY = y;
+      context.lineTo(x, y);
+      context.strokeStyle = c;
+      context.lineWidth = b;
+      context.lineCap = 'round';
+      context.fill();
+      context.stroke();
       context.beginPath();
     }
+
+    socket.on('draw', function (data) {
+      if (data.data.action == 'b') {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      } else {
+        draw(data.data.x, data.data.y, data.data.b, data.data.c);
+      }
+    });
   }, []);
 
   function wipe() {
