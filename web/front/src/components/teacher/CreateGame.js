@@ -100,36 +100,37 @@ const CreateGame = ({ socket }) => {
   };
 
   return (
-    <>
+    <div className="h-screen flex bg-cover bg-center bg-[url('../style/webBackground.png')]">
       {!isSelected ? (
-        <div>
+        <div className='bg-rose-100 h-26 opacity-80 rounded-lg m-[auto] p-6 block'>
           {loading ? (
             'Loading'
           ) : (
             <>
-              <select onChange={handleSelect}>
+              <select onChange={handleSelect} className="font-semibold bg-rose-50 border border-rose-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full">
                 {categories.categoriesList.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.category}
                   </option>
                 ))}
               </select>
-              <label>Numero usuarios por sala</label>
+              <label className='font-semibold m-1 mb-0'>Nº Users: </label>
               <input
                 id='users'
                 name='users'
-                type='users'
+                type='number'
                 value={users}
                 onChange={(e) => setUsers(e.target.value)}
+                className="w-full m-1"
               />
-              <button onClick={handleClick}>Continue</button>
+              <button onClick={handleClick} className="rounded-lg p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 w-full hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold ">Continue</button>
             </>
           )}
         </div>
       ) : (
-        <>
+        <div className='inline mx-[auto] bg-rose-100 opacity-80 rounded-lg m-[auto] p-6 h-auto'>
           <label>Here's the code to your lobby! Have FUN!</label>
-          <hr></hr>
+          <br></br>
           <button
             onClick={createNewLobby}
             className='default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1'
@@ -139,10 +140,10 @@ const CreateGame = ({ socket }) => {
           <div className='grid grid-cols-5 gap-3 items-center justify-center p-8'>
             {lobbies.map((lobby, index) => (
               <div
-                className='h-36 w-80 rounded-md pink-to-orange-gr p-1'
+                className='h-36 w-80 rounded-lg pink-to-orange-gr p-1'
                 key={index}
               >
-                <div className='h-full w-full bg-white back p-2'>
+                <div className='h-full w-full bg-rose-50 back p-2 rounded-lg'>
                   <div className='max-w-sm rounded overflow-hidden' key={index}>
                     <div className=''>
                       <div className='font-bold text-gray-800 text-xl'>
@@ -165,9 +166,9 @@ const CreateGame = ({ socket }) => {
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 
