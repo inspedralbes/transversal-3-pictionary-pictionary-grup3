@@ -24,10 +24,6 @@ io.on("connection", (socket) => {
         sendLobbyList();
     });
 
-    socket.on("get user list", () => {
-        sendUserList(socket);
-    });
-
     socket.on("new lobby", (data) => {
         let lobby_exists = false;
         lobbies.forEach((element) => {
@@ -36,7 +32,6 @@ io.on("connection", (socket) => {
             }
         });
         if (!lobby_exists) {
-            // let words = getWords(data.category);
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
@@ -45,7 +40,8 @@ io.on("connection", (socket) => {
                 round: 0,
                 painter: null,
                 drawings: [],
-                // words: words,
+                word: "",
+                words: data.words.words,
             });
             sendLobbyList();
         }
@@ -65,6 +61,7 @@ io.on("connection", (socket) => {
                         lobby.users.push({
                             name: data.name,
                             userId: data.userId,
+                            ready: false,
                             score: 0,
                         });
                     }
@@ -75,6 +72,10 @@ io.on("connection", (socket) => {
         socket.data.current_lobby = data.lobby_code;
         socket.data.name = data.name;
         socket.data.userId = data.userId;
+        sendUserList(socket);
+    });
+
+    socket.on("get user list", () => {
         sendUserList(socket);
     });
 
@@ -107,6 +108,33 @@ io.on("connection", (socket) => {
         });
         io.to(socket.data.current_lobby).emit("drawings", {
             drawings,
+        });
+    });
+
+    socket.on("ready user", () => {
+        lobbies.forEach((lobby) => {
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                lobby.users.forEach((user) => {
+                    if (user.name == socket.data.name) {
+                        user.ready = true;
+                    }
+                });
+                let ready = 0;
+                lobby.users.forEach((user) => {
+                    if (user.ready) {
+                        ready++;
+                    }
+                });
+                if (ready == lobby.maxUsers) {
+                    lobby.round = 1;
+                    lobby.painter = lobby.users[0].name;
+                    lobby.word = lobby.words[0].word;
+                    sendLobbyList();
+                    io.to(socket.data.current_lobby).emit("start game", { lobby });
+                } else {
+                    io.to(socket.data.current_lobby).emit("users ready", { lobby });
+                }
+            }
         });
     });
 
@@ -152,23 +180,6 @@ function leaveLobby(socket) {
 
 function sendLobbyList() {
     io.emit("lobbies list", lobbies);
-}
-
-async function getWords(category) {
-    // const res = await fetch('https://dogs.com/api/breeds/list/all');
-    // const json = await res.json();
-    // console.log(json);
-    // const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     method: 'post',
-    //     body: JSON.stringify({
-    //         idCategory: 1,
-    //     }),
-    // });
-    // const data = await response.json();
-    // return data;
 }
 
 server.listen(7500, () => {

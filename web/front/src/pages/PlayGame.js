@@ -1,4 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
+import logo from '../style/logoPictoboom small.png'
+import '../style/style.css';
+import { Link } from 'react-router-dom';
 
 const CreateGame = ({ socket }) => {
   const canvasRef = useRef(null);
@@ -19,18 +22,27 @@ const CreateGame = ({ socket }) => {
       console.log(users);
     });
 
+    getParaula();
+
+    var tiempoRestante = 100;
+
+    function actualizarContador() {
+      document.getElementById("contador").innerHTML = tiempoRestante;
+      tiempoRestante--;
+
+      if (tiempoRestante < 0) {
+        clearInterval(intervalID);
+        alert("¡Tiempo terminado!");
+      }
+    }
+
+    var intervalID = setInterval(actualizarContador, 1000);
+
     canvas.addEventListener('mousedown', function (event) {
       var mousePos = getMousePos(canvas, event);
       isDrawing = true;
       [lastX, lastY] = [event.offsetX, event.offsetY];
       socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
-      // data = {
-      //   x:0,
-      //   y:0,
-      //   t: null,//como la accion es pintar, no necessito este.
-      //   c: null,//como la accion es pintar, no necessito este.
-      //   action:'p'// 'p' = pintar , 'b' = borrar, 'i' = inició de trazo, 't' = tamanyo de pinzel, 'c' = color
-      // }
     });
 
     canvas.addEventListener('mousemove', function (event) {
@@ -98,19 +110,31 @@ const CreateGame = ({ socket }) => {
   }
 
   return (
-    <div>
-      <input onChange={changeColor} type='color' id='colorPicker' />
-
-      <input
-        onClick={changeBrush}
-        type='range'
-        min='1'
-        max='20'
-        id='brushSize'
-      />
-      <label id='brushText'>Brush Size: {brushSize} </label>
-      <button onClick={wipe}>Wipe</button>
-      <canvas ref={canvasRef} width='900px' height='900px'></canvas>
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
+      <div className="w-screen flex items-center justify-center">
+        <div className='w-fit'>
+          <div className="flex items-center">
+            <div>
+              <div id="contador"></div>
+              <div>
+                <input onChange={changeColor} type='color' id='colorPicker' />
+                <input
+                  onClick={changeBrush}
+                  type='range'
+                  min='1'
+                  max='20'
+                  id='brushSize'
+                />
+                <label id='brushText'>Brush Size: {brushSize} </label>
+                <button onClick={wipe}>Wipe</button>
+              </div>
+              <div>
+                <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
