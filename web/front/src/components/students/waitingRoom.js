@@ -29,7 +29,7 @@ const WaitingRoom = ({ socket }) => {
   const getUsers = () => {
     socket.emit('get user list', {});
     socket.on('lobby user list', function (data) {
-      console.log(data);
+      setMaxUsers(data.maxUsers);
     });
   };
 
