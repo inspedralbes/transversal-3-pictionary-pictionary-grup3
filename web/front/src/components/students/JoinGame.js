@@ -46,7 +46,7 @@ const JoinGame = ({ socket }) => {
               userId: userID,
               lobby_code: lobbyCode,
             });
-            navigate('/waitingRoom');
+            navigate('/playGame');
           }
         }
       }
