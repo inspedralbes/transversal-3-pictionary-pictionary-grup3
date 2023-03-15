@@ -46,7 +46,7 @@ const JoinGame = ({ socket }) => {
               userId: userID,
               lobby_code: lobbyCode,
             });
-            navigate('/playGame');
+            navigate('/waitingRoom');
           }
         }
       }
@@ -58,7 +58,7 @@ const JoinGame = ({ socket }) => {
   };
 
   return (
-    <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
       <div className='m-[auto] border-2 rounded-lg w-80 p-16'>
         <form onSubmit={handleSubmit}>
           <label>
@@ -66,7 +66,7 @@ const JoinGame = ({ socket }) => {
               type='text'
               value={lobbyCode}
               onChange={(e) => setLobbyCode(e.target.value)}
-              placeholder="Lobby code"
+              placeholder='Lobby code'
               className='input-join'
             ></input>
           </label>
@@ -75,11 +75,14 @@ const JoinGame = ({ socket }) => {
               type='text'
               value={nameUser}
               onChange={(e) => setNameUser(e.target.value)}
-              placeholder="Your name"
+              placeholder='Your name'
               className='input-join'
             ></input>
           </label>
-          <button type='submit' className='default-button font-semibold outline outline-1 p-1 rounded-lg hover:bg-gray-800 hover:text-gray-50'>
+          <button
+            type='submit'
+            className='default-button font-semibold outline outline-1 p-1 rounded-lg hover:bg-gray-800 hover:text-gray-50'
+          >
             Send
           </button>
         </form>

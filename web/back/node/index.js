@@ -61,6 +61,7 @@ io.on("connection", (socket) => {
                         lobby.users.push({
                             name: data.name,
                             userId: data.userId,
+                            ready: false,
                             score: 0,
                         });
                     }
@@ -110,14 +111,29 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("ready lobby", () => {
+    socket.on("ready user", () => {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
-                lobby.round = 1;
-                lobby.painter = lobby.users[0].name;
-                lobby.word = lobby.words[0].word;
-                sendLobbyList();
-                io.to(socket.data.current_lobby).emit("start game", { lobby });
+                lobby.users.forEach((user) => {
+                    if (user.name == socket.data.name) {
+                        user.ready = true;
+                    }
+                });
+                let ready = 0;
+                lobby.users.forEach((user) => {
+                    if (user.ready) {
+                        ready++;
+                    }
+                });
+                if (ready == lobby.maxUsers) {
+                    lobby.round = 1;
+                    lobby.painter = lobby.users[0].name;
+                    lobby.word = lobby.words[0].word;
+                    sendLobbyList();
+                    io.to(socket.data.current_lobby).emit("start game", { lobby });
+                } else {
+                    io.to(socket.data.current_lobby).emit("users ready", { lobby });
+                }
             }
         });
     });
@@ -144,6 +160,7 @@ function sendUserList(socket) {
         io.to(socket.data.current_lobby).emit("lobby user list", {
             list: list,
         });
+        sendLobbyList();
     }
 }
 

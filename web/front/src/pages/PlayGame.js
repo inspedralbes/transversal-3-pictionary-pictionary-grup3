@@ -25,7 +25,7 @@ const CreateGame = ({ socket }) => {
       data.forEach(function (drawing) {
         draw(drawing.x, drawing.y);
       });
-    }); 
+    });
 
     // TIMER
     var tiempoRestante = 100;
@@ -131,21 +131,31 @@ const CreateGame = ({ socket }) => {
   }
 
   return (
-    <div>
-      <div id="contador">
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
+      <div className="w-screen flex items-center justify-center">
+        <div className='w-fit'>
+          <div className="flex items-center">
+            <div>
+              <div id="contador"></div>
+              <div>
+                <input onChange={changeColor} type='color' id='colorPicker' />
+                <input
+                  onClick={changeBrush}
+                  type='range'
+                  min='1'
+                  max='20'
+                  id='brushSize'
+                />
+                <label id='brushText'>Brush Size: {brushSize} </label>
+                <button onClick={wipe}>Wipe</button>
+              </div>
+              <div>
+                <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <input onChange={changeColor} type='color' id='colorPicker' />
-
-      <input
-        onClick={changeBrush}
-        type='range'
-        min='1'
-        max='20'
-        id='brushSize'
-      />
-      <label id='brushText'>Brush Size: {brushSize} </label>
-      <button onClick={wipe}>Wipe</button>
-      <canvas ref={canvasRef} width='900px' height='900px'></canvas>
     </div>
   );
 };
