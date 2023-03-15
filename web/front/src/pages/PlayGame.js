@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom';
 
 const CreateGame = ({ socket }) => {
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
-  const [nameUser, setNameUser] = useState(localStorage.getItem('userName'));
-  // const [painter, setPainter] = useState(false);
+  
   let painter = false;
-
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
@@ -30,7 +28,17 @@ const CreateGame = ({ socket }) => {
     context = canvas.getContext('2d');
     isDrawing = false;
 
-    console.log("Eeeeee")
+    var tiempoRestante = 100;
+    function actualizarContador() {
+      document.getElementById("contador").innerHTML = tiempoRestante;
+      tiempoRestante--;
+
+      if (tiempoRestante < 0) {
+        clearInterval(intervalID);
+      }
+    }
+
+    var intervalID = setInterval(actualizarContador, 1000);
 
     return () => {
       socket.off("lobby user list");
@@ -39,22 +47,6 @@ const CreateGame = ({ socket }) => {
 
 
   useEffect(() => {
-    // TIMER
-    var tiempoRestante = 100;
-
-    function actualizarContador() {
-      document.getElementById("contador").innerHTML = tiempoRestante;
-      tiempoRestante--;
-
-      if (tiempoRestante < 0) {
-        clearInterval(intervalID);
-        // alert("¡Tiempo terminado!");
-      }
-    }
-
-    var intervalID = setInterval(actualizarContador, 1000);
-    // FI 
-
     canvas.addEventListener('mousedown', function (event) {
       if (painter) {
         var mousePos = getMousePos(canvas, event);
