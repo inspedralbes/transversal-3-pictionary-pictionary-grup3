@@ -54,7 +54,7 @@ const JoinGame = ({ socket }) => {
   };
 
   return (
-    <div className="h-screen flex bg-[url('../style/webBackground.png')] bg-cover items-center">
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
       <div className='m-[auto] border-2 rounded-lg w-80 p-16'>
         <form onSubmit={handleSubmit}>
           <label>

@@ -9,7 +9,7 @@ import Register from './components/teacher/Register';
 import CreateGame from './components/teacher/CreateGame';
 import JoinGame from './components/students/JoinGame';
 import PlayGame from './pages/PlayGame';
-import WaitingRoom from './components/students/WaitingRoom';
+import WaitingRoom from './components/students/waitingRoom';
 import Test from './pages/Test';
 
 const socket = socketIO.connect('http://localhost:7500');

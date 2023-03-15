@@ -52,8 +52,12 @@ const createNewLobby = ({ socket }) => {
     });
 
     const readyLobby = () => {
-        socket.emit('ready lobby');
+        socket.emit('ready user');
     }
+
+    socket.on('users ready', function (data) {
+        console.log(data);
+    });
 
     socket.on('start game', function (data) {
         console.log(data);
