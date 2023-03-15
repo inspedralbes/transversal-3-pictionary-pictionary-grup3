@@ -4,7 +4,6 @@ const CreateGame = ({ socket }) => {
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
-  let nameUser = '';
   let lastX = 0;
   let lastY = 0;
 
@@ -13,12 +12,6 @@ const CreateGame = ({ socket }) => {
     const context = canvas.getContext('2d');
 
     let isDrawing = false;
-
-    socket.on('drawings', function (data) {
-      data.forEach(function (drawing) {
-        draw(drawing.x, drawing.y);
-      });
-    });
 
     canvas.addEventListener('mousedown', function (event) {
       var mousePos = getMousePos(canvas, event);
@@ -39,6 +32,8 @@ const CreateGame = ({ socket }) => {
       if (isDrawing) {
         socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
       }
+
+   
     });
 
     canvas.addEventListener('mouseup', function (event) {
@@ -50,7 +45,6 @@ const CreateGame = ({ socket }) => {
     });
 
     function draw(x, y, b, c) {
-      console.log(b, c)
       context.beginPath();
       context.moveTo(lastX, lastY);
       lastX = x;
@@ -86,10 +80,6 @@ const CreateGame = ({ socket }) => {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top,
     };
-  }
-
-  function userName() {
-    nameUser = document.getElementById('nameUser').value;
   }
 
   function changeColor() {
