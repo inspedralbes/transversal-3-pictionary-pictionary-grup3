@@ -160,6 +160,7 @@ function sendUserList(socket) {
         io.to(socket.data.current_lobby).emit("lobby user list", {
             list: list,
         });
+        sendLobbyList();
     }
 }
 
