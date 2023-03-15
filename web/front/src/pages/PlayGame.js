@@ -13,6 +13,12 @@ const CreateGame = ({ socket }) => {
 
     let isDrawing = false;
 
+    socket.emit("get user list", {});
+
+    socket.on("lobby user list", function (users) {
+      console.log(users);
+    });
+
     canvas.addEventListener('mousedown', function (event) {
       var mousePos = getMousePos(canvas, event);
       isDrawing = true;
@@ -33,7 +39,7 @@ const CreateGame = ({ socket }) => {
         socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
       }
 
-   
+
     });
 
     canvas.addEventListener('mouseup', function (event) {
