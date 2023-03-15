@@ -6,27 +6,39 @@ import { Link } from 'react-router-dom';
 const CreateGame = ({ socket }) => {
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
   const [nameUser, setNameUser] = useState(localStorage.getItem('userName'));
-  const [painter, setPainter] = useState(false);
-
+  // const [painter, setPainter] = useState(false);
+  let painter = false;
 
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
   let lastX = 0;
   let lastY = 0;
+  let canvas;
+  let context;
+  let isDrawing;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    let isDrawing = false;
-
-    socket.on('drawings', function (data) {
-      data.forEach(function (drawing) {
-        draw(drawing.x, drawing.y);
-      });
+    socket.emit("get user list", {});
+    socket.on("lobby user list", function (data) {
+      if(data.list[0].userId == userId) {
+        painter = true;
+      } 
     });
 
+    canvas = canvasRef.current;
+    context = canvas.getContext('2d');
+    isDrawing = false;
+
+    console.log("Eeeeee")
+
+    return () => {
+      socket.off("lobby user list");
+    };
+  }, []);
+
+
+  useEffect(() => {
     // TIMER
     var tiempoRestante = 100;
 
@@ -39,8 +51,6 @@ const CreateGame = ({ socket }) => {
         // alert("¡Tiempo terminado!");
       }
     }
-
-    getUsers();
 
     var intervalID = setInterval(actualizarContador, 1000);
     // FI 
@@ -92,19 +102,6 @@ const CreateGame = ({ socket }) => {
       }
     });
   }, []);
-
-  const getUsers = () => {
-    socket.emit("get user list", {});
-    socket.on("lobby user list", function (data) {
-      if(data.list[0].userId == userId) {
-        setPainter(true);
-      } 
-    })
-    // socket.emit("get painter", {});
-    // socket.on("lobby painter", function (data) {
-    //   console.log(data);   
-    // })
-  }
 
   function wipe() {
     const canvas = canvasRef.current;

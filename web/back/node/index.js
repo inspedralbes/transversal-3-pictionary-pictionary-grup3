@@ -99,18 +99,6 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on('drawings', function () {
-        let drawings;
-        lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == socket.data.current_lobby) {
-                drawings = lobby.drawings;
-            }
-        });
-        io.to(socket.data.current_lobby).emit("drawings", {
-            drawings,
-        });
-    });
-
     socket.on("ready user", () => {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
