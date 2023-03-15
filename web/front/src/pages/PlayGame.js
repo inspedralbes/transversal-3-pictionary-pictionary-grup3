@@ -4,6 +4,11 @@ import '../style/style.css';
 import { Link } from 'react-router-dom';
 
 const CreateGame = ({ socket }) => {
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  const [nameUser, setNameUser] = useState(localStorage.getItem('userName'));
+  const [painter, setPainter] = useState(false);
+
+
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
@@ -22,8 +27,7 @@ const CreateGame = ({ socket }) => {
       });
     }); 
 
-    getParaula();
-
+    // TIMER
     var tiempoRestante = 100;
 
     function actualizarContador() {
@@ -32,17 +36,22 @@ const CreateGame = ({ socket }) => {
 
       if (tiempoRestante < 0) {
         clearInterval(intervalID);
-        alert("¡Tiempo terminado!");
+        // alert("¡Tiempo terminado!");
       }
     }
 
+    getUsers();
+
     var intervalID = setInterval(actualizarContador, 1000);
+    // FI 
 
     canvas.addEventListener('mousedown', function (event) {
-      var mousePos = getMousePos(canvas, event);
-      isDrawing = true;
-      [lastX, lastY] = [event.offsetX, event.offsetY];
-      socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+      if (painter) {
+        var mousePos = getMousePos(canvas, event);
+        isDrawing = true;
+        [lastX, lastY] = [event.offsetX, event.offsetY];
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+      }
     });
 
     canvas.addEventListener('mousemove', function (event) {
@@ -84,6 +93,19 @@ const CreateGame = ({ socket }) => {
     });
   }, []);
 
+  const getUsers = () => {
+    socket.emit("get user list", {});
+    socket.on("lobby user list", function (data) {
+      if(data.list[0].userId == userId) {
+        setPainter(true);
+      } 
+    })
+    // socket.emit("get painter", {});
+    // socket.on("lobby painter", function (data) {
+    //   console.log(data);   
+    // })
+  }
+
   function wipe() {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -97,10 +119,6 @@ const CreateGame = ({ socket }) => {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top,
     };
-  }
-
-  function getParaula() {
-    console.log("hola");
   }
 
   function changeColor() {

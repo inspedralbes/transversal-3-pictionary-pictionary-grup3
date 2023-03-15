@@ -24,6 +24,10 @@ const JoinGame = ({ socket }) => {
   };
 
   const checkCodeRoom = () => {
+    let userID = uuidv4();
+    localStorage.setItem("userId", userID);
+    localStorage.setItem("userName", nameUser);
+
     let lobbies = {};
     socket.emit('get lobbies', {});
     socket.on('lobbies list', function (data) {
@@ -39,7 +43,7 @@ const JoinGame = ({ socket }) => {
           } else {
             socket.emit('join room', {
               name: nameUser,
-              userId: uuidv4(),
+              userId: userID,
               lobby_code: lobbyCode,
             });
             navigate('/playGame');
