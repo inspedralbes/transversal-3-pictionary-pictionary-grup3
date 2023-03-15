@@ -102,12 +102,12 @@ const CreateGame = ({ socket }) => {
   return (
     <div className="h-screen flex bg-cover bg-center bg-[url('../style/webBackground.png')]">
       {!isSelected ? (
-        <div className='bg-rose-100 h-26 opacity-80 rounded-lg m-[auto] p-6 block'>
+        <div className='bg-rose-100 lg:h-auto lg:w-[32rem] opacity-80 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen'>
           {loading ? (
             'Loading'
           ) : (
             <>
-              <select onChange={handleSelect} className="font-semibold bg-rose-50 border border-rose-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full">
+              <select onChange={handleSelect} className="font-semibold bg-rose-50 border-2 border-rose-400 text-gray-900 text-md rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full">
                 {categories.categoriesList.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.category}
@@ -119,9 +119,10 @@ const CreateGame = ({ socket }) => {
                 id='users'
                 name='users'
                 type='number'
+                min="1"
                 value={users}
                 onChange={(e) => setUsers(e.target.value)}
-                className="w-full m-1"
+                className="w-full m-1 input-join focus:outline outline-2 outline-rose-500"
               />
               <button onClick={handleClick} className="rounded-lg p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 w-full hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold ">Continue</button>
             </>
@@ -137,10 +138,10 @@ const CreateGame = ({ socket }) => {
           >
             Create a new lobby
           </button>
-          <div className='grid grid-cols-5 gap-3 items-center justify-center p-8'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center justify-center p-8'>
             {lobbies.map((lobby, index) => (
               <div
-                className='h-36 w-80 rounded-lg pink-to-orange-gr p-1'
+                className='h-48 w-60 rounded-lg pink-to-orange-gr p-1'
                 key={index}
               >
                 <div className='h-full w-full bg-rose-50 back p-2 rounded-lg'>
