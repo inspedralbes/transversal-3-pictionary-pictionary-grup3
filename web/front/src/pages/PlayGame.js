@@ -22,8 +22,6 @@ const CreateGame = ({ socket }) => {
       console.log(users);
     });
 
-    getParaula();
-
     var tiempoRestante = 100;
 
     function actualizarContador() {
