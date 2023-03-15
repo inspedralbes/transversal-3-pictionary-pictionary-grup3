@@ -9,6 +9,7 @@ const CreateGame = ({ socket }) => {
   let brushSize = 3;
   let lastX = 0;
   let lastY = 0;
+  let users;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,11 +19,11 @@ const CreateGame = ({ socket }) => {
 
     socket.emit("get user list", {});
 
-    socket.on("lobby user list", function (users) {
-      console.log(users);
+    socket.on("lobby user list", function (user) {
+      
+      users = user;
+      console.log(users)
     });
-
-    getParaula();
 
     var tiempoRestante = 100;
 
@@ -109,6 +110,11 @@ const CreateGame = ({ socket }) => {
     document.getElementById('brushText').innerHTML = 'Brush Size: ' + brushSize;
   }
 
+  const Canva() => {
+
+  }
+
+
   return (
     <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
       <div className="w-screen flex items-center justify-center">
@@ -116,21 +122,31 @@ const CreateGame = ({ socket }) => {
           <div className="flex items-center">
             <div>
               <div id="contador"></div>
-              <div>
-                <input onChange={changeColor} type='color' id='colorPicker' />
-                <input
-                  onClick={changeBrush}
-                  type='range'
-                  min='1'
-                  max='20'
-                  id='brushSize'
-                />
-                <label id='brushText'>Brush Size: {brushSize} </label>
-                <button onClick={wipe}>Wipe</button>
-              </div>
-              <div>
-                <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
-              </div>
+              
+                <div>
+                  <div>
+                    <input onChange={changeColor} type='color' id='colorPicker' />
+                    <input
+                      onClick={changeBrush}
+                      type='range'
+                      min='1'
+                      max='20'
+                      id='brushSize'
+                    />
+                    <label id='brushText'>Brush Size: {brushSize} </label>
+                    <button onClick={wipe}>Wipe</button>
+                  </div>
+                  <div>
+                    <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+                  </div>
+                </div>
+                
+                <div>
+                  <div>
+                    <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+                  </div>
+                </div>
+              
             </div>
           </div>
         </div>
