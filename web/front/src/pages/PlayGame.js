@@ -110,11 +110,6 @@ const CreateGame = ({ socket }) => {
     document.getElementById('brushText').innerHTML = 'Brush Size: ' + brushSize;
   }
 
-  const Canva() => {
-
-  }
-
-
   return (
     <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
       <div className="w-screen flex items-center justify-center">
