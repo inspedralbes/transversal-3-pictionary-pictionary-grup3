@@ -117,11 +117,45 @@ io.on("connection", (socket) => {
                     lobby.round = 1;
                     lobby.painter = lobby.users[0].name;
                     lobby.word = lobby.words[0].word;
-                    sendLobbyList();
                     io.to(socket.data.current_lobby).emit("start game", { lobby });
                 } else {
-                    io.to(socket.data.current_lobby).emit("users ready", { lobby });
+                    sendUserList(socket);
                 }
+            }
+        });
+    });
+
+    socket.on("next round", () => {
+        lobbies.forEach((lobby) => {
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                if (lobby.round == lobby.users.length) {
+                    lobby.drawings = [];
+                    lobby.round = 0;
+                    lobby.painter = null;
+                    lobby.word = "";
+                    lobby.users.forEach((user) => {
+                        user.ready = false;
+                    });
+                    io.to(socket.data.current_lobby).emit("finished game", { lobby });
+                } else {
+                    lobby.round = lobby.round + 1;
+                    lobby.painter = lobby.users[lobby.round - 1].name;
+                    lobby.word = lobby.words[lobby.round - 1].word;
+                    io.to(socket.data.current_lobby).emit("next round", { lobby });
+                }
+            }
+        });
+    });
+
+    socket.on("correct word", (data) => {
+        lobbies.forEach((lobby) => {
+            if (lobby.lobby_code == socket.data.current_lobby) {
+                lobby.users.forEach((user) => {
+                    if (user.name == socket.data.name) {
+                        user.score = user.score + data.score;
+                        io.to(socket.data.current_lobby).emit("correct word", { lobby });
+                    }
+                });
             }
         });
     });
