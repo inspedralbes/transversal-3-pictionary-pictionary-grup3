@@ -129,14 +129,16 @@ io.on("connection", (socket) => {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
                 if (lobby.round == lobby.users.length) {
+                    let finishedLobby = lobby;
                     lobby.drawings = [];
                     lobby.round = 0;
                     lobby.painter = null;
                     lobby.word = "";
                     lobby.users.forEach((user) => {
                         user.ready = false;
+                        user.score = 0;
                     });
-                    io.to(socket.data.current_lobby).emit("finished game", { lobby });
+                    io.to(socket.data.current_lobby).emit("finished game", { "score": finishedLobby.users, "lobby": lobby });
                 } else {
                     lobby.round = lobby.round + 1;
                     lobby.painter = lobby.users[lobby.round - 1].name;
