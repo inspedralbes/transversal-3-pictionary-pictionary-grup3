@@ -102,7 +102,7 @@ const CreateGame = ({ socket }) => {
   return (
     <div className="h-screen flex bg-cover bg-center bg-[url('../style/webBackground.png')]">
       {!isSelected ? (
-        <div className='bg-rose-100 lg:h-auto lg:w-[32rem] opacity-80 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen'>
+        <div className='bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen'>
           {loading ? (
             'Loading'
           ) : (
@@ -129,8 +129,8 @@ const CreateGame = ({ socket }) => {
           )}
         </div>
       ) : (
-        <div className='inline mx-[auto] bg-rose-100 opacity-80 rounded-lg m-[auto] p-6 h-auto'>
-          <label>Here's the code to your lobby! Have FUN!</label>
+        <div className='inline mx-[auto] bg-rose-100 lg:rounded-lg m-[auto] p-6 h-auto w-screen lg:w-auto md:w-auto'>
+          <label className='font-bold'>Here's the code to your lobby! Have FUN!</label>
           <br></br>
           <button
             onClick={createNewLobby}
@@ -144,7 +144,7 @@ const CreateGame = ({ socket }) => {
                 className='h-48 w-60 rounded-lg pink-to-orange-gr p-1'
                 key={index}
               >
-                <div className='h-full w-full bg-rose-50 back p-2 rounded-lg'>
+                <div className='h-full w-full bg-white back p-2 rounded-lg'>
                   <div className='max-w-sm rounded overflow-hidden' key={index}>
                     <div className=''>
                       <div className='font-bold text-gray-800 text-xl'>
