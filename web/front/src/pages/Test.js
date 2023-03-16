@@ -88,11 +88,11 @@ const createNewLobby = ({ socket }) => {
     return (
         <>
             <button onClick={createLobby}>Create a new lobby</button>
-            <br></br><button onClick={joinLobby1}>Join lobby 1</button>
-            <br></br><button onClick={joinLobby2}>Join lobby 2</button>
+            <br></br><button onClick={joinLobby1}>Join lobby user 1</button>
+            <br></br><button onClick={joinLobby2}>Join lobby user 2</button>
             <br></br><button onClick={readyLobby}>Ready lobby</button>
-            <br></br><button onClick={nextRound}>Next round</button>
             <br></br><button onClick={correctWord}>Correct word</button>
+            <br></br><button onClick={nextRound}>Next round</button>
             <br></br><button onClick={leaveLobby}>Leave lobby</button>
         </>
     );
