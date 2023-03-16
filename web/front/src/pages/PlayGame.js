@@ -110,6 +110,15 @@ const CreateGame = ({ socket }) => {
   return (
         <div className="flex bg-cover bg-center lg:bg-fixed bg-[url('../style/webBackground.png')]">
             <div className="relative w-full max-w-screen-lg mx-auto">
+            {/* <!-- Lista de jugadores --> */}
+            <div class="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
+                <h3 class="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">Jugadores</h3>
+                <ul class="px-2 py-1">
+                    <li>Jugador 1</li>
+                    <li>Jugador 2</li>
+                    <li>Jugador 3</li>
+                </ul>
+            </div>
                 <div 
                     className="absolute inset-0 z-[-1] bg-cover bg-center" 
                     style={{ backgroundImage: "url('../style/spinning-bg-pinchitos.png')" }}>
@@ -119,6 +128,9 @@ const CreateGame = ({ socket }) => {
                         <div 
                             id="contador" 
                             className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-lg">
+                        </div>
+                        <div className='absolute mt-44 ml-96 underline font-bold'>
+                            PALABRA
                         </div>
                     </div>
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">Choose your colors
