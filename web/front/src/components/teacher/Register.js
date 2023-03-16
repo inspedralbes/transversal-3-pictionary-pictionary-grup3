@@ -51,7 +51,7 @@ const Register = () => {
               alt='Pictobbom logo'
             ></img>
           <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900'>
-            Register your account
+            Sign up
           </h2>
         </div>
         <form className='mt-8 space-y-6' action='#' onSubmit={handleSubmit}>
@@ -116,7 +116,7 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className='relative block w-full border-0 py-1.5 mt-2 p-3 rounded-md text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                placeholder='Password'
+                placeholder='Confirm password'
               ></input>
             </div>
           </div>
