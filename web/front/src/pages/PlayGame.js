@@ -151,53 +151,39 @@ const CreateGame = ({ socket }) => {
                             className="bg-white border-4 border-rose-300">
                         </canvas>
                     </div>
-                    <div id="chat" className="flex items-center justify-center mt-12">
-                        ño
-                    </div>
                 </div>
             </div>
 
             {/* CHAT */}
-
-
-            <div id="chat" class="mt-12 mx-auto max-w-xl">
-                <div class="h-64 overflow-y-scroll border-4 border-rose-300 bg-white p-4">
-                    <div class="flex flex-col gap-2">
-                        {/* <!-- Ejemplo de mensaje enviado por el usuario --> */}
-                        <div class="flex flex-col items-end">
-                            <span class="bg-rose-300 text-white rounded-lg px-4 py-2 max-w-xs">
-                                Hola, ¿cómo estás?
-                            </span>
-                            <span class="text-sm text-gray-500 mt-2">Hace 2 minutos</span>
+            <div className="absolute">
+                <div id="chat" className="content-end mt-12 m-[auto]">
+                    <div className="h-64 overflow-y-scroll border-4 border-rose-300 bg-white p-4">
+                        <div className="flex flex-col gap-2">
+                            <div className="flex flex-col items-end">
+                                <span className="bg-rose-300 text-white rounded-lg px-4 py-2 max-w-xs">
+                                    Hola, ¿cómo estás?
+                                </span>
+                                <span class="text-sm text-gray-500 mt-2">Hace 2 minutos</span>
+                            </div>
+                            <div className="flex flex-col items-start">
+                                <span className="bg-gray-200 rounded-lg px-4 py-2 max-w-xs">
+                                    Estoy bien, ¿y tú?
+                                </span>
+                                <span className="text-sm text-gray-500 mt-2">Hace 1 minuto</span>
+                            </div>
                         </div>
-
-                        {/* <!-- Ejemplo de mensaje recibido del otro usuario --> */}
-                        <div class="flex flex-col items-start">
-                            <span class="bg-gray-200 rounded-lg px-4 py-2 max-w-xs">
-                                Estoy bien, ¿y tú?
-                            </span>
-                            <span class="text-sm text-gray-500 mt-2">Hace 1 minuto</span>
-                        </div>
-
-                        {/* <!-- Puedes agregar tantos mensajes como desees --> */}
+                    </div>
+                    <div className="flex gap-4 mt-4">
+                        <input type="text" placeholder="Escribe un mensaje" className="border-2 border-gray-300 p-2 flex-1"/>
+                        <button className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                            Enviar
+                        </button>
                     </div>
                 </div>
-
-                {/* <!-- Caja de texto para ingresar un nuevo mensaje --> */}
-                <div class="flex gap-4 mt-4">
-                    <input type="text" placeholder="Escribe un mensaje" class="border-2 border-gray-300 p-2 flex-1"/>
-                    <button class="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
-                        Enviar
-                    </button>
-                </div>
             </div>
-
-
+            
         </div>
-  
-        
-    
-  );
+    );
 };
 
 export default CreateGame;
