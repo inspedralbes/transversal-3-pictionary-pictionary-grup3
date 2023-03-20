@@ -45,7 +45,7 @@ export const PlayGame = ({ socket }) => {
       setWord(data.lobby.word);
       setRound(data.lobby.round);
     });
-  });
+  }, [nameUser, socket]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -124,74 +124,75 @@ export const PlayGame = ({ socket }) => {
     });
   }, []);
 
-function wipe() {
-  const canvas = canvasRef.current;
-  const context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  socket.emit('draw', { x: null, y: null, action: 'b' });
-}
+  function wipe() {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    socket.emit('draw', { x: null, y: null, action: 'b' });
+  }
 
-function getMousePos(canvas, evt) {
-  var rect = canvas.getBoundingClientRect();
-  return {
-    x: evt.clientX - rect.left,
-    y: evt.clientY - rect.top,
-  };
-}
+  function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top,
+    };
+  }
 
-function changeColor() {
-  colorCanva = document.getElementById('colorPicker').value;
-}
+  function changeColor() {
+    colorCanva = document.getElementById('colorPicker').value;
+  }
 
-function changeBrush() {
-  brushSize = document.getElementById('brushSize').value;
-  document.getElementById('brushText').innerHTML = 'Brush Size: ' + brushSize;
-}
+  function changeBrush() {
+    brushSize = document.getElementById('brushSize').value;
+    document.getElementById('brushText').innerHTML = 'Brush Size: ' + brushSize;
+  }
 
-return (
-  <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
-    <div className="w-screen flex items-center justify-center">
-      <div className='w-fit'>
-        <div className="flex items-center">
-          <div>
+  return (
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
+      <div className="w-screen flex items-center justify-center">
+        <div className='w-fit'>
+          <div className="flex items-center">
             <div>
-              Timer: {timer}
-              Round: {round} / 3
-              {painter ? (
-                word
-              ) : (
-                <>
-                  <form onSubmit={handleSubmit}>
-                    <label>Introduce word</label>{' '}
-                    <input
-                      name='word'
-                      type='text'
-                      value={wordInserted}
-                      onChange={(e) => setWordInserted(e.target.value)}
-                    />
-                    <button type='submit'>Enviar</button>
-                  </form>
-                </>
-              )}
-            </div>
-            <div>
-              <input onChange={changeColor} type='color' id='colorPicker' />
-              <input
-                onClick={changeBrush}
-                type='range'
-                min='1'
-                max='20'
-                id='brushSize'
-              />
-              <label id='brushText'>Brush Size: {brushSize} </label>
-              <button onClick={wipe}>Wipe</button>
-            </div>
-            <div>
-              <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+              <div>
+                Timer: {timer}
+                Round: {round} / 3
+                {painter ? (
+                  word
+                ) : (
+                  <>
+                    <form onSubmit={handleSubmit}>
+                      <label>Introduce word</label>{' '}
+                      <input
+                        name='word'
+                        type='text'
+                        value={wordInserted}
+                        onChange={(e) => setWordInserted(e.target.value)}
+                      />
+                      <button type='submit'>Enviar</button>
+                    </form>
+                  </>
+                )}
+              </div>
+              <div>
+                <input onChange={changeColor} type='color' id='colorPicker' />
+                <input
+                  onClick={changeBrush}
+                  type='range'
+                  min='1'
+                  max='20'
+                  id='brushSize'
+                />
+                <label id='brushText'>Brush Size: {brushSize} </label>
+                <button onClick={wipe}>Wipe</button>
+              </div>
+              <div>
+                <canvas ref={canvasRef} width='600px' height='600px' className="bg-white"></canvas>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-)};
+  );
+};
