@@ -71,7 +71,6 @@ export const PlayGame = ({ socket }) => {
   useEffect(() => {
     canvas = canvasRef.current;
     context = canvas.getContext('2d');
-
   });
 
   useEffect(() => {
@@ -101,15 +100,26 @@ export const PlayGame = ({ socket }) => {
       isDrawing = false;
     });
 
-    function draw(x, y, b, c) {
+    function draw(x, y, b, c, action) {
       context.beginPath();
-      context.moveTo(lastX, lastY);
-      lastX = x;
-      lastY = y;
-      context.lineTo(x, y);
-      context.strokeStyle = c;
-      context.lineWidth = b;
-      context.lineCap = 'round';
+      console.log(action);
+
+      if (action == "p") {
+        context.moveTo(lastX, lastY);
+        lastX = x;
+        lastY = y;
+        context.lineTo(x, y);
+        context.strokeStyle = c;
+        context.lineWidth = b;
+        context.lineCap = 'round';
+      } else {
+        lastX = x;
+        lastY = y;
+        context.lineTo(x, y);
+        context.strokeStyle = c;
+        context.lineWidth = b;
+        context.lineCap = 'round';
+      }
       context.fill();
       context.stroke();
       context.beginPath();
@@ -119,7 +129,7 @@ export const PlayGame = ({ socket }) => {
       if (data.data.action == 'b') {
         context.clearRect(0, 0, canvas.width, canvas.height);
       } else {
-        draw(data.data.x, data.data.y, data.data.b, data.data.c);
+        draw(data.data.x, data.data.y, data.data.b, data.data.c, data.data.action);
       }
     });
   }, []);
