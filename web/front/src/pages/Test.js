@@ -63,19 +63,24 @@ const createNewLobby = ({ socket }) => {
         socket.emit('leave lobby');
     }
 
-    const nextRound = () => {
-        socket.emit('next round');
+    const nextTurn = () => {
+        socket.emit('next turn');
     }
 
-    socket.on('next round', function (data) {
-        console.log('next round', data);
+    socket.on('next turn', function (data) {
+        console.log('next turn', data);
     });
 
     const correctWord = () => {
-        socket.emit('correct word', {
-            score: 50,
+        socket.emit('word inserted', {
+            word: "Word 1",
+            time: 50,
         });
     }
+
+    socket.on('word inserted', function (data) {
+        console.log('word inserted', data);
+    });
 
     socket.on('correct word', function (data) {
         console.log('correct word', data);
@@ -92,7 +97,7 @@ const createNewLobby = ({ socket }) => {
             <br></br><button onClick={joinLobby2}>Join lobby user 2</button>
             <br></br><button onClick={readyLobby}>Ready lobby</button>
             <br></br><button onClick={correctWord}>Correct word</button>
-            <br></br><button onClick={nextRound}>Next round</button>
+            <br></br><button onClick={nextTurn}>Next turn</button>
             <br></br><button onClick={leaveLobby}>Leave lobby</button>
         </>
     );
