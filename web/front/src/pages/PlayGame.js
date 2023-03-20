@@ -45,17 +45,25 @@ export const PlayGame = ({ socket }) => {
       setWord(data.lobby.word);
       setRound(data.lobby.round);
     });
+  });
 
-    var tiempoRestante = 100;
-
-    function actualizarContador() {
-      document.getElementById("contador").innerHTML = tiempoRestante;
-      tiempoRestante--;
-
-      if (tiempoRestante < 0) {
-        clearInterval(intervalID);
-        alert("¡Tiempo terminado!");
-      }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (word === wordInserted) {
+      socket.emit('word correct', {
+        time: 60 - timer,
+        word: wordInserted,
+        round: round,
+        painter: painter,
+        userName: nameUser,
+      });
+    } else {
+      socket.emit('word inserted', {
+        word: wordInserted,
+        round: round,
+        painter: painter,
+        userName: nameUser,
+      });
     }
     setWordInserted('');
   };
@@ -66,54 +74,55 @@ export const PlayGame = ({ socket }) => {
 
   });
 
-  canvas.addEventListener('mousedown', function (event) {
-    if (painterAux) {
-      var mousePos = getMousePos(canvas, event);
-      isDrawing = true;
-      [lastX, lastY] = [event.offsetX, event.offsetY];
-      socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
-    }
-  });
-
-  canvas.addEventListener('mousemove', function (event) {
-    if (painterAux) {
-      var mousePos = getMousePos(canvas, event);
-      if (isDrawing) {
-        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
+  useEffect(() => {
+    canvas.addEventListener('mousedown', function (event) {
+      if (painterAux) {
+        var mousePos = getMousePos(canvas, event);
+        isDrawing = true;
+        [lastX, lastY] = [event.offsetX, event.offsetY];
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
       }
+    });
+
+    canvas.addEventListener('mousemove', function (event) {
+      if (painterAux) {
+        var mousePos = getMousePos(canvas, event);
+        if (isDrawing) {
+          socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
+        }
+      }
+    });
+
+    canvas.addEventListener('mouseup', function (event) {
+      isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseout', function (event) {
+      isDrawing = false;
+    });
+
+    function draw(x, y, b, c) {
+      context.beginPath();
+      context.moveTo(lastX, lastY);
+      lastX = x;
+      lastY = y;
+      context.lineTo(x, y);
+      context.strokeStyle = c;
+      context.lineWidth = b;
+      context.lineCap = 'round';
+      context.fill();
+      context.stroke();
+      context.beginPath();
     }
-  });
 
-  canvas.addEventListener('mouseup', function (event) {
-    isDrawing = false;
-  });
-
-  canvas.addEventListener('mouseout', function (event) {
-    isDrawing = false;
-  });
-
-  function draw(x, y, b, c) {
-    context.beginPath();
-    context.moveTo(lastX, lastY);
-    lastX = x;
-    lastY = y;
-    context.lineTo(x, y);
-    context.strokeStyle = c;
-    context.lineWidth = b;
-    context.lineCap = 'round';
-    context.fill();
-    context.stroke();
-    context.beginPath();
-  }
-
-  socket.on('draw', function (data) {
-    if (data.data.action == 'b') {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    } else {
-      draw(data.data.x, data.data.y, data.data.b, data.data.c);
-    }
-  });
-}, []);
+    socket.on('draw', function (data) {
+      if (data.data.action == 'b') {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      } else {
+        draw(data.data.x, data.data.y, data.data.b, data.data.c);
+      }
+    });
+  }, []);
 
 function wipe() {
   const canvas = canvasRef.current;
@@ -185,5 +194,4 @@ return (
       </div>
     </div>
   </div>
-);
-};
+)};
