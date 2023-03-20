@@ -24,6 +24,10 @@ const JoinGame = ({ socket }) => {
   };
 
   const checkCodeRoom = () => {
+    let userID = uuidv4();
+    localStorage.setItem("userId", userID);
+    localStorage.setItem("userName", nameUser);
+
     let lobbies = {};
     socket.emit('get lobbies', {});
     socket.on('lobbies list', function (data) {
@@ -39,7 +43,7 @@ const JoinGame = ({ socket }) => {
           } else {
             socket.emit('join room', {
               name: nameUser,
-              userId: uuidv4(),
+              userId: userID,
               lobby_code: lobbyCode,
             });
             navigate('/playGame');
@@ -62,7 +66,7 @@ const JoinGame = ({ socket }) => {
               type='text'
               value={lobbyCode}
               onChange={(e) => setLobbyCode(e.target.value)}
-              placeholder="Lobby code"
+              placeholder='Lobby code'
               className='input-join'
             ></input>
           </label>
@@ -71,11 +75,14 @@ const JoinGame = ({ socket }) => {
               type='text'
               value={nameUser}
               onChange={(e) => setNameUser(e.target.value)}
-              placeholder="Your name"
+              placeholder='Your name'
               className='input-join'
             ></input>
           </label>
-          <button type='submit' className='default-button font-semibold outline outline-1 p-1 rounded-lg hover:bg-gray-800 hover:text-gray-50'>
+          <button
+            type='submit'
+            className='default-button font-semibold outline outline-1 p-1 rounded-lg hover:bg-gray-800 hover:text-gray-50'
+          >
             Send
           </button>
         </form>

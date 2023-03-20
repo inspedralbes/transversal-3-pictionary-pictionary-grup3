@@ -4,43 +4,56 @@ import '../style/style.css';
 import { Link } from 'react-router-dom';
 
 const CreateGame = ({ socket }) => {
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  
+  let painter = false;
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
   let lastX = 0;
   let lastY = 0;
+  let canvas;
+  let context;
+  let isDrawing;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    let isDrawing = false;
-
     socket.emit("get user list", {});
-
-    socket.on("lobby user list", function (users) {
-      console.log(users);
+    socket.on("lobby user list", function (data) {
+      if(data.list[0].userId == userId) {
+        painter = true;
+      } 
     });
 
-    var tiempoRestante = 100;
+    canvas = canvasRef.current;
+    context = canvas.getContext('2d');
+    isDrawing = false;
 
+    var tiempoRestante = 100;
     function actualizarContador() {
       document.getElementById("contador").innerHTML = tiempoRestante;
       tiempoRestante--;
 
       if (tiempoRestante < 0) {
         clearInterval(intervalID);
-        alert("¡Tiempo terminado!");
       }
     }
 
     var intervalID = setInterval(actualizarContador, 1000);
 
+    return () => {
+      socket.off("lobby user list");
+    };
+  }, []);
+
+
+  useEffect(() => {
     canvas.addEventListener('mousedown', function (event) {
-      var mousePos = getMousePos(canvas, event);
-      isDrawing = true;
-      [lastX, lastY] = [event.offsetX, event.offsetY];
-      socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+      if (painter) {
+        var mousePos = getMousePos(canvas, event);
+        isDrawing = true;
+        [lastX, lastY] = [event.offsetX, event.offsetY];
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+      }
     });
 
     canvas.addEventListener('mousemove', function (event) {
