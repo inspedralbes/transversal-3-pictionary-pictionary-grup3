@@ -19,7 +19,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     socket.data.current_lobby = null;
-
+    
     socket.on("get lobbies", () => {
         sendLobbyList();
     });

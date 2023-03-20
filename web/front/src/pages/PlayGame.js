@@ -61,6 +61,8 @@ const CreateGame = ({ socket }) => {
       if (isDrawing) {
         socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
       }
+
+
     });
 
     canvas.addEventListener('mouseup', function (event) {
@@ -72,7 +74,6 @@ const CreateGame = ({ socket }) => {
     });
 
     function draw(x, y, b, c) {
-      console.log(b, c)
       context.beginPath();
       context.moveTo(lastX, lastY);
       lastX = x;
