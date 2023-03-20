@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
                 category: data.category,
                 maxUsers: data.maxUsers,
                 users: [],
+                userWords: [],
                 round: 0,
                 turn: 0,
                 painter: null,
@@ -161,7 +162,11 @@ io.on("connection", (socket) => {
                         }
                     });
                 } else {
-                    io.to(socket.data.current_lobby).emit("word inserted", data.word);
+                    lobby.userWords.push({
+                        name: socket.data.name,
+                        word: data.word,
+                    });
+                    io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
                 }
             }
         });
