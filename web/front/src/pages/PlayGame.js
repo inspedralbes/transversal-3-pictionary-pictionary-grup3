@@ -50,12 +50,8 @@ export const PlayGame = ({ socket }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (word === wordInserted) {
-      socket.emit('word correct', {
-        time: 60 - timer,
-        word: wordInserted,
-        round: round,
-        painter: painter,
-        userName: nameUser,
+      socket.emit('correct word', {
+        score: timer + 10,
       });
     } else {
       socket.emit('word inserted', {
