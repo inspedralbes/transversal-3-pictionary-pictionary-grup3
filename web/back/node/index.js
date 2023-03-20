@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
                 drawings: [],
                 word: "",
                 words: data.words.words,
+                time: 5,
             });
             sendLobbyList();
         }

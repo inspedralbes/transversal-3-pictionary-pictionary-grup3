@@ -8,7 +8,7 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState('');
   const [wordInserted, setWordInserted] = useState('');
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(0);
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
@@ -21,16 +21,8 @@ export const PlayGame = ({ socket }) => {
   let isDrawing = false;
   let painterAux = false;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prevSeconds) => prevSeconds - 1);
-    }, 1000);
-    if (timer === 0) {
-      clearInterval(interval);
-      console.log('ha terminado el tiempo');
-    }
-    return () => clearInterval(interval);
-  }, [timer]);
+
+
 
   useEffect(() => {
     socket.emit('ready user');
@@ -44,8 +36,27 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
+      setTime(data.lobby.time);
     });
-  }, [nameUser, socket]);
+  }, [nameUser]);
+
+  function setTime(time) {
+    const interval = setInterval(() => {
+      time--;
+      setTimer(time);
+      if (time <= 0) {
+        console.log('ha terminado el tiempo');
+        clearInterval(interval);
+        // socket.emit('next round');
+      }
+    }, 1000);
+
+
+  };
+
+  socket.on('next round', function (data) {
+    console.log('next round', data);
+});
 
   const handleSubmit = (e) => {
     e.preventDefault();
