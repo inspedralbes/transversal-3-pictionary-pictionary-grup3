@@ -19,7 +19,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     socket.data.current_lobby = null;
-    
+
     socket.on("get lobbies", () => {
         sendLobbyList();
     });
@@ -151,15 +151,19 @@ io.on("connection", (socket) => {
 
 function sendUserList(socket) {
     let list;
+    let maxUsers;
     if (socket) {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
                 list = lobby.users;
+                maxUsers = lobby.maxUsers;
             }
         });
         io.to(socket.data.current_lobby).emit("lobby user list", {
             list: list,
+            maxUsers: maxUsers
         });
+        sendLobbyList();
     }
 }
 
