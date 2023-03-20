@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import logo from '../../style/logoPictoboom small.png';
+import logo from '../style/logoPictoboomSmall.png';
 import { Link } from 'react-router-dom';
-import '../../style/style.css';
+import '../style/style.css';
 
-const Register = () => {
+export const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -148,4 +148,3 @@ const Register = () => {
   );
 };
 
-export default Register;

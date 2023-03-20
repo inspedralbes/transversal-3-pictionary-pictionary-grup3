@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import logo from '../../style/logoPictoboom small.png';
-import '../../style/style.css';
+import logo from '../style/logoPictoboomSmall.png';
+import '../style/style.css';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoginToken } from '../features/loginSlice';
 
-const Login = () => {
+export const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +28,7 @@ const Login = () => {
       });
       const json = await response.json();
       console.log('Response:', json);
+      dispatch(setLoginToken(json));
     } catch (error) {
       console.error('Error:', error);
     }
@@ -143,5 +148,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

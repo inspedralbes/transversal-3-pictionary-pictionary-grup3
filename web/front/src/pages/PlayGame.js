@@ -1,55 +1,96 @@
 import React, { useEffect, useState, useRef } from 'react';
-import logo from '../style/logoPictoboom small.png'
 import '../style/style.css';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const CreateGame = ({ socket }) => {
+export const PlayGame = ({ socket }) => {
+  const stateUserData = useSelector((state) => state.dataUser.dataUser);
+  const [painter, setPainter] = useState(false);
+  const [word, setWord] = useState('');
+  const [wordInserted, setWordInserted] = useState('');
+  const [round, setRound] = useState(0);
+  const [timer, setTimer] = useState(60);
+
+  const nameUser = stateUserData;
   const canvasRef = useRef(null);
   let colorCanva = 'black';
   let brushSize = 3;
   let lastX = 0;
   let lastY = 0;
+  let canvas;
+  let context;
+  let isDrawing = false;
+  let painterAux = false;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    let isDrawing = false;
-
-    socket.emit("get user list", {});
-
-    socket.on("lobby user list", function (users) {
-      console.log(users);
-    });
-
-    var tiempoRestante = 100;
-
-    function actualizarContador() {
-      document.getElementById("contador").innerHTML = tiempoRestante;
-      tiempoRestante--;
-
-      if (tiempoRestante < 0) {
-        clearInterval(intervalID);
-        alert("¡Tiempo terminado!");
-      }
+    const interval = setInterval(() => {
+      setTimer((prevSeconds) => prevSeconds - 1);
+    }, 1000);
+    if (timer === 0) {
+      clearInterval(interval);
+      console.log('ha terminado el tiempo');
     }
+    return () => clearInterval(interval);
+  }, [timer]);
 
-    var intervalID = setInterval(actualizarContador, 1000);
+  useEffect(() => {
+    socket.emit('ready user');
+    socket.on('start game', (data) => {
+      if (data.lobby.painter === nameUser) {
+        setPainter(true);
+        painterAux = true;
+      }else{
+        setPainter(false)
+        painterAux = false;
+      }
+      setWord(data.lobby.word);
+      setRound(data.lobby.round);
+    });
+  }, [nameUser, socket]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (word === wordInserted) {
+      socket.emit('word correct', {
+        time: 60 - timer,
+        word: wordInserted,
+        round: round,
+        painter: painter,
+        userName: nameUser,
+      });
+    } else {
+      socket.emit('word inserted', {
+        word: wordInserted,
+        round: round,
+        painter: painter,
+        userName: nameUser,
+      });
+    }
+    setWordInserted('');
+  };
+
+  useEffect(() => {
+    canvas = canvasRef.current;
+    context = canvas.getContext('2d');
+
+  });
+
+  useEffect(() => {
     canvas.addEventListener('mousedown', function (event) {
-      var mousePos = getMousePos(canvas, event);
-      isDrawing = true;
-      [lastX, lastY] = [event.offsetX, event.offsetY];
-      socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+      if (painterAux) {
+        var mousePos = getMousePos(canvas, event);
+        isDrawing = true;
+        [lastX, lastY] = [event.offsetX, event.offsetY];
+        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+      }
     });
 
     canvas.addEventListener('mousemove', function (event) {
-      var mousePos = getMousePos(canvas, event);
-      if (isDrawing) {
-        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
+      if (painterAux) {
+        var mousePos = getMousePos(canvas, event);
+        if (isDrawing) {
+          socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'p' });
+        }
       }
-
-
     });
 
     canvas.addEventListener('mouseup', function (event) {
@@ -113,7 +154,26 @@ const CreateGame = ({ socket }) => {
         <div className='w-fit'>
           <div className="flex items-center">
             <div>
-              <div id="contador"></div>
+              <div>
+                Timer: {timer}
+                Round: {round} / 3
+                {painter ? (
+                  word
+                ) : (
+                  <>
+                    <form onSubmit={handleSubmit}>
+                      <label>Introduce word</label>{' '}
+                      <input
+                        name='word'
+                        type='text'
+                        value={wordInserted}
+                        onChange={(e) => setWordInserted(e.target.value)}
+                      />
+                      <button type='submit'>Enviar</button>
+                    </form>
+                  </>
+                )}
+              </div>
               <div>
                 <input onChange={changeColor} type='color' id='colorPicker' />
                 <input
@@ -136,5 +196,3 @@ const CreateGame = ({ socket }) => {
     </div>
   );
 };
-
-export default CreateGame;

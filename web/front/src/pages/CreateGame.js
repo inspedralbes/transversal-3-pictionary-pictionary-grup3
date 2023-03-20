@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import '../../style/style.css';
+import { useSelector } from 'react-redux';
 
-const CreateGame = ({ socket }) => {
+export const CreateGame = ({ socket }) => {
+  const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
   const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(0);
   const [lobbies, setLobbies] = useState([]);
@@ -56,6 +57,7 @@ const CreateGame = ({ socket }) => {
           headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
+            // Authorization: 'Bearer ' + stateLoginToken,
           },
           method: 'get',
         }
@@ -172,5 +174,3 @@ const CreateGame = ({ socket }) => {
     </div>
   );
 };
-
-export default CreateGame;
