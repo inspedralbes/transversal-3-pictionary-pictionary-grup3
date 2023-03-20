@@ -5,7 +5,7 @@ const createNewLobby = ({ socket }) => {
     const createLobby = () => {
         socket.emit('new lobby', {
             lobby_code: 123,
-            maxUsers: 5,
+            maxUsers: 2,
             category: 1,
             words: {
                 category: 'Categoria 1',
@@ -28,7 +28,7 @@ const createNewLobby = ({ socket }) => {
     }
 
     socket.on('lobbies list', function (data) {
-        console.log(data);
+        console.log('lobbies list', data);
     });
 
     const joinLobby1 = () => {
@@ -48,31 +48,51 @@ const createNewLobby = ({ socket }) => {
     }
 
     socket.on('lobby user list', function (data) {
-        console.log(data);
+        console.log('lobby user list', data);
     });
 
     const readyLobby = () => {
         socket.emit('ready user');
     }
 
-    socket.on('users ready', function (data) {
-        console.log(data);
-    });
-
     socket.on('start game', function (data) {
-        console.log(data);
+        console.log('start game', data);
     });
 
     const leaveLobby = () => {
         socket.emit('leave lobby');
     }
 
+    const nextRound = () => {
+        socket.emit('next round');
+    }
+
+    socket.on('next round', function (data) {
+        console.log('next round', data);
+    });
+
+    const correctWord = () => {
+        socket.emit('correct word', {
+            score: 50,
+        });
+    }
+
+    socket.on('correct word', function (data) {
+        console.log('correct word', data);
+    });
+
+    socket.on('finished game', function (data) {
+        console.log('finished game', data);
+    });
+
     return (
         <>
             <button onClick={createLobby}>Create a new lobby</button>
-            <br></br><button onClick={joinLobby1}>Join lobby 1</button>
-            <br></br><button onClick={joinLobby2}>Join lobby 2</button>
+            <br></br><button onClick={joinLobby1}>Join lobby user 1</button>
+            <br></br><button onClick={joinLobby2}>Join lobby user 2</button>
             <br></br><button onClick={readyLobby}>Ready lobby</button>
+            <br></br><button onClick={correctWord}>Correct word</button>
+            <br></br><button onClick={nextRound}>Next round</button>
             <br></br><button onClick={leaveLobby}>Leave lobby</button>
         </>
     );
