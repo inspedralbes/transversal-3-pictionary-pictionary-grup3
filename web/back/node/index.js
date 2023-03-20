@@ -116,6 +116,7 @@ io.on("connection", (socket) => {
                     }
                 });
                 if (ready == lobby.maxUsers) {
+                    lobby.round = 1;
                     lobby.turn = 1;
                     lobby.painter = lobby.users[0].name;
                     lobby.word = lobby.words[0].word;
@@ -130,9 +131,10 @@ io.on("connection", (socket) => {
     socket.on("next turn", () => {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
-                if (lobby.turn == lobby.users.length) {
-                    let finishedLobby = lobby;
+                if (lobby.turn == lobby.users.length && lobby.round == 3) {
+                    let finishedLobbyUsers = lobby.users;
                     lobby.drawings = [];
+                    lobby.round = 0;
                     lobby.turn = 0;
                     lobby.painter = null;
                     lobby.word = "";
@@ -140,11 +142,17 @@ io.on("connection", (socket) => {
                         user.ready = false;
                         user.score = 0;
                     });
-                    io.to(socket.data.current_lobby).emit("finished game", { "score": finishedLobby.users, "lobby": lobby });
+                    io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": finishedLobbyUsers, "lobby": lobby });
                 } else {
-                    lobby.turn = lobby.turn + 1;
+                    if (lobby.turn == lobby.users.length && lobby.round < 3) {
+                        lobby.round = lobby.round + 1;
+                        lobby.turn = 1;
+                    } else {
+                        lobby.turn = lobby.turn + 1;
+                    }
                     lobby.painter = lobby.users[lobby.turn - 1].name;
-                    lobby.word = lobby.words[lobby.turn - 1].word;
+                    console.log(lobby.turn, lobby.round, (lobby.turn - 1) * lobby.round);
+                    lobby.word = lobby.words[(lobby.turn - 1) * lobby.round].word;
                     io.to(socket.data.current_lobby).emit("next turn", { lobby });
                 }
             }

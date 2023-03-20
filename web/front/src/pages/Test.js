@@ -8,20 +8,29 @@ const createNewLobby = ({ socket }) => {
             maxUsers: 2,
             category: 1,
             words: {
-                category: 'Categoria 1',
+                category: '1',
                 words: [
-                    {
-                        word: 'Word 1',
-                        description: 'Description word 1',
-                        word_ca: 'Paraula 1',
-                        description_ca: 'Descripció paraula 1'
-                    },
-                    {
-                        word: 'Word 2',
-                        description: 'Description word 2',
-                        word_ca: 'Paraula 2',
-                        description_ca: 'Descripció paraula 2'
-                    }
+                    { word: 'cat', description: 'A small carnivorous mammal and a popular pet', word_ca: 'Gat', description_ca: 'Un petit mamífer carnívor i una mascota popular' },
+                    { word: 'dog', description: 'A domesticated mammal and a popular pet', word_ca: 'Gos', description_ca: 'Un mamífer domèstic i una mascota popular' }
+                    ,
+                    { word: 'lion', description: 'A large carnivorous feline found in Africa and Asia', word_ca: 'Lleó', description_ca: "Un gran fèlid carnívor que es troba a l'Àfrica i l'Àsia" }
+                    ,
+                    { word: 'elephant', description: 'A large mammal with a long trunk and tusks', word_ca: 'Elefant', description_ca: 'Un gran mamífer amb una trompa i preses' }
+                    ,
+                    { word: 'giraffe', description: 'A tall African mammal with a long neck and spots', word_ca: 'Girafa', description_ca: 'Un mamífer africà alt amb un coll llarg i taques' }
+                    ,
+                    { word: 'horse', description: 'A large domesticated mammal used for riding and racing', word_ca: 'Cavall', description_ca: 'Un gran mamífer domèstic utilitzat per a la equitació i les curses' }
+                    ,
+                    { word: 'bird', description: 'A warm-blooded egg-laying vertebrate with feathers', word_ca: 'Ocell', description_ca: 'Un vertebrat que pon ous de sang calenta i amb plomes' }
+                    ,
+                    { word: 'fish', description: 'A cold-blooded aquatic vertebrate with scales', word_ca: 'Peix', description_ca: 'Un vertebrat aquàtic de sang freda amb escates' }
+                    ,
+                    { word: 'frog', description: 'A cold-blooded amphibian with smooth skin and long hind legs', word_ca: 'Granota', description_ca: 'Un amfibi de sang freda amb pell suau i potes posteriors llargues' }
+                    ,
+                    { word: 'butterfly', description: 'A flying insect with brightly colored wings', word_ca: 'Papallona', description_ca: 'Un insecte volador amb ales de colors' }
+                    ,
+                    { word: 'penguin', description: 'A flightless bird that lives in cold climates and has a distinctive black and white coloration', word_ca: 'Pingüí', description_ca: 'Un ocell sense vol que viu en climes freds i té una coloració distintiva en blanc i negre' }
+                    ,
                 ]
             }
         });
