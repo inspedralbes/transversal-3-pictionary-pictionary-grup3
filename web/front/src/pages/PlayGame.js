@@ -47,6 +47,12 @@ export const PlayGame = ({ socket }) => {
     });
   }, [nameUser, socket]);
 
+  useEffect(() => {
+   socket.on('word inserted', (data) => {
+    console.log(data)
+   }) 
+  })
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (word === wordInserted) {
@@ -55,8 +61,7 @@ export const PlayGame = ({ socket }) => {
       socket.emit('word inserted', {
         word: wordInserted,
         time: timer,
-      });
-    
+      });    
     setWordInserted('');
   };
 
