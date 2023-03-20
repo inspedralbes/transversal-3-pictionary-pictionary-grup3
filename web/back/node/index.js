@@ -40,6 +40,7 @@ io.on("connection", (socket) => {
                 userWords: [],
                 round: 0,
                 turn: 0,
+                totalTurns: 0,
                 painter: null,
                 drawings: [],
                 word: "",
@@ -118,6 +119,7 @@ io.on("connection", (socket) => {
                 if (ready == lobby.maxUsers) {
                     lobby.round = 1;
                     lobby.turn = 1;
+                    lobby.totalTurns = 1;
                     lobby.painter = lobby.users[0].name;
                     lobby.word = lobby.words[0].word;
                     io.to(socket.data.current_lobby).emit("start game", { lobby });
@@ -136,6 +138,7 @@ io.on("connection", (socket) => {
                     lobby.drawings = [];
                     lobby.round = 0;
                     lobby.turn = 0;
+                    lobby.totalTurns = 0;
                     lobby.painter = null;
                     lobby.word = "";
                     lobby.users.forEach((user) => {
@@ -150,9 +153,9 @@ io.on("connection", (socket) => {
                     } else {
                         lobby.turn = lobby.turn + 1;
                     }
+                    lobby.totalTurns = lobby.totalTurns + 1;
                     lobby.painter = lobby.users[lobby.turn - 1].name;
-                    console.log(lobby.turn, lobby.round, (lobby.turn - 1) * lobby.round);
-                    lobby.word = lobby.words[(lobby.turn - 1) * lobby.round].word;
+                    lobby.word = lobby.words[lobby.totalTurns - 1].word;
                     io.to(socket.data.current_lobby).emit("next turn", { lobby });
                 }
             }
