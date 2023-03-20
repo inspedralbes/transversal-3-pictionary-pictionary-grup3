@@ -8,7 +8,7 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState('');
   const [wordInserted, setWordInserted] = useState('');
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(90);
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
