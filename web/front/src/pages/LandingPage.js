@@ -1,9 +1,10 @@
 import logoSmall from '../style/logoPictoboomSmall.png';
+import '../style/landingStyle.css';
 import { Link } from 'react-router-dom';
 
 export const LandingPage = () => {
   return (
-    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className='mx-auto max-w-2xl'>
         <div className='hidden sm:mb-8 sm:flex sm:justify-center'></div>
         <div className='text-center '>
