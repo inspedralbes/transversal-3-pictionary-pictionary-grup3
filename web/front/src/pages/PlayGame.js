@@ -12,12 +12,13 @@ export const PlayGame = ({ socket }) => {
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
-  let colorCanva = 'black';
-  let brushSize = 3;
+
   let lastX = 0;
   let lastY = 0;
   let canvas;
   let context;
+  let brushSize;
+  let colorCanva = 'black';
   let isDrawing = false;
   let painterAux = false;
 
@@ -79,6 +80,8 @@ export const PlayGame = ({ socket }) => {
         var mousePos = getMousePos(canvas, event);
         isDrawing = true;
         [lastX, lastY] = [event.offsetX, event.offsetY];
+        brushSize = document.getElementById('brushSize').value;
+        colorCanva = document.getElementById('colorPicker').value;
         socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
       }
     });
@@ -102,7 +105,6 @@ export const PlayGame = ({ socket }) => {
 
     function draw(x, y, b, c, action) {
       context.beginPath();
-      console.log(action);
 
       if (action == "p") {
         context.moveTo(lastX, lastY);
@@ -132,7 +134,7 @@ export const PlayGame = ({ socket }) => {
         draw(data.data.x, data.data.y, data.data.b, data.data.c, data.data.action);
       }
     });
-  }, []);
+  }, [brushSize]);
 
   function wipe() {
     const canvas = canvasRef.current;
@@ -149,22 +151,13 @@ export const PlayGame = ({ socket }) => {
     };
   }
 
-  function changeColor() {
-    colorCanva = document.getElementById('colorPicker').value;
-  }
-
-  function changeBrush() {
-    brushSize = document.getElementById('brushSize').value;
-    document.getElementById('brushText').innerHTML = 'Brush Size: ' + brushSize;
-  }
-
   return (
     <div className="flex bg-cover bg-center lg:bg-fixed bg-[url('../style/webBackground.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
         {/* <!-- Lista de jugadores --> */}
-        <div class="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
-          <h3 class="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">Jugadores</h3>
-          <ul class="px-2 py-1">
+        <div className="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
+          <h3 className="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">Jugadores</h3>
+          <ul className="px-2 py-1">
             <li>Jugador 1</li>
             <li>Jugador 2</li>
             <li>Jugador 3</li>
@@ -203,18 +196,17 @@ export const PlayGame = ({ socket }) => {
               </h2>
               <div className="flex items-center mb-4">
                 <label htmlFor="colorPicker" className="mr-4">Color:</label>
-                <input onChange={changeColor} type='color' id='colorPicker' className="h-8 w-8" />
+                <input type='color' id='colorPicker' className="h-8 w-8" defaultValue="#000000" />
               </div>
               <div className="flex items-center mb-6">
                 <label htmlFor="brushSize" className="mr-4">Brush Size:</label>
                 <input
-                  onClick={changeBrush}
                   type='range'
                   min='1'
-                  max='20'
+                  max='30'
                   id='brushSize'
-                  className="h-4 w-48" />
-                <span className="ml-4 text-gray-700">{brushSize}</span>
+                  className="h-4 w-48"
+                  defaultValue="3" />
               </div>
               {word}
             </>
@@ -246,7 +238,7 @@ export const PlayGame = ({ socket }) => {
                   <span className="bg-rose-300 text-white rounded-lg px-4 py-2 max-w-xs">
                     Hola, ¿cómo estás?
                   </span>
-                  <span class="text-sm text-gray-500 mt-2">Hace 2 minutos</span>
+                  <span className="text-sm text-gray-500 mt-2">Hace 2 minutos</span>
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="bg-gray-200 rounded-lg px-4 py-2 max-w-xs">
