@@ -111,8 +111,8 @@ export const JoinGame = ({ socket }) => {
         <div>
           {!ready ? (
             <>
-              <button onClick={handleClickLeave}>Leave lobby</button>
-              <button onClick={handleClickReady}>Ready</button>
+              <button onClick={handleClickLeave} className="default-button m-1">Leave lobby</button>
+              <button onClick={handleClickReady} className="default-button m-1">Ready</button>
             </>
           ) : (
             <div>
