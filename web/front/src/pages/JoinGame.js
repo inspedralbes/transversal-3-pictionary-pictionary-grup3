@@ -87,7 +87,7 @@ export const JoinGame = ({ socket }) => {
   // };
 
   return (
-    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center lg:bg-[url('../style/webBackground.png')]">
+    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center justify-center lg:bg-[url('../style/webBackground.png')] w-screen">
       {!inLobby ? (
         <div className='m-[auto] border-2 rounded-lg w-80 p-16'>
           <form onSubmit={handleSubmit}>
@@ -119,17 +119,21 @@ export const JoinGame = ({ socket }) => {
           </form>
         </div>
       ) : (
-        <div>
-          <button onClick={handleClickLeave} className="default-button m-1">Leave lobby</button>
-          {!ready ? (
-            <button onClick={handleClickReady} className="default-button m-1 text-red-700 font-extrabold bg-red-200 red">NOT READY</button>
-            ):(
-              <button onClick={handleClickReady} className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50" disabled >READY</button>
-          )}
-          <div className='grid grid-cols-4 '>
-            <div className='col-span-2 rounded-full bg-pink-50'>
-              
+        <div className='flex w-full'>
+          <div className='block'>
+            <button onClick={handleClickLeave} className="default-button m-1">Leave lobby</button>
+            {!ready ? (
+              <button onClick={handleClickReady} className="default-button m-1 text-red-700 font-extrabold bg-red-200 red">NOT READY</button>
+              ):(
+                <button onClick={handleClickReady} className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50" disabled >READY</button>
+            )}
+          </div>
+          <div className='grid grid-cols-4 px-96'>
+            {usersReady.map((user) => (
+            <div className='col-span-1 rounded-full bg-pink-50  h-28 w-28'key={user.userId}>{user.name}
+
             </div>
+                ))}
           </div>
         </div>
         )}
