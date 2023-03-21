@@ -28,8 +28,9 @@ export const JoinGame = ({ socket }) => {
       });
       setInLobby(true);
       dispatch(setUserData(nameUser));
+    }else{
+      setError('Fill in the blanks');
     }
-    setError('Fill in the blanks');
   };
 
   const handleClickLeave = (e) => {
@@ -119,27 +120,18 @@ export const JoinGame = ({ socket }) => {
         </div>
       ) : (
         <div>
-            <>
-              <button onClick={handleClickLeave} className="default-button m-1">Leave lobby</button>
-              {!ready ? (
-                <button onClick={handleClickReady} className="default-button m-1 text-red-700 font-extrabold bg-red-200 red">NOT READY</button>
-                ):(
-                  <button onClick={handleClickReady} className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50" disabled >READY</button>
-              )}
+          <button onClick={handleClickLeave} className="default-button m-1">Leave lobby</button>
+          {!ready ? (
+            <button onClick={handleClickReady} className="default-button m-1 text-red-700 font-extrabold bg-red-200 red">NOT READY</button>
+            ):(
+              <button onClick={handleClickReady} className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50" disabled >READY</button>
+          )}
+          <div className='grid grid-cols-4 '>
+            <div className='col-span-2 rounded-full bg-pink-50'>
               
-            </>
-            <div>
-              <h2>Users ready:</h2>
-              <p>Current players: {currentPlayers}</p>
-              <p>Lobby size: {maxPlayers}</p>
-              <ul>
-                {usersReady.map((user) => (
-                  <li key={user.userId}>{user.name}</li>
-                ))}
-              </ul>
             </div>
+          </div>
         </div>
-      )}
+        )}
     </div>
-  );
-};
+)}
