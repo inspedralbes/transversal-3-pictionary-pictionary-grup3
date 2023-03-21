@@ -25,8 +25,10 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
+    console.log('asd')
     socket.emit("ready user");
     socket.on("start game", (data) => {
+      console.log(data)
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
@@ -36,23 +38,31 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
-      setTime(data.lobby.time);
+      // setTime(data.lobby.time);
     });
-  }, []);
+  }, [socket]);
 
-  function setTime(time) {
+  // function setTime(time) {
+  //   const interval = setInterval(() => {
+  //     setTimer((time) => time - 1);
+  //     if (time === 0) {
+  //       clearInterval(interval);
+  //       console.log('ha terminado el tiempo');
+  //       // socket.emit('call next turn');
+  //     }
+  //   }, 1000);
+  // };
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setTimer(time);
-      if (time <= 0) {
-        console.log('ha terminado el tiempo');
-        clearInterval(interval);
-        // socket.emit('call next turn');
-      }
-      time--;
+      setTimer((prevSeconds) => prevSeconds - 1);
     }, 1000);
-
-
-  };
+    if (timer === 0) {
+      clearInterval(interval);
+      console.log("ha terminado el tiempo");
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
 
   socket.on('next round', function (data) {
     console.log('next round', data);
@@ -66,11 +76,7 @@ export const PlayGame = ({ socket }) => {
     socket.on("correct word", (data) => {
       setUserCorrectWords(data.lobby.users);
     });
-
-    socket.on('call next turn', () => {
-      socket.emit('next turn')
-    })
-
+    
     socket.on('next turn', (data) => {
       console.log(data)
       if (data.lobby.painter === nameUser) {
@@ -83,7 +89,7 @@ export const PlayGame = ({ socket }) => {
       setWord(data.lobby.word);
       setRound(data.lobby.round);
     })
-  }, [socket]);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
