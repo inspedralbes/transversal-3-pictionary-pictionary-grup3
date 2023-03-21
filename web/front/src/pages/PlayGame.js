@@ -15,8 +15,6 @@ export const PlayGame = ({ socket }) => {
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
-  let colorCanva = "black";
-  let brushSize = 3;
   let lastX = 0;
   let lastY = 0;
   let canvas;
