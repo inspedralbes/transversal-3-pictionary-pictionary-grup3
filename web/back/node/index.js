@@ -32,6 +32,8 @@ io.on("connection", (socket) => {
             }
         });
         if (!lobby_exists) {
+            let randomWords = data.words.words;
+            const random = () => Math.random() - 0.5;
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
@@ -44,7 +46,7 @@ io.on("connection", (socket) => {
                 painter: null,
                 drawings: [],
                 word: "",
-                words: data.words.words,
+                words: randomWords.sort(random),
             });
             sendLobbyList();
         }
