@@ -225,20 +225,14 @@ function nextTurn(socket) {
     lobbies.forEach((lobby) => {
         if (lobby.lobby_code == socket.data.current_lobby) {
             if (lobby.turn == lobby.users.length && lobby.round == 3) {
-                let finishedLobbyUsers = [...lobby.users];
-                // lobby.drawings = [];
-                lobby.round = 0;
-                lobby.turn = 0;
-                lobby.totalTurns = 0;
-                lobby.painter = null;
-                lobby.word = "";
-                lobby.users.forEach((user) => {
-                    user.ready = false;
-                    user.score = 0;
-                    user.answered = false;
+                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": lobby.users });
+                lobbies.forEach((lobby, index) => {
+                    if (lobby.lobby_code == socket.data.current_lobby) {
+                        console.log(lobby, index);
+                        lobbies.splice(index, 1);
+                    }
                 });
-                lobby.userWords = [];
-                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": finishedLobbyUsers, "lobby": lobby });
+                sendLobbyList();
             } else {
                 if (lobby.turn == lobby.users.length && lobby.round < 3) {
                     lobby.round = lobby.round + 1;
