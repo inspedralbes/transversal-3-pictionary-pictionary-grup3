@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
                 turn: 0,
                 totalTurns: 0,
                 painter: null,
-                drawings: [],
+                // drawings: [],
                 word: "",
                 words: randomWords.sort(random),
             });
@@ -86,20 +86,20 @@ io.on("connection", (socket) => {
     });
 
     socket.on('draw', function (data) {
-        lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == socket.data.current_lobby) {
-                switch (data.action) {
-                    case 'i': lobby.drawings.push(data);
-                        break;
-                    case 'p': lobby.drawings.push(data);
-                        break;
-                    case 'b': lobby.drawings = [];
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+        // lobbies.forEach((lobby) => {
+        // if (lobby.lobby_code == socket.data.current_lobby) {
+        //     switch (data.action) {
+        //         case 'i': lobby.drawings.push(data);
+        //             break;
+        //         case 'p': lobby.drawings.push(data);
+        //             break;
+        //         case 'b': lobby.drawings = [];
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
+        // });
         io.to(socket.data.current_lobby).emit("draw", {
             data
         });
@@ -138,7 +138,7 @@ io.on("connection", (socket) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
                 if (lobby.turn == lobby.users.length && lobby.round == 3) {
                     let finishedLobbyUsers = lobby.users;
-                    lobby.drawings = [];
+                    // lobby.drawings = [];
                     lobby.round = 0;
                     lobby.turn = 0;
                     lobby.totalTurns = 0;
