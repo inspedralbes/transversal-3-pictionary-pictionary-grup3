@@ -42,13 +42,13 @@ export const PlayGame = ({ socket }) => {
 
   function setTime(time) {
     const interval = setInterval(() => {
-      time--;
       setTimer(time);
       if (time <= 0) {
         console.log('ha terminado el tiempo');
         clearInterval(interval);
-        // socket.emit('next round');
+        // socket.emit('call next turn');
       }
+      time--;
     }, 1000);
 
 
