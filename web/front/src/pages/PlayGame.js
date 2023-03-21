@@ -38,7 +38,7 @@ export const PlayGame = ({ socket }) => {
       setRound(data.lobby.round);
       setTime(data.lobby.time);
     });
-  }, [nameUser]);
+  }, []);
 
   function setTime(time) {
     const interval = setInterval(() => {
@@ -72,6 +72,7 @@ export const PlayGame = ({ socket }) => {
     })
 
     socket.on('next turn', (data) => {
+      console.log(data)
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
