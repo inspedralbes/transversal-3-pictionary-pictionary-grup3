@@ -195,7 +195,7 @@ io.on("connection", (socket) => {
                         usersAnswered++;
                     }
                 });
-                if (usersAnswered == lobby.users.length) {
+                if (usersAnswered == lobby.users.length - 1) {
                     io.to(socket.data.current_lobby).emit("call next turn");
                 }
             }
