@@ -66,6 +66,7 @@ io.on("connection", (socket) => {
                             userId: data.userId,
                             ready: false,
                             score: 0,
+                            answered: false,
                         });
                     }
                 }
@@ -144,6 +145,7 @@ io.on("connection", (socket) => {
                     lobby.users.forEach((user) => {
                         user.ready = false;
                         user.score = 0;
+                        user.answered = false;
                     });
                     io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": finishedLobbyUsers, "lobby": lobby });
                 } else {
@@ -156,6 +158,9 @@ io.on("connection", (socket) => {
                     lobby.totalTurns = lobby.totalTurns + 1;
                     lobby.painter = lobby.users[lobby.turn - 1].name;
                     lobby.word = lobby.words[lobby.totalTurns - 1].word;
+                    lobby.users.forEach((user) => {
+                        user.answered = false;
+                    });
                     io.to(socket.data.current_lobby).emit("next turn", { lobby });
                 }
             }
@@ -168,8 +173,13 @@ io.on("connection", (socket) => {
                 if (lobby.word == data.word) {
                     lobby.users.forEach((user) => {
                         if (user.name == socket.data.name) {
+                            user.answered = true;
                             user.score = user.score + (data.time + 10);
                             io.to(socket.data.current_lobby).emit("correct word", { lobby });
+                            lobby.userWords.push({
+                                name: socket.data.name,
+                                word: "Answered correctly",
+                            });
                         }
                     });
                 } else {
@@ -177,7 +187,16 @@ io.on("connection", (socket) => {
                         name: socket.data.name,
                         word: data.word,
                     });
-                    io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
+                }
+                io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
+                let usersAnswered = 0;
+                lobby.users.forEach((user) => {
+                    if (user.answered) {
+                        usersAnswered++;
+                    }
+                });
+                if (usersAnswered == lobby.users.length) {
+                    io.to(socket.data.current_lobby).emit("call next turn");
                 }
             }
         });

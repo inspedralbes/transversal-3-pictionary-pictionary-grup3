@@ -80,9 +80,13 @@ const createNewLobby = ({ socket }) => {
         console.log('next turn', data);
     });
 
+    socket.on('call next turn', function () {
+        socket.emit('next turn');
+    });
+
     const correctWord = () => {
         socket.emit('word inserted', {
-            word: "Word 1",
+            word: "cat",
             time: 50,
         });
     }
