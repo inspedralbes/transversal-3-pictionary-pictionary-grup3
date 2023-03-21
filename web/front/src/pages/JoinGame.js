@@ -12,6 +12,8 @@ export const JoinGame = ({ socket }) => {
   const [error, setError] = useState('');
   const [usersReady, setUsersReady] = useState([]);
   const [ready, setReady] = useState(false);
+  const [currentPlayers, setCurrentPlayers] = useState(0);
+  const [maxPlayers, setMaxPlayers] = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +46,10 @@ export const JoinGame = ({ socket }) => {
   useEffect(() => {
     socket.on('lobby user list', (data) => {
       const readyUsers = data.list.filter((user) => user.ready);
+      const currentPlayers = data.list.length;
+      const maxPlayers = data.maxUsers;
+      setMaxPlayers(maxPlayers);
+      setCurrentPlayers(currentPlayers);
       setUsersReady(readyUsers);
     });
 
@@ -117,6 +123,8 @@ export const JoinGame = ({ socket }) => {
           ) : (
             <div>
               <h2>Users ready:</h2>
+              <p>Current players: {currentPlayers}</p>
+              <p>Lobby size: {maxPlayers}</p>
               <ul>
                 {usersReady.map((user) => (
                   <li key={user.userId}>{user.name}</li>
