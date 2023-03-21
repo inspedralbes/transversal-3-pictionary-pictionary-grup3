@@ -8,8 +8,10 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState('');
   const [wordInserted, setWordInserted] = useState('');
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(0);
-
+  const [timer, setTimer] = useState(60);
+  const [userWords, setUserWords] = useState([])
+  const [userCorrectWords, setUserCorrectWords] = useState([])
+  
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
   let colorCanva = 'black';
@@ -58,24 +60,25 @@ export const PlayGame = ({ socket }) => {
     console.log('next round', data);
 });
 
+  useEffect(() => {
+   socket.on('word inserted', (data) => {
+    setUserWords(data)
+   }) 
+
+   socket.on('correct word', (data) => {
+    setUserCorrectWords(data.lobby.users)
+   })
+  })
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (word === wordInserted) {
-      socket.emit('word correct', {
-        time: 60 - timer,
-        word: wordInserted,
-        round: round,
-        painter: painter,
-        userName: nameUser,
-      });
-    } else {
+     //Estat desapareixer input
+    } 
       socket.emit('word inserted', {
         word: wordInserted,
-        round: round,
-        painter: painter,
-        userName: nameUser,
-      });
-    }
+        time: timer,
+      });    
     setWordInserted('');
   };
 
@@ -165,11 +168,15 @@ export const PlayGame = ({ socket }) => {
         {/* <!-- Lista de jugadores --> */}
         <div class="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
           <h3 class="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">Jugadores</h3>
-          <ul class="px-2 py-1">
-            <li>Jugador 1</li>
-            <li>Jugador 2</li>
-            <li>Jugador 3</li>
-          </ul>
+          <ul class="px-2 py-1">          
+            {userCorrectWords
+              .map((userCorrectWords, key) => (
+              <li key={key}>
+                <strong>{userCorrectWords.name}</strong>
+                {userCorrectWords.score}
+              </li>
+            ))}
+          </ul>          
         </div>
         <div className="absolute inset-0 z-[-1] bg-cover bg-center" style={{
           backgroundImage: "url('../style/spinning-bg-pinchitos.png')"
@@ -221,16 +228,7 @@ export const PlayGame = ({ socket }) => {
             </>
           ) : (
             <>
-              <form onSubmit={handleSubmit}>
-                <label>Introduce word</label>{' '}
-                <input
-                  name='word'
-                  type='text'
-                  value={wordInserted}
-                  onChange={(e) => setWordInserted(e.target.value)}
-                />
-                <button type='submit'>Enviar</button>
-              </form>
+
             </>
           )}
         </div>
@@ -244,28 +242,29 @@ export const PlayGame = ({ socket }) => {
             <div className="h-96 overflow-y-scroll border-4 border-rose-300 bg-white p-4">
               <div className="flex flex-col gap-2">
                 <div className="flex flex-col items-end">
-                  <span className="bg-rose-300 text-white rounded-lg px-4 py-2 max-w-xs">
-                    Hola, ¿cómo estás?
-                  </span>
-                  <span class="text-sm text-gray-500 mt-2">Hace 2 minutos</span>
-                </div>
-                <div className="flex flex-col items-start">
-                  <span className="bg-gray-200 rounded-lg px-4 py-2 max-w-xs">
-                    Estoy bien, ¿y tú?
-                  </span>
-                  <span className="text-sm text-gray-500 mt-2">Hace 1 minuto</span>
+                  <ul>
+                    {userWords.map((userWords, key) => (
+                      <li key={key}><strong>{userWords.name}</strong>{userWords.word}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
+            {painter ? <></> : 
             <div className="flex gap-4 mt-4">
-              <input type="text" placeholder="Escribe un mensaje"
-                className="border-2 border-gray-300 p-2 flex-1" />
-              <button
-                className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
-                Enviar
-              </button>
+              <form onSubmit={handleSubmit}>
+                <input type="text" placeholder="Introduce Word"
+                  className="border-2 border-gray-300 p-2 flex-1"  name='word'
+                  value={wordInserted}
+                  onChange={(e) => setWordInserted(e.target.value)}/>
+                <button
+                  className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500" type="submit">
+                  Enviar
+                </button>
+              </form>
             </div>
-          </div>
+            }
+          </div>            
         </div>
       </div>
     </div>
