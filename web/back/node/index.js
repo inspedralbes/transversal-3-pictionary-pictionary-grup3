@@ -46,6 +46,7 @@ io.on("connection", (socket) => {
                 painter: null,
                 // drawings: [],
                 word: "",
+                time: 90,
                 words: randomWords.sort(random),
             });
             sendLobbyList();

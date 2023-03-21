@@ -25,17 +25,6 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prevSeconds) => prevSeconds - 1);
-    }, 1000);
-    if (timer === 0) {
-      clearInterval(interval);
-      console.log("ha terminado el tiempo");
-    }
-    return () => clearInterval(interval);
-  }, [timer]);
-
-  useEffect(() => {
     socket.emit("ready user");
     socket.on("start game", (data) => {
       if (data.lobby.painter === nameUser) {
@@ -47,8 +36,27 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
+      setTime(data.lobby.time);
     });
-  }, [socket]);
+  }, [nameUser]);
+
+  function setTime(time) {
+    const interval = setInterval(() => {
+      setTimer(time);
+      if (time <= 0) {
+        console.log('ha terminado el tiempo');
+        clearInterval(interval);
+        // socket.emit('call next turn');
+      }
+      time--;
+    }, 1000);
+
+
+  };
+
+  socket.on('next round', function (data) {
+    console.log('next round', data);
+});
 
   useEffect(() => {
     socket.on("word inserted", (data) => {
