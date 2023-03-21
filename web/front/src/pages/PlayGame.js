@@ -15,12 +15,12 @@ export const PlayGame = ({ socket }) => {
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
+  let colorCanva;
+  let brushSize;
   let lastX = 0;
   let lastY = 0;
   let canvas;
   let context;
-  let brushSize;
-  let colorCanva = 'black';
   let isDrawing = false;
   let painterAux = false;
 
@@ -107,10 +107,16 @@ export const PlayGame = ({ socket }) => {
       if (painterAux) {
         var mousePos = getMousePos(canvas, event);
         isDrawing = true;
+        brushSize = document.getElementById("brushSize").value;
+        colorCanva = document.getElementById("colorPicker").value;
         [lastX, lastY] = [event.offsetX, event.offsetY];
-        brushSize = document.getElementById('brushSize').value;
-        colorCanva = document.getElementById('colorPicker').value;
-        socket.emit('draw', { x: mousePos.x, y: mousePos.y, b: brushSize, c: colorCanva, action: 'i' });
+        socket.emit("draw", {
+          x: mousePos.x,
+          y: mousePos.y,
+          b: brushSize,
+          c: colorCanva,
+          action: "i",
+        });
       }
     });
 
@@ -168,7 +174,7 @@ export const PlayGame = ({ socket }) => {
         draw(data.data.x, data.data.y, data.data.b, data.data.c, data.data.action);
       }
     });
-  }, [brushSize]);
+  }, []);
 
   function wipe() {
     const canvas = canvasRef.current;
@@ -190,11 +196,16 @@ export const PlayGame = ({ socket }) => {
       <div className="relative w-full max-w-screen-lg mx-auto">
         {/* <!-- Lista de jugadores --> */}
         <div class="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
-          <h3 class="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">Jugadores</h3>
+          <h3 class="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">
+            Jugadores
+          </h3>
           <ul class="px-2 py-1">
-            <li>Jugador 1</li>
-            <li>Jugador 2</li>
-            <li>Jugador 3</li>
+            {userCorrectWords.map((userCorrectWords, key) => (
+              <li key={key}>
+                <strong>{userCorrectWords.name}</strong>
+                {userCorrectWords.score}
+              </li>
+            ))}
           </ul>
         </div>
         <div
@@ -236,20 +247,29 @@ export const PlayGame = ({ socket }) => {
                 </button>
               </h2>
               <div className="flex items-center mb-4">
-                <label htmlFor="colorPicker" className="mr-4">Color:</label>
-                <input type='color' id='colorPicker' className="h-8 w-8" defaultValue="#000000" />
+                <label htmlFor="colorPicker" className="mr-4">
+                  Color:
+                </label>
+                <input
+                  type="color"
+                  id="colorPicker"
+                  className="h-8 w-8"
+                  defaultValue="#000000"
+                />
               </div>
               <div className="flex items-center mb-6">
                 <label htmlFor="brushSize" className="mr-4">
                   Brush Size:
                 </label>
                 <input
-                  type='range'
-                  min='1'
-                  max='30'
-                  id='brushSize'
+                  type="range"
+                  min="1"
+                  max="30"
+                  id="brushSize"
                   className="h-4 w-48"
-                  defaultValue="3" />
+                  defaultValue="3"
+                />
+                <span className="ml-4 text-gray-700">{brushSize}</span>
               </div>
               {word}
             </>
