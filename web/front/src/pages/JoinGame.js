@@ -41,6 +41,10 @@ export const JoinGame = ({ socket }) => {
   const handleClickReady = () => {
     socket.emit('ready user');
     setReady(true);
+
+    if (ready) {
+      setReady(false);
+    }
   };
 
   useEffect(() => {
@@ -115,12 +119,15 @@ export const JoinGame = ({ socket }) => {
         </div>
       ) : (
         <div>
-          {!ready ? (
             <>
               <button onClick={handleClickLeave} className="default-button m-1">Leave lobby</button>
-              <button onClick={handleClickReady} className="default-button m-1">Ready</button>
+              {!ready ? (
+                <button onClick={handleClickReady} className="default-button m-1 text-red-700 font-extrabold bg-red-200 red">NOT READY</button>
+                ):(
+                  <button onClick={handleClickReady} className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50" disabled >READY</button>
+              )}
+              
             </>
-          ) : (
             <div>
               <h2>Users ready:</h2>
               <p>Current players: {currentPlayers}</p>
@@ -131,7 +138,6 @@ export const JoinGame = ({ socket }) => {
                 ))}
               </ul>
             </div>
-          )}
         </div>
       )}
     </div>
