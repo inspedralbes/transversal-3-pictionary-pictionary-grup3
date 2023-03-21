@@ -9,7 +9,7 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(90);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
 
@@ -88,6 +88,9 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
+      setTimer(90)
+      setWordCorrect(false)
+      wipe()
     });
   });
 
@@ -214,44 +217,47 @@ export const PlayGame = ({ socket }) => {
         ></div>
         <div className="flex mt-10 ">
           <div class="-ml-5 h-44 w-96 absolute p-3 mx-4 bg-white border-4 border-rose-300 shadow-2xl rounded-lg">
-        {painter ? (
-            <div id="colores" className="w-full">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-                Choose your colors
-                <button
-                  onClick={wipe}
-                  className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-                >
-                  Wipe
-                </button>
-              </h2>
-              <div className="flex items-center mb-4">
-                <label htmlFor="colorPicker" className="mr-4">
-                  Color:
-                </label>
-                <input
-                  type="color"
-                  id="colorPicker"
-                  className="h-8 w-8"
-                  defaultValue="#000000"
-                />
+            {painter ? (
+              <div id="colores" className="w-full">
+              {nameUser}
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
+                  Choose your colors
+                  <button
+                    onClick={wipe}
+                    className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  >
+                    Wipe
+                  </button>
+                </h2>
+                <div className="flex items-center mb-4">
+                  <label htmlFor="colorPicker" className="mr-4">
+                    Color:
+                  </label>
+                  <input
+                    type="color"
+                    id="colorPicker"
+                    className="h-8 w-8"
+                    defaultValue="#000000"
+                  />
+                </div>
+                <div className="flex items-center mb-6">
+                  <label htmlFor="brushSize" className="mr-4">
+                    Brush Size:
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="20"
+                    id="brushSize"
+                    className="h-4 w-48"
+                    defaultValue="3"
+                  />
+                  <span className="ml-4 text-gray-700">{brushSize}</span>
+                </div>
               </div>
-              <div className="flex items-center mb-6">
-                <label htmlFor="brushSize" className="mr-4">
-                  Brush Size:
-                </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="20"
-                  id="brushSize"
-                  className="h-4 w-48"
-                  defaultValue="3"
-                />
-                <span className="ml-4 text-gray-700">{brushSize}</span> 
-              </div> 
-            </div> )
-                : <></> }
+            ) : (
+              <></>
+            )}
             {/* <!-- JUGADORES --> */}
             <br></br>
             <div className="w-96 h-full -mt-1 -ml-4 absolute bg-white border-4 border-rose-500 rounded-lg">
