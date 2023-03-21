@@ -222,16 +222,11 @@ function sendLobbyList() {
 }
 
 function nextTurn(socket) {
-    lobbies.forEach((lobby) => {
+    lobbies.forEach((lobby, index) => {
         if (lobby.lobby_code == socket.data.current_lobby) {
             if (lobby.turn == lobby.users.length && lobby.round == 3) {
                 io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": lobby.users });
-                lobbies.forEach((lobby, index) => {
-                    if (lobby.lobby_code == socket.data.current_lobby) {
-                        console.log(lobby, index);
-                        lobbies.splice(index, 1);
-                    }
-                });
+                lobbies.splice(index, 1);
                 sendLobbyList();
             } else {
                 if (lobby.turn == lobby.users.length && lobby.round < 3) {
