@@ -72,15 +72,15 @@ io.on("connection", (socket) => {
                             score: 0,
                             answered: false,
                         });
+                        socket.join(data.lobby_code);
+                        socket.data.current_lobby = data.lobby_code;
+                        socket.data.name = data.name;
+                        socket.data.userId = data.userId;
+                        sendUserList(socket);
                     }
                 }
             }
         });
-        socket.join(data.lobby_code);
-        socket.data.current_lobby = data.lobby_code;
-        socket.data.name = data.name;
-        socket.data.userId = data.userId;
-        sendUserList(socket);
     });
 
     socket.on("get user list", () => {
