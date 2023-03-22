@@ -9,7 +9,7 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(0);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
 
@@ -44,14 +44,13 @@ export const PlayGame = ({ socket }) => {
     const interval = setInterval(() => {
       setTimer(time);
       if (time <= 0) {
-        console.log('ha terminado el tiempo');
         clearInterval(interval);
+        console.log('ha terminado el tiempo');
+        
         // socket.emit('call next turn');
       }
       time--;
     }, 1000);
-
-
   };
 
   socket.on('next round', function (data) {
@@ -195,11 +194,11 @@ export const PlayGame = ({ socket }) => {
     <div className="flex bg-cover bg-center lg:bg-fixed bg-[url('../style/webBackground.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
         {/* <!-- Lista de jugadores --> */}
-        <div class="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
-          <h3 class="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">
+        <div className="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
+          <h3 className="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">
             Jugadores
           </h3>
-          <ul class="px-2 py-1">
+          <ul className="px-2 py-1">
             {userCorrectWords.map((userCorrectWords, key) => (
               <li key={key}>
                 <strong>{userCorrectWords.name}</strong>
