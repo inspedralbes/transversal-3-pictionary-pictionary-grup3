@@ -31,7 +31,7 @@ En el meu cas faig servir LABS per la creacio del meu domini i el seu DNS. Al cr
 
 ## Instalacio del LEMP
 
-Seguint la guia **https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-22-04** s'instala el software necessari per el funcionament del projecte, en aquest cas Linux, Nginx, MySQL i PHP. Nginx ja esta instalat i Linux tambe. Aixi doncs seguint la guia instalarem els dos que resten.
+Seguint la guia **https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-22-04** s'instala el software necessari per el funcionament del projecte, en aquest cas Linux, Nginx, MySQL i PHP. Nginx ja esta instalat i Linux tambe. Aixi doncs seguint la guia instalarem els dos que resten. (Posar al fitxer amb el port 80 la URL que hem creat al labs)
 
 ## Instalacio de NodeJS
 
@@ -39,9 +39,11 @@ Fer servir la comanda **sudo apt install nodejs** i a continuacio **sudo apt ins
 
 ## Cerrtificat HTTPS
 
-
+Seguir la guia del **Certbot (https://certbot.eff.org/)** la qual ens pregunta el software i el sistema en el que estem treballant. S'instala la per metode default i a la mateixa pagina estan els prerequisits.
 
 ## Nginx com a proxy invers
+
+
 
 
 
