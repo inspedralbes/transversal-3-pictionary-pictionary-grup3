@@ -42,8 +42,8 @@ export const JoinGame = ({ socket }) => {
   };
 
   useEffect(() => {
-    socket.on('users ready', (data) => {
-      const readyUsers = data.lobby.users.filter((user) => user.ready);
+    socket.on('lobby user list', (data) => {
+      const readyUsers = data.list.filter((user) => user.ready);
       setUsersReady(readyUsers);
     });
 
