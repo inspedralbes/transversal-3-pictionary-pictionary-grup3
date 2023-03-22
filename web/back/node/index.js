@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
                 lobby_code: data.lobby_code,
                 category: data.category,
                 maxUsers: data.maxUsers,
+                created: new Date().getTime(),
                 users: [],
                 userWords: [],
                 round: 0,
@@ -71,15 +72,15 @@ io.on("connection", (socket) => {
                             score: 0,
                             answered: false,
                         });
+                        socket.join(data.lobby_code);
+                        socket.data.current_lobby = data.lobby_code;
+                        socket.data.name = data.name;
+                        socket.data.userId = data.userId;
+                        sendUserList(socket);
                     }
                 }
             }
         });
-        socket.join(data.lobby_code);
-        socket.data.current_lobby = data.lobby_code;
-        socket.data.name = data.name;
-        socket.data.userId = data.userId;
-        sendUserList(socket);
     });
 
     socket.on("get user list", () => {
@@ -156,7 +157,7 @@ io.on("connection", (socket) => {
                 } else {
                     lobby.userWords.push({
                         name: socket.data.name,
-                        word: data.word,
+                        word: "Answered wrong",
                     });
                 }
                 io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
@@ -246,6 +247,16 @@ function nextTurn(socket) {
         }
     });
 };
+
+setInterval(function () {
+    lobbies.forEach((lobby, index) => {
+        let diference = ((new Date().getTime() - lobby.created) / 60) / 1000;
+        if (parseInt(diference) >= 30 && lobby.users.length === 0) {
+            lobbies.splice(index, 1);
+        }
+        sendLobbyList();
+    });
+}, 1000 * 30);
 
 server.listen(7500, () => {
     console.log("Listening on port 7500");
