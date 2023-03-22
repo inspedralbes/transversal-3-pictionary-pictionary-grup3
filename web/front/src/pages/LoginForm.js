@@ -3,6 +3,7 @@ import logo from "../style/logoPictoboomSmall.png";
 import "../style/style.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setLoginToken, setLoginUser } from "../features/loginSlice";
 
 export const LoginForm = () => {
@@ -10,6 +11,7 @@ export const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ export const LoginForm = () => {
       d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000);
       let expires = 'expires=' + d.toUTCString();
       document.cookie = 'sessionCookie=' + JSON.stringify(sessionCookie) + ';' + expires + ';path=/';
+      navigate('../createGame')
     } catch (error) {
       // console.error("Error:", error);
     }

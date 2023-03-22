@@ -20,10 +20,10 @@ export const LandingPage = () => {
               Play now!
             </Link>
             <Link
-              to='/createGame' //This Link is Provisional, when we have login make, here we put the login
+              to='/login'
               className='text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none'
             >
-              Are you the teacher?
+              Are you a teacher?
             </Link>
           </div>
         </div>
