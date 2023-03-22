@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export const Categories = ({ socket }) => {
     const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
@@ -73,8 +74,8 @@ export const Categories = ({ socket }) => {
                 <div className='text-center '>
                     <div className='bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen'>
                         <div className='flex justify-center'>
-                            <button className="rounded-lg w-36 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold ">Create Category</button>
-                            <button className="rounded-lg w-36 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold ">Add Words</button>
+                            <Link to='/createCategories' className="rounded-lg w-36 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold ">Create Category</Link>
+                            <Link to='/addWords' className="rounded-lg w-36 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold ">Add Words</Link>
                         </div>
                         {loading ? (
                             'Loading'
