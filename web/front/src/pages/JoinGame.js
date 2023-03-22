@@ -144,10 +144,10 @@ export const JoinGame = ({ socket }) => {
           <div className="grid grid-cols-4 px-96">
             {usersReady.map((user) => (
               <div
-                className="col-span-1 rounded-full bg-pink-50  h-28 w-28"
+                className="col-span-1 rounded-full bg-pink-50  h-28 w-28 opacity-70 m-4 flex "
                 key={user.userId}
               >
-                {user.name}
+                <p className="m-[auto]">{user.name}</p>
               </div>
             ))}
           </div>

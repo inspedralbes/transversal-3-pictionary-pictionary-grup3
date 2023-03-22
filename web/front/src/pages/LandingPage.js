@@ -12,16 +12,17 @@ export const LandingPage = () => {
           <p className='mt-6 text-lg leading-8 text-slate-700 font-semibold'>
             ¡PictoBoom, where your drawings come alive!<br></br>
           </p>
-          <div className='mt-10 flex items-center justify-center gap-x-6'>
+          <div className='mt-10 block gap-x-6 relative group'>
+            <div className='absolute inset-2 bottom-5 bg-gray-100 w-[95%] blur-2xl h-28 animate-bounce opacity-75  group-hover:opacity-100 transition duration-200'></div>
             <Link
               to='/joinGame'
-              className='default-button text-sm font-semibold text-gray-100 hover:text-white shadow-sm hover:pink-to-orange-gr hover:outline-none outline-orange-600 animate-bounce'
+              className='relative default-button block m-4 text-2xl font-extrabold text-orange-600 hover:text-white shadow-2xl hover:pink-to-orange-gr hover:outline-gray-100 outline-orange-600 animate-bounce p-12'
             >
               Play now!
             </Link>
             <Link
               to='/createGame' //This Link is Provisional, when we have login make, here we put the login
-              className='text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none'
+              className='text-sm font-semibold block m-4 mt-6 text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none'
             >
               Are you the teacher?
             </Link>
