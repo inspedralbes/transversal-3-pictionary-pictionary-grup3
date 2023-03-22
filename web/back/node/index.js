@@ -135,39 +135,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("next turn", () => {
-        lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == socket.data.current_lobby) {
-                if (lobby.turn == lobby.users.length && lobby.round == 3) {
-                    let finishedLobbyUsers = lobby.users;
-                    // lobby.drawings = [];
-                    lobby.round = 0;
-                    lobby.turn = 0;
-                    lobby.totalTurns = 0;
-                    lobby.painter = null;
-                    lobby.word = "";
-                    lobby.users.forEach((user) => {
-                        user.ready = false;
-                        user.score = 0;
-                        user.answered = false;
-                    });
-                    io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": finishedLobbyUsers, "lobby": lobby });
-                } else {
-                    if (lobby.turn == lobby.users.length && lobby.round < 3) {
-                        lobby.round = lobby.round + 1;
-                        lobby.turn = 1;
-                    } else {
-                        lobby.turn = lobby.turn + 1;
-                    }
-                    lobby.totalTurns = lobby.totalTurns + 1;
-                    lobby.painter = lobby.users[lobby.turn - 1].name;
-                    lobby.word = lobby.words[lobby.totalTurns - 1].word;
-                    lobby.users.forEach((user) => {
-                        user.answered = false;
-                    });
-                    io.to(socket.data.current_lobby).emit("next turn", { lobby });
-                }
-            }
-        });
+        nextTurn(socket);
     });
 
     socket.on("word inserted", (data) => {
@@ -199,7 +167,7 @@ io.on("connection", (socket) => {
                     }
                 });
                 if (usersAnswered == lobby.users.length - 1) {
-                    io.to(socket.data.current_lobby).emit("call next turn");
+                    nextTurn(socket);
                 }
             }
         });
@@ -252,6 +220,32 @@ function leaveLobby(socket) {
 function sendLobbyList() {
     io.emit("lobbies list", lobbies);
 }
+
+function nextTurn(socket) {
+    lobbies.forEach((lobby, index) => {
+        if (lobby.lobby_code == socket.data.current_lobby) {
+            if (lobby.turn == lobby.users.length && lobby.round == 3) {
+                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": lobby.users });
+                lobbies.splice(index, 1);
+                sendLobbyList();
+            } else {
+                if (lobby.turn == lobby.users.length && lobby.round < 3) {
+                    lobby.round = lobby.round + 1;
+                    lobby.turn = 1;
+                } else {
+                    lobby.turn = lobby.turn + 1;
+                }
+                lobby.totalTurns = lobby.totalTurns + 1;
+                lobby.painter = lobby.users[lobby.turn - 1].name;
+                lobby.word = lobby.words[lobby.totalTurns - 1].word;
+                lobby.users.forEach((user) => {
+                    user.answered = false;
+                });
+                io.to(socket.data.current_lobby).emit("next turn", { lobby });
+            }
+        }
+    });
+};
 
 server.listen(7500, () => {
     console.log("Listening on port 7500");

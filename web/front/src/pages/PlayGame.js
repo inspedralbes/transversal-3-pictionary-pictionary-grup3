@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../style/style.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
@@ -12,6 +13,8 @@ export const PlayGame = ({ socket }) => {
   const [timer, setTimer] = useState(0);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
+
+  const navigate = useNavigate()
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
@@ -25,8 +28,10 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
+    console.log("asd");
     socket.emit("ready user");
     socket.on("start game", (data) => {
+      console.log(data);
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
@@ -36,11 +41,22 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
-      setTime(data.lobby.time);
+      // setTime(data.lobby.time);
     });
-  }, []);
+  }, [socket]);
 
-  function setTime(time) {
+  // function setTime(time) {
+  //   const interval = setInterval(() => {
+  //     setTimer((time) => time - 1);
+  //     if (time === 0) {
+  //       clearInterval(interval);
+  //       console.log('ha terminado el tiempo');
+  //       // socket.emit('call next turn');
+  //     }
+  //   }, 1000);
+  // };
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setTimer(time);
       if (time <= 0) {
@@ -66,12 +82,8 @@ export const PlayGame = ({ socket }) => {
       setUserCorrectWords(data.lobby.users);
     });
 
-    socket.on('call next turn', () => {
-      socket.emit('next turn')
-    })
-
-    socket.on('next turn', (data) => {
-      console.log(data)
+    socket.on("next turn", (data) => {
+      console.log(data);
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
@@ -81,8 +93,15 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
+      setTimer(90)
+      setWordCorrect(false)
+      wipe()
+    });
+
+    socket.on('finished game', (data) => {
+      navigate('../rankingGame')
     })
-  }, [socket]);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -152,14 +171,14 @@ export const PlayGame = ({ socket }) => {
         context.lineTo(x, y);
         context.strokeStyle = c;
         context.lineWidth = b;
-        context.lineCap = 'round';
+        context.lineCap = "round";
       } else {
         lastX = x;
         lastY = y;
         context.lineTo(x, y);
         context.strokeStyle = c;
         context.lineWidth = b;
-        context.lineCap = 'round';
+        context.lineCap = "round";
       }
       context.fill();
       context.stroke();
@@ -170,7 +189,13 @@ export const PlayGame = ({ socket }) => {
       if (data.data.action == "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
       } else {
-        draw(data.data.x, data.data.y, data.data.b, data.data.c, data.data.action);
+        draw(
+          data.data.x,
+          data.data.y,
+          data.data.b,
+          data.data.c,
+          data.data.action
+        );
       }
     });
   }, []);
@@ -191,150 +216,146 @@ export const PlayGame = ({ socket }) => {
   }
 
   return (
-    <div className="flex bg-cover bg-center lg:bg-fixed bg-[url('../style/webBackground.png')]">
+    <div className="flex -ml-72 bg-cover bg-center lg:bg-fixed bg-[url('../style/webBackground.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
-        {/* <!-- Lista de jugadores --> */}
-        <div className="w-64 bg-white border-4 border-rose-300 shadow-2xl rounded-lg mr-5">
-          <h3 className="text-lg font-bold mb-2 px-2 py-1 bg-rose-300 text-white rounded-t-lg">
-            Jugadores
-          </h3>
-          <ul className="px-2 py-1">
-            {userCorrectWords.map((userCorrectWords, key) => (
-              <li key={key}>
-                <strong>{userCorrectWords.name}</strong>
-                {userCorrectWords.score}
-              </li>
-            ))}
-          </ul>
-        </div>
         <div
           className="absolute inset-0 z-[-1] bg-cover bg-center"
           style={{
             backgroundImage: "url('../style/spinning-bg-pinchitos.png')",
           }}
         ></div>
-        <div className="h-64 px-4 py-12 mt-10 mx-auto border-4 border-rose-300 bg-rose-100 shadow-2xl rounded-lg">
-          <div className="flex items-center justify-center -mt-8">
-            <div
-              id="contador"
-              className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-lg"
-            >
-              {timer}
-            </div>
+        <div className="flex mt-10 ">
+          <div class="-ml-5 h-44 w-96 absolute p-3 mx-4 bg-white border-4 border-rose-300 shadow-2xl rounded-lg">
             {painter ? (
-              <>
-                <div className="absolute mt-44 ml-96 underline font-bold">
-                  PALABRA:
+              <div id="colores" className="w-full">
+              {nameUser}
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
+                  Choose your colors
+                  <button
+                    onClick={wipe}
+                    className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  >
+                    Wipe
+                  </button>
+                </h2>
+                <div className="flex items-center mb-4">
+                  <label htmlFor="colorPicker" className="mr-4">
+                    Color:
+                  </label>
+                  <input
+                    type="color"
+                    id="colorPicker"
+                    className="h-8 w-8"
+                    defaultValue="#000000"
+                  />
                 </div>
-              </>
+                <div className="flex items-center mb-6">
+                  <label htmlFor="brushSize" className="mr-4">
+                    Brush Size:
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="20"
+                    id="brushSize"
+                    className="h-4 w-48"
+                    defaultValue="3"
+                  />
+                  <span className="ml-4 text-gray-700">{brushSize}</span>
+                </div>
+              </div>
             ) : (
               <></>
             )}
+            {/* <!-- JUGADORES --> */}
+            <br></br>
+            <div className="w-96 h-full -mt-1 -ml-4 absolute bg-white border-4 border-rose-500 rounded-lg">
+              <h3 class="text-lg text-center font-bold mb-2 px-2 py-1 bg-rose-300 text-white border-4 border-rose-300 ">
+                Players
+              </h3>
+              <ul class="px-2 py-1">
+                {userCorrectWords.map((userCorrectWords, key) => (
+                  <li key={key}>
+                    <strong>{userCorrectWords.name}</strong>
+                    {userCorrectWords.score}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="absolute mt-44 ml-96 underline font-bold">
-            Round: {round} / 3
+          <div className="h-36 w-4/6 ml-96 px-4 py-12 mx-auto border-4 border-rose-300 bg-rose-100 shadow-2xl rounded-lg">
+            <div className="flex items-center justify-center -mt-8">
+              <div
+                id="contador"
+                className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-lg"
+              >
+                {timer}
+              </div>
+              {painter ? (
+                <div className="absolute mt-28 ">
+                  <h2 className="underline font-bold">{word}</h2>
+                </div>
+              ) : (
+                <></>
+              )}
+              <div className="absolute -mt-10 ml-96 underline font-bold">
+                Round: {round} / 3
+              </div>
+            </div>
           </div>
-          {painter ? (
-            <>
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-                Choose your colors
-                <button
-                  onClick={wipe}
-                  className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-                >
-                  Wipe
-                </button>
-              </h2>
-              <div className="flex items-center mb-4">
-                <label htmlFor="colorPicker" className="mr-4">
-                  Color:
-                </label>
-                <input
-                  type="color"
-                  id="colorPicker"
-                  className="h-8 w-8"
-                  defaultValue="#000000"
-                />
-              </div>
-              <div className="flex items-center mb-6">
-                <label htmlFor="brushSize" className="mr-4">
-                  Brush Size:
-                </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="30"
-                  id="brushSize"
-                  className="h-4 w-48"
-                  defaultValue="3"
-                />
-                <span className="ml-4 text-gray-700">{brushSize}</span>
-              </div>
-              {word}
-            </>
-          ) : (
-            <></>
-          )}
         </div>
         <div className="mt-5 mb-5 flex">
           <div id="canvas" className="flex items-center justify-center">
             <canvas
               ref={canvasRef}
-              width="700px"
+              width="633px"
               height="600px"
-              className="bg-white border-4 border-rose-300"
+              className="ml-96 mx-auto bg-white border-4 border-pink-500"
             ></canvas>
           </div>
           {/* CHAT */}
-          <div id="chat" className="m-auto w-96 ml-5 -mt-0.5">
-            <div className="h-96 overflow-y-scroll border-4 border-rose-300 bg-white p-4">
-              <div className="flex flex-col gap-2">
-                <div className="flex flex-col items-end">
-                  <ul>
-                    {userWords.map((userWords, key) => (
-                      <li key={key}>
-                        <strong>{userWords.name}</strong>
-                        {userWords.word}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          <div id="chat" className="m-auto w-96 h-40 ml-5 -mt-48">
+            <div className="h-96 overflow-y-scroll border-4 border-pink-500 bg-white p-4">
+              <ul>
+                {userWords.map((userWords, key) => (
+                  <li key={key}>
+                    <strong>{userWords.name}</strong>
+                    {userWords.word}
+                  </li>
+                ))}
+              </ul>
             </div>
-            {painter ? (
-              <></>
-            ) :
-              wordCorrect ? (
-                <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-2">
+              {painter ? (
+                <></>
+              ) : wordCorrect ? (
+                <input
+                  name="word"
+                  type="text"
+                  value={wordInserted}
+                  onChange={(e) => setWordInserted(e.target.value)}
+                  className="border-2 border-gray-300 p-2 flex-1"
+                  placeholder="Escribe un mensaje"
+                />
+              ) : (
+                <form onSubmit={handleSubmit}>
                   <input
-                    type="text"
-                    className="border-2 border-gray-300 p-2 flex-1"
                     name="word"
+                    type="text"
                     value={wordInserted}
                     onChange={(e) => setWordInserted(e.target.value)}
+                    className="border-2 border-gray-300 p-2 flex-1"
+                    placeholder="Escribe un mensaje"
                   />
-                </div>
-              ) : (
-                <div className="flex gap-4 mt-4">
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      type="text"
-                      placeholder="Introduce Word"
-                      className="border-2 border-gray-300 p-2 flex-1"
-                      name="word"
-                      value={wordInserted}
-                      onChange={(e) => setWordInserted(e.target.value)}
-                    />
-                    <button
-                      className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-                      type="submit"
-                    >
-                      Enviar
-                    </button>
-                  </form>
-                </div>
-              )
-            }
+                  <button
+                    type="submit"
+                    className="bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  >
+                    Enviar
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
