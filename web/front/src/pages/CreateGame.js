@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export const CreateGame = ({ socket }) => {
-  const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
+  console.log(useSelector((state) => state.login.loginToken))
+  const stateLoginToken = useSelector((state) => state.login.loginToken);
+  const stateLoginUser = useSelector((state) => state.login.loginUser);
   const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(0);
   const [lobbies, setLobbies] = useState([]);
@@ -15,6 +17,8 @@ export const CreateGame = ({ socket }) => {
   useEffect(() => {
     codeGenerator();
     getCollection();
+    console.log(stateLoginToken)
+    console.log(stateLoginUser)
   }, []);
 
   useEffect(() => {
