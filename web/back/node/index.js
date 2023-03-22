@@ -157,7 +157,7 @@ io.on("connection", (socket) => {
                 } else {
                     lobby.userWords.push({
                         name: socket.data.name,
-                        word: data.word,
+                        word: "Answered wrong",
                     });
                 }
                 io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
@@ -251,7 +251,7 @@ function nextTurn(socket) {
 setInterval(function () {
     lobbies.forEach((lobby, index) => {
         let diference = ((new Date().getTime() - lobby.created) / 60) / 1000;
-        if (parseInt(diference) >= 15 && lobby.users.length === 0) {
+        if (parseInt(diference) >= 30 && lobby.users.length === 0) {
             lobbies.splice(index, 1);
         }
         sendLobbyList();
