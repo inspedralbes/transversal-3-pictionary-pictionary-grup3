@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../style/logoPictoboomSmall.png";
 import "../style/style.css";
 import { Link } from "react-router-dom";
@@ -12,6 +12,14 @@ export const LoginForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    readCookie()
+  }, [])
+  
+  const readCookie = () => {
+    
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
