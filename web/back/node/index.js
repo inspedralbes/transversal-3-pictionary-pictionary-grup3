@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
                 lobby_code: data.lobby_code,
                 category: data.category,
                 maxUsers: data.maxUsers,
+                created: new Date().getTime(),
                 users: [],
                 userWords: [],
                 round: 0,
@@ -246,6 +247,16 @@ function nextTurn(socket) {
         }
     });
 };
+
+setInterval(function () {
+    lobbies.forEach((lobby, index) => {
+        let diference = ((new Date().getTime() - lobby.created) / 60) / 1000;
+        if (parseInt(diference) >= 15 && lobby.users.length === 0) {
+            lobbies.splice(index, 1);
+        }
+        sendLobbyList();
+    });
+}, 1000 * 30);
 
 server.listen(7500, () => {
     console.log("Listening on port 7500");
