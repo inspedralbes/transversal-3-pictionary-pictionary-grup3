@@ -10,9 +10,10 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(10);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
+  const [wordLength, setWordLength] = useState([]);
 
   const navigate = useNavigate()
 
@@ -40,6 +41,11 @@ export const PlayGame = ({ socket }) => {
         painterAux = false;
       }
       setWord(data.lobby.word);
+      let str = "";
+      for (let i = 0; i < data.lobby.word.length; i++) {
+        str += "_ ";
+      }
+      setWordLength(str);
       setRound(data.lobby.round);
       // setTime(data.lobby.time);
     });
@@ -58,16 +64,16 @@ export const PlayGame = ({ socket }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimer(time);
-      if (time <= 0) {
+      setTimer((prevSeconds) => prevSeconds -1);}, 1000)
+      if (timer === 0) {
         clearInterval(interval);
         console.log('ha terminado el tiempo');
         
         // socket.emit('call next turn');
       }
-      time--;
-    }, 1000);
-  };
+      return () => clearInterval(interval)
+    }, [timer]);
+  
 
   socket.on('next round', function (data) {
     console.log('next round', data);
@@ -92,6 +98,11 @@ export const PlayGame = ({ socket }) => {
         painterAux = false;
       }
       setWord(data.lobby.word);
+      let str = "";
+      for (let i = 0; i < data.lobby.word.length; i++) {
+        str += "_ "
+      }
+      setWordLength(str);
       setRound(data.lobby.round);
       setTimer(90)
       setWordCorrect(false)
@@ -296,7 +307,9 @@ export const PlayGame = ({ socket }) => {
                   <h2 className="underline font-bold">{word}</h2>
                 </div>
               ) : (
-                <></>
+              <div className="absolute mt-28 ">
+                <h2 className="font-bold">{wordLength}</h2>
+              </div>
               )}
               <div className="absolute -mt-10 ml-96 underline font-bold">
                 Round: {round} / 3
