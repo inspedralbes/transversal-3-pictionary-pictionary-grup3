@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../style/style.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setScoreBoard } from "../features/scoreBoardSlice";
 
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
@@ -9,9 +11,12 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(90);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
@@ -88,7 +93,15 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setRound(data.lobby.round);
+      setTimer(90)
+      setWordCorrect(false)
+      wipe()
     });
+
+    socket.on('finished game', (data) => {
+      dispatch(setScoreBoard(data))
+           navigate('../rankingGame')
+    })
   });
 
   const handleSubmit = (e) => {

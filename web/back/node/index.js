@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
                 lobby_code: data.lobby_code,
                 category: data.category,
                 maxUsers: data.maxUsers,
+                created: new Date().getTime(),
                 users: [],
                 userWords: [],
                 round: 0,
@@ -71,15 +72,15 @@ io.on("connection", (socket) => {
                             score: 0,
                             answered: false,
                         });
+                        socket.join(data.lobby_code);
+                        socket.data.current_lobby = data.lobby_code;
+                        socket.data.name = data.name;
+                        socket.data.userId = data.userId;
+                        sendUserList(socket);
                     }
                 }
             }
         });
-        socket.join(data.lobby_code);
-        socket.data.current_lobby = data.lobby_code;
-        socket.data.name = data.name;
-        socket.data.userId = data.userId;
-        sendUserList(socket);
     });
 
     socket.on("get user list", () => {
@@ -222,23 +223,12 @@ function sendLobbyList() {
 }
 
 function nextTurn(socket) {
-    lobbies.forEach((lobby) => {
+    lobbies.forEach((lobby, index) => {
         if (lobby.lobby_code == socket.data.current_lobby) {
             if (lobby.turn == lobby.users.length && lobby.round == 3) {
-                let finishedLobbyUsers = [...lobby.users];
-                // lobby.drawings = [];
-                lobby.round = 0;
-                lobby.turn = 0;
-                lobby.totalTurns = 0;
-                lobby.painter = null;
-                lobby.word = "";
-                lobby.users.forEach((user) => {
-                    user.ready = false;
-                    user.score = 0;
-                    user.answered = false;
-                });
-                lobby.userWords = [];
-                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": finishedLobbyUsers, "lobby": lobby });
+                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": lobby.users });
+                lobbies.splice(index, 1);
+                sendLobbyList();
             } else {
                 if (lobby.turn == lobby.users.length && lobby.round < 3) {
                     lobby.round = lobby.round + 1;
@@ -257,6 +247,16 @@ function nextTurn(socket) {
         }
     });
 };
+
+setInterval(function () {
+    lobbies.forEach((lobby, index) => {
+        let diference = ((new Date().getTime() - lobby.created) / 60) / 1000;
+        if (parseInt(diference) >= 15 && lobby.users.length === 0) {
+            lobbies.splice(index, 1);
+        }
+        sendLobbyList();
+    });
+}, 1000 * 30);
 
 server.listen(7500, () => {
     console.log("Listening on port 7500");
