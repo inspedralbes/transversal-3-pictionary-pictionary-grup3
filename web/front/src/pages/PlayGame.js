@@ -14,7 +14,7 @@ export const PlayGame = ({ socket }) => {
   const [timer, setTimer] = useState(90);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
-  const [wordLength, setWordLength] = useState('')
+  const [wordLength, setWordLength] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,10 +31,8 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
-    console.log("asd");
     socket.emit("ready user");
     socket.on("start game", (data) => {
-      console.log(data);
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
@@ -45,12 +43,14 @@ export const PlayGame = ({ socket }) => {
       setWord(data.lobby.word);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
-        str += "_ "
+        str += "_ ";
       }
       setWordLength(str);
       setRound(data.lobby.round);
+      setUserCorrectWords(data.lobby.users);
       // setTime(data.lobby.time);
     });
+    
   }, [socket]);
 
   // function setTime(time) {
@@ -70,14 +70,13 @@ export const PlayGame = ({ socket }) => {
     }, 1000);
     if (timer === 0) {
       clearInterval(interval);
-      console.log("ha terminado el tiempo");
     }
     return () => clearInterval(interval);
   }, [timer]);
 
-  socket.on("next round", function (data) {
-    console.log("next round", data);
-  });
+  // socket.on("next round", function (data) {
+  //   console.log("next round", data);
+  // });
 
   useEffect(() => {
     socket.on("word inserted", (data) => {
@@ -89,7 +88,6 @@ export const PlayGame = ({ socket }) => {
     });
 
     socket.on("next turn", (data) => {
-      console.log(data);
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
@@ -100,7 +98,7 @@ export const PlayGame = ({ socket }) => {
       setWord(data.lobby.word);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
-        str += "_ "
+        str += "_ ";
       }
       setWordLength(str);
       setRound(data.lobby.round);
@@ -117,11 +115,11 @@ export const PlayGame = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (word === wordInserted) {
+    if (word === wordInserted.toLowerCase()) {
       setWordCorrect(true);
     }
     socket.emit("word inserted", {
-      word: wordInserted,
+      word: wordInserted.toLowerCase(),
       time: timer,
     });
     setWordInserted("");
@@ -237,9 +235,9 @@ export const PlayGame = ({ socket }) => {
           }}
         ></div>
         <div className="flex mt-10 ">
-          <div class="-ml-5 h-44 w-96 absolute mx-4 shadow-2xl rounded-lg">
+          <div className="-ml-5 h-44 w-96 absolute mx-4 shadow-2xl rounded-lg">
             <div className="w-96 h-full -ml-0.5 mb-5 bg-white border-4 border-rose-500 rounded-lg">
-              <h3 class="text-lg text-center font-bold mb-2 px-2 py-1 bg-rose-300 text-white border-4 border-rose-300 ">
+              <h3 className="text-lg text-center font-bold mb-2 px-2 py-1 bg-rose-300 text-white border-4 border-rose-300 ">
                 Players
               </h3>
               <div className="grid gap-4 grid-cols-3 grid-rows-3 ml-5 mt-5">
@@ -316,7 +314,9 @@ export const PlayGame = ({ socket }) => {
                 </div>
               ) : (
                 <div className="ml-8">
-                  <h2 className="uppercase -mt-16 font-bold text-xl">{wordLength}</h2>
+                  <h2 className="uppercase -mt-16 font-bold text-xl">
+                    {wordLength}
+                  </h2>
                 </div>
               )}
               <div className="font-bold text-xl">ROUND: {round} / 3</div>
