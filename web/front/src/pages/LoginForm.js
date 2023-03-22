@@ -30,6 +30,14 @@ export const LoginForm = () => {
       // console.log("Response:", json);
       dispatch(setLoginToken(json.token));
       dispatch(setLoginUser(json.user.username));
+      let sessionCookie = {
+        username: json.user.username,
+        token: json.token,
+      };
+      const d = new Date();
+      d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000);
+      let expires = 'expires=' + d.toUTCString();
+      document.cookie = 'sessionCookie=' + JSON.stringify(sessionCookie) + ';' + expires + ';path=/';
     } catch (error) {
       // console.error("Error:", error);
     }
