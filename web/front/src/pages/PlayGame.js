@@ -363,7 +363,7 @@ export const PlayGame = ({ socket }) => {
                   onChange={(e) => setWordInserted(e.target.value)}
                   className="w-64 border-2 border-gray-300 p-2 flex-1"
                   placeholder="Type the word"
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               ) : (
                 <form onSubmit={handleSubmit} className="flex items-center">
@@ -374,7 +374,7 @@ export const PlayGame = ({ socket }) => {
                     onChange={(e) => setWordInserted(e.target.value)}
                     className="inline w-40 border-2 border-gray-300 p-2 flex-1"
                     placeholder="Type the word"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                   <button
                     type="submit"
