@@ -119,39 +119,42 @@ export const JoinGame = ({ socket }) => {
           </form>
         </div>
       ) : (
-        <div className="flex w-full">
-          <div className="block">
-            <button onClick={handleClickLeave} className="default-button m-1">
+        <div className="block w-full lg:h-full">
+            <button onClick={handleClickLeave} className="default-button m-1 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit lg:m-16">
               Leave lobby
             </button>
-            {!ready ? (
-              <button
-                onClick={handleClickReady}
-                className="default-button m-1 text-red-700 font-extrabold bg-red-200 red"
-              >
-                NOT READY
-              </button>
-            ) : (
-              <button
-                onClick={handleClickReady}
-                className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50"
-                disabled
-              >
-                READY
-              </button>
-            )}
+          <div className="flex m-[auto] ">
+            <div className="flex-nowrap m-[auto]">
+              <h2 className="font-semibold text-5xl">Welcome <p className="font-bold text-yellow-400 inline">{nameUser}</p>!<br></br>Are you ready?!</h2>
+                {!ready ? (
+                  <button
+                    onClick={handleClickReady}
+                    className="default-button m-1 text-red-700 font-extrabold bg-red-200 red transition duration-100"
+                  >
+                    NOT READY
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleClickReady}
+                    className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50 transition duration-100"
+                    disabled
+                  >
+                    READY
+                  </button>
+                )}
+            <div className="grid grid-cols-4 bg-rose-50 bg-opacity-25 w-fit rounded-lg">
+              {usersReady.map((user) => (
+                <div
+                  className="col-span-1 rounded-full bg-pink-50  h-28 w-28 bg-opacity-60 m-4 flex border-dashed border-2 border-pink-600"
+                  key={user.userId}
+                >
+                  <p className="m-[auto] opacity-1 font-semibold">{user.name}</p>
+                </div>
+              ))}
+            </div>
+            </div>
           </div>
-          <div className="grid grid-cols-4 px-96">
-            {usersReady.map((user) => (
-              <div
-                className="col-span-1 rounded-full bg-pink-50  h-28 w-28 opacity-70 m-4 flex "
-                key={user.userId}
-              >
-                <p className="m-[auto]">{user.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        </div> 
       )}
     </div>
   );
