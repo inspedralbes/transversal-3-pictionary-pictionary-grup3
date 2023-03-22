@@ -4,3 +4,4 @@ export * from './CreateGame';
 export * from './LoginForm';
 export * from './RegisterForm';
 export * from './PlayGame';
+export * from './RankingGame'

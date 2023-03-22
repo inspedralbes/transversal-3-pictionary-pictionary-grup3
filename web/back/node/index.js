@@ -19,7 +19,7 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     socket.data.current_lobby = null;
-    
+
     socket.on("get lobbies", () => {
         sendLobbyList();
     });
@@ -32,16 +32,23 @@ io.on("connection", (socket) => {
             }
         });
         if (!lobby_exists) {
+            let randomWords = data.words.words;
+            const random = () => Math.random() - 0.5;
             lobbies.push({
                 lobby_code: data.lobby_code,
                 category: data.category,
                 maxUsers: data.maxUsers,
+                created: new Date().getTime(),
                 users: [],
+                userWords: [],
                 round: 0,
+                turn: 0,
+                totalTurns: 0,
                 painter: null,
-                drawings: [],
+                // drawings: [],
                 word: "",
-                words: data.words.words,
+                time: 90,
+                words: randomWords.sort(random),
             });
             sendLobbyList();
         }
@@ -63,16 +70,17 @@ io.on("connection", (socket) => {
                             userId: data.userId,
                             ready: false,
                             score: 0,
+                            answered: false,
                         });
+                        socket.join(data.lobby_code);
+                        socket.data.current_lobby = data.lobby_code;
+                        socket.data.name = data.name;
+                        socket.data.userId = data.userId;
+                        sendUserList(socket);
                     }
                 }
             }
         });
-        socket.join(data.lobby_code);
-        socket.data.current_lobby = data.lobby_code;
-        socket.data.name = data.name;
-        socket.data.userId = data.userId;
-        sendUserList(socket);
     });
 
     socket.on("get user list", () => {
@@ -80,20 +88,20 @@ io.on("connection", (socket) => {
     });
 
     socket.on('draw', function (data) {
-        lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == socket.data.current_lobby) {
-                switch (data.action) {
-                    case 'i': lobby.drawings.push(data);
-                        break;
-                    case 'p': lobby.drawings.push(data);
-                        break;
-                    case 'b': lobby.drawings = [];
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+        // lobbies.forEach((lobby) => {
+        // if (lobby.lobby_code == socket.data.current_lobby) {
+        //     switch (data.action) {
+        //         case 'i': lobby.drawings.push(data);
+        //             break;
+        //         case 'p': lobby.drawings.push(data);
+        //             break;
+        //         case 'b': lobby.drawings = [];
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
+        // });
         io.to(socket.data.current_lobby).emit("draw", {
             data
         });
@@ -115,6 +123,8 @@ io.on("connection", (socket) => {
                 });
                 if (ready == lobby.maxUsers) {
                     lobby.round = 1;
+                    lobby.turn = 1;
+                    lobby.totalTurns = 1;
                     lobby.painter = lobby.users[0].name;
                     lobby.word = lobby.words[0].word;
                     io.to(socket.data.current_lobby).emit("start game", { lobby });
@@ -125,39 +135,41 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("next round", () => {
-        lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == socket.data.current_lobby) {
-                if (lobby.round == lobby.users.length) {
-                    let finishedLobby = lobby;
-                    lobby.drawings = [];
-                    lobby.round = 0;
-                    lobby.painter = null;
-                    lobby.word = "";
-                    lobby.users.forEach((user) => {
-                        user.ready = false;
-                        user.score = 0;
-                    });
-                    io.to(socket.data.current_lobby).emit("finished game", { "score": finishedLobby.users, "lobby": lobby });
-                } else {
-                    lobby.round = lobby.round + 1;
-                    lobby.painter = lobby.users[lobby.round - 1].name;
-                    lobby.word = lobby.words[lobby.round - 1].word;
-                    io.to(socket.data.current_lobby).emit("next round", { lobby });
-                }
-            }
-        });
+    socket.on("next turn", () => {
+        nextTurn(socket);
     });
 
-    socket.on("correct word", (data) => {
+    socket.on("word inserted", (data) => {
         lobbies.forEach((lobby) => {
             if (lobby.lobby_code == socket.data.current_lobby) {
+                if (lobby.word == data.word) {
+                    lobby.users.forEach((user) => {
+                        if (user.name == socket.data.name) {
+                            user.answered = true;
+                            user.score = user.score + (data.time + 10);
+                            io.to(socket.data.current_lobby).emit("correct word", { lobby });
+                            lobby.userWords.push({
+                                name: socket.data.name,
+                                word: "Answered correctly",
+                            });
+                        }
+                    });
+                } else {
+                    lobby.userWords.push({
+                        name: socket.data.name,
+                        word: "Answered wrong",
+                    });
+                }
+                io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
+                let usersAnswered = 0;
                 lobby.users.forEach((user) => {
-                    if (user.name == socket.data.name) {
-                        user.score = user.score + data.score;
-                        io.to(socket.data.current_lobby).emit("correct word", { lobby });
+                    if (user.answered) {
+                        usersAnswered++;
                     }
                 });
+                if (usersAnswered == lobby.users.length - 1) {
+                    nextTurn(socket);
+                }
             }
         });
     });
@@ -209,6 +221,42 @@ function leaveLobby(socket) {
 function sendLobbyList() {
     io.emit("lobbies list", lobbies);
 }
+
+function nextTurn(socket) {
+    lobbies.forEach((lobby, index) => {
+        if (lobby.lobby_code == socket.data.current_lobby) {
+            if (lobby.turn == lobby.users.length && lobby.round == 3) {
+                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": lobby.users });
+                lobbies.splice(index, 1);
+                sendLobbyList();
+            } else {
+                if (lobby.turn == lobby.users.length && lobby.round < 3) {
+                    lobby.round = lobby.round + 1;
+                    lobby.turn = 1;
+                } else {
+                    lobby.turn = lobby.turn + 1;
+                }
+                lobby.totalTurns = lobby.totalTurns + 1;
+                lobby.painter = lobby.users[lobby.turn - 1].name;
+                lobby.word = lobby.words[lobby.totalTurns - 1].word;
+                lobby.users.forEach((user) => {
+                    user.answered = false;
+                });
+                io.to(socket.data.current_lobby).emit("next turn", { lobby });
+            }
+        }
+    });
+};
+
+setInterval(function () {
+    lobbies.forEach((lobby, index) => {
+        let diference = ((new Date().getTime() - lobby.created) / 60) / 1000;
+        if (parseInt(diference) >= 30 && lobby.users.length === 0) {
+            lobbies.splice(index, 1);
+        }
+        sendLobbyList();
+    });
+}, 1000 * 30);
 
 server.listen(7500, () => {
     console.log("Listening on port 7500");
