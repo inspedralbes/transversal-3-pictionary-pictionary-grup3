@@ -77,7 +77,7 @@ export const LoginForm = () => {
             <input type="hidden" name="remember" value="true"></input>
             <div className="-space-y-px rounded-lg shadow-sm">
               <div className="relative">
-                <label htmlFor="username-address" className="">
+                <label htmlFor="username-address" className="sr-only">
                   Username
                 </label>
                 <div className="relative">
@@ -106,12 +106,12 @@ export const LoginForm = () => {
                     autoComplete="username"
                     required
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
-                  // placeholder='Username'
+                    placeholder='Username'
                   ></input>
                 </div>
               </div>
               <div className="relative">
-                <label htmlFor="password" className="">
+                <label htmlFor="password" className="sr-only">
                   Password
                 </label>
                 <div className="relative">
@@ -139,26 +139,14 @@ export const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     required
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
-                  // placeholder='Password'
+                    className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
+                    placeholder='Password'
                   ></input>
                 </div>
               </div>
             </div>
             <div className="block items-center justify-between1">
-              <div className="flex items-center relative w-full">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 accent-rose-500"
-                ></input>
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
+              <div className="mb-5 flex items-center relative w-full">
                 <Link
                   to="/register"
                   className="font-medium text-rose-800 hover:text-rose-500"
