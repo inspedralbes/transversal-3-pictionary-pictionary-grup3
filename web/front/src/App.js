@@ -8,6 +8,7 @@ import {
   RegisterForm,
   LoginForm,
   PlayGame,
+  Categories
 } from './pages';
 import Test from './pages/Test';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/playGame' element={<PlayGame socket={socket} />} />
           <Route path='/register' element={<RegisterForm />} />
           <Route path='/login' element={<LoginForm />} />
+          <Route path='/categories' element={<Categories />} />
           <Route path='/test' element={<Test socket={socket} />} />
         </Routes>
       </Router>
