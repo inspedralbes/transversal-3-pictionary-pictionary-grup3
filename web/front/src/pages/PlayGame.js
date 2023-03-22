@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../style/style.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
@@ -12,6 +13,8 @@ export const PlayGame = ({ socket }) => {
   const [timer, setTimer] = useState(90);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
+
+  const navigate = useNavigate()
 
   const nameUser = stateUserData;
   const canvasRef = useRef(null);
@@ -92,6 +95,10 @@ export const PlayGame = ({ socket }) => {
       setWordCorrect(false)
       wipe()
     });
+
+    socket.on('finished game', (data) => {
+      navigate('../rankingGame')
+    })
   });
 
   const handleSubmit = (e) => {
