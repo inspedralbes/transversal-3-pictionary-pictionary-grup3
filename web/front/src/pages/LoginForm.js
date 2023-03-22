@@ -3,7 +3,7 @@ import logo from "../style/logoPictoboomSmall.png";
 import "../style/style.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLoginToken } from "../features/loginSlice";
+import { setLoginToken, setLoginUser } from "../features/loginSlice";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -28,7 +28,8 @@ export const LoginForm = () => {
       });
       const json = await response.json();
       // console.log("Response:", json);
-      dispatch(setLoginToken(json));
+      dispatch(setLoginToken(json.token));
+      dispatch(setLoginUser(json.user.username));
     } catch (error) {
       // console.error("Error:", error);
     }
