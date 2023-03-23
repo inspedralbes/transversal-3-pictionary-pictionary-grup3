@@ -74,8 +74,20 @@ io.on("connection", (socket) => {
                         socket.data.name = data.name;
                         socket.data.userId = data.userId;
                         sendUserList(socket);
+                    } else {
+                        io.to(socket).emit("not joined", {
+                            "errorMsg": "name not available",
+                        });
                     }
+                } else {
+                    io.to(socket).emit("not joined", {
+                        "errorMsg": "lobby is full",
+                    });
                 }
+            } else {
+                io.to(socket).emit("not joined", {
+                    "errorMsg": "lobby don't exist",
+                });
             }
         });
     });
