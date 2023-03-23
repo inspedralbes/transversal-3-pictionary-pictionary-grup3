@@ -1,19 +1,16 @@
 const express = require("express");
 const app = express();
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
-
-app.use(cors());
-
+const http = require('http');
 const server = http.createServer(app);
+const port = 7500;
+const host = '0.0.0.0';
 
 let lobbies = [];
 
-const io = new Server(server, {
+const io = require("socket.io")(server, {
     cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"],
+        origin: true,
+        credentials: true,
     },
 });
 
@@ -47,7 +44,7 @@ io.on("connection", (socket) => {
                 painter: null,
                 // drawings: [],
                 word: "",
-                time: 90,
+                time: 10,
                 words: randomWords.sort(random),
             });
             sendLobbyList();
@@ -258,6 +255,6 @@ setInterval(function () {
     });
 }, 1000 * 30);
 
-server.listen(7500, () => {
-    console.log("Listening on port 7500");
+server.listen(port, host, () => {
+    console.log("Listening on " + host + ":" + port);
 });

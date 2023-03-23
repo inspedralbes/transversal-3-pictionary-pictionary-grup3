@@ -15,11 +15,14 @@ export const CreateGame = ({ socket }) => {
   const [words, setWords] = useState([]);
   const [idCategory, setIdCategory] = useState(1);
 
+  // const navigate = useNavigate();
+
   useEffect(() => {
     codeGenerator();
     getCollection();
-    console.log(stateLoginToken);
-    console.log(stateLoginUser);
+    // if (stateLoginToken && stateLoginUser) {
+    //   navigate("../login");
+    // }
   }, []);
 
   useEffect(() => {
@@ -65,14 +68,15 @@ export const CreateGame = ({ socket }) => {
   };
 
   const getCollection = async () => {
+    console.log(stateLoginToken)
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/list-categories`,
         {
           headers: {
-            "Content-Type": "application/json",
-            // Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
-            Authorization: "Bearer " + stateLoginToken,
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
+            // Authorization: `Bearer ${stateLoginToken}`,
           },
           method: "get",
         }

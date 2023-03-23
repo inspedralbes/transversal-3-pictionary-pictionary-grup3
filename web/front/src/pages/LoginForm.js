@@ -24,7 +24,6 @@ export const LoginForm = () => {
     if (logged) {
       let token = JSON.parse(logged).token;
       let username = JSON.parse(logged).username;
-      console.log(token)
       dispatch(setLoginToken(token));
       dispatch(setLoginUser(username));
       navigate("../createGame");
