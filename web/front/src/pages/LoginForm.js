@@ -1,15 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../style/logoPictoboomSmall.png";
 import "../style/style.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLoginToken } from "../features/loginSlice";
+import { useNavigate } from "react-router-dom";
+import { setLoginToken, setLoginUser } from "../features/loginSlice";
 
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    readCookie();
+  }, []);
+
+  const readCookie = () => {
+    let logged = getCookie("sessionCookie=");
+    if (logged) {
+      let token = JSON.parse(logged).token;
+      let username = JSON.parse(logged).username;
+      dispatch(setLoginToken(token));
+      dispatch(setLoginUser(username));
+      navigate("../createGame");
+    }
+  };
+
+  function getCookie(name) {
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,8 +58,24 @@ export const LoginForm = () => {
         body: JSON.stringify(data),
       });
       const json = await response.json();
-      // console.log("Response:", json);
-      dispatch(setLoginToken(json));
+      console.log("Response:", json);
+      console.log(json.token)
+      dispatch(setLoginToken(json.token));
+      dispatch(setLoginUser(json.user.username));
+      let sessionCookie = {
+        username: json.user.username,
+        token: json.token,
+      };
+      const d = new Date();
+      d.setTime(d.getTime() + 7 * 24 * 60 * 60 * 1000);
+      let expires = "expires=" + d.toUTCString();
+      document.cookie =
+        "sessionCookie=" +
+        JSON.stringify(sessionCookie) +
+        ";" +
+        expires +
+        ";path=/";
+      navigate("../createGame");
     } catch (error) {
       // console.error("Error:", error);
     }
@@ -76,10 +123,6 @@ export const LoginForm = () => {
           <form className="mt-8 space-y-6" action="#" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" value="true"></input>
             <div className="-space-y-px rounded-lg shadow-sm">
-              <div className="relative">
-                <label htmlFor="username-address" className="">
-                  Username
-                </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <svg
@@ -106,12 +149,11 @@ export const LoginForm = () => {
                     autoComplete="username"
                     required
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
-                  // placeholder='Username'
+                    placeholder="Username"
                   ></input>
-                </div>
               </div>
               <div className="relative">
-                <label htmlFor="password" className="">
+                <label htmlFor="password" className="sr-only">
                   Password
                 </label>
                 <div className="relative">
@@ -139,34 +181,25 @@ export const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     required
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
-                  // placeholder='Password'
+                    className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
+                    placeholder="Password"
                   ></input>
                 </div>
               </div>
             </div>
             <div className="block items-center justify-between1">
-              <div className="flex items-center relative w-full">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 accent-rose-500"
-                ></input>
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-                <Link
-                  to="/register"
-                  className="font-medium text-rose-800 hover:text-rose-500"
-                >
+              <div className="mb-5 flex items-center relative w-full">
+                <p to="/register" className="text-neutral-500">
                   Don't have an account yet?
-                </Link>
+                  <Link
+                    to="/register"
+                    className="font-medium text-rose-800 hover:text-rose-500 ml-1"
+                  >
+                    Create an account
+                  </Link>
+                </p>
               </div>
-              <div className="">
+              <div>
                 <button
                   type="submit"
                   className="group relative flex w-full justify-center rounded-lg bg-rose-500 py-2 px-3 text-sm font-semibold text-white hover:pink-to-orange-gr focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -185,7 +218,7 @@ export const LoginForm = () => {
                       />
                     </svg>
                   </span>
-                  Sign in
+                  Login
                 </button>
               </div>
             </div>
