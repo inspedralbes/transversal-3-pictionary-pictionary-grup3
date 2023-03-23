@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
 
 export const CreateGame = ({ socket }) => {
-  const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
+  const stateLoginToken = useSelector((state) => state.login.loginToken);
+  const stateLoginUser = useSelector((state) => state.login.loginUser);
   const [room, setRoom] = useState(null);
   const [users, setUsers] = useState(0);
   const [lobbies, setLobbies] = useState([]);
@@ -12,9 +14,14 @@ export const CreateGame = ({ socket }) => {
   const [words, setWords] = useState([]);
   const [idCategory, setIdCategory] = useState(1);
 
+  // const navigate = useNavigate();
+
   useEffect(() => {
     codeGenerator();
     getCollection();
+    // if (stateLoginToken && stateLoginUser) {
+    //   navigate("../login");
+    // }
   }, []);
 
   useEffect(() => {
@@ -43,13 +50,14 @@ export const CreateGame = ({ socket }) => {
       const data = await response.json();
       setWords(data);
       setLoading(false);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const getCollection = async () => {
+    console.log(stateLoginToken)
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/list-categories`,
@@ -57,7 +65,7 @@ export const CreateGame = ({ socket }) => {
           headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
-            // Authorization: 'Bearer ' + stateLoginToken,
+            // Authorization: `Bearer ${stateLoginToken}`,
           },
           method: 'get',
         }
@@ -87,7 +95,6 @@ export const CreateGame = ({ socket }) => {
       words: words,
     });
     getLobby();
-    showLobby();
   };
 
   const getLobby = () => {
@@ -95,10 +102,6 @@ export const CreateGame = ({ socket }) => {
     socket.on('lobbies list', function (data) {
       setLobbies(data);
     });
-  };
-
-  const showLobby = () => {
-    console.log(lobbies);
   };
 
   return (

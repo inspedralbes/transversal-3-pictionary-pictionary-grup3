@@ -6,7 +6,7 @@ import scoreBoardReducer from '../features/scoreBoardSlice';
 export const store = configureStore({
   reducer: {
     dataUser: dataUserReducer,
-    loginToken: loginReducer,
+    login: loginReducer,
     scoreBoard: scoreBoardReducer,
   },
 });
