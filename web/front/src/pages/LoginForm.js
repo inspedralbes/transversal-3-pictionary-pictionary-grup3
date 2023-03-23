@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLoginToken, setLoginUser } from "../features/loginSlice";
 
+import Swal from 'sweetalert2'
+
 export const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -76,9 +78,22 @@ export const LoginForm = () => {
         ";" +
         expires +
         ";path=/";
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          title: 'Success',
+          showConfirmButton: false,
+          timer: 1500
+        })
       navigate("../createGame");
     } catch (error) {
-      // console.error("Error:", error);
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'error',
+        title: 'Incorrect Credentials',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 
