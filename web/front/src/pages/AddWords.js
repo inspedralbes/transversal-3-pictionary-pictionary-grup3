@@ -7,14 +7,14 @@ export const AddWords = ({ socket }) => {
 
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [idCategory, setIdCategory] = useState(1);
     const [words, setWords] = useState([]);
     const [isWords, setIsWords] = useState(false);
-    const [userWords, setUserWords] = useState([]);
     const [word, setUserWord] = useState("");
     const [description, setUserDescription] = useState("");
     const [Cword, setUserCWord] = useState("");
     const [Cdescription, setUserCDescription] = useState("");
+    const [idCategory, setIdCategory] = useState("");
+    let auxIdCategory = 0;
 
     useEffect(() => {
         getCollection();
@@ -50,12 +50,11 @@ export const AddWords = ({ socket }) => {
                 },
                 method: 'post',
                 body: JSON.stringify({
-                    idCategory: idCategory,
+                    idCategory: auxIdCategory,
                 }),
             });
             const data = await response.json();
             setWords(data);
-            console.log(data);
             setIsWords(true);
         } catch (error) {
             console.error(error);
@@ -64,27 +63,44 @@ export const AddWords = ({ socket }) => {
 
     const handleSelect = (e) => {
         setIsWords(false);
+        auxIdCategory = e.target.value;
         setIdCategory(e.target.value);
         getWords();
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        console.log(idCategory);
         e.preventDefault();
-        let userWordsAux = userWords;
-        userWordsAux.push({ word: word, description: description, catWord: Cword, catDescription: Cdescription });
-        setUserWords(userWordsAux);
+
+        if (word != "" && description != "" && Cword != "" && Cdescription != "") {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/create-word`, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // Authorization: 'Bearer ' + stateLoginToken,
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "idCategory": idCategory,
+                        "word": word,
+                        "description": description,
+                        "word_ca": Cword,
+                        "description_ca": Cdescription,
+                    }),
+                });
+
+                setIsWords(true);
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
         setUserWord("");
         setUserDescription("");
+        setUserCWord("");
+        setUserCDescription("");
+        getWords();
     };
-
-    const handleDelete = (index) => {
-        const userWordsAux = [...userWords];
-        userWordsAux.splice(index, 1);
-        setUserWords(userWordsAux);
-
-        console.log(userWords);
-    }
 
     return (
         <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
@@ -137,27 +153,6 @@ export const AddWords = ({ socket }) => {
                                 <button type="submit" className='rounded-lg w-24 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold'>Add Word</button>
                             </form>
                         </div>
-                        {userWords != 0 ? (
-                            <div className='max-h-72 overflow-y-scroll'>
-                                <table className='text-left'>
-                                    <thead>
-                                        <tr>
-                                            <th>Word</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {userWords.map((word, index) => (
-                                            <tr key={index}>
-                                                <td>{word.word}</td>
-                                                <td>{word.description}</td>
-                                                <td onClick={() => handleDelete(index)}>Delete</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        ) : (<input type="hidden"></input>)}
                         <div className='bg-rose-100 lg:w-[32rem] lg:h-auto opacity-70 lg:rounded-lg p-6 block h-screen w-screen'>
                             <div className='overflow-y-scroll h-[400px]'>
                                 <table className='text-left'>
