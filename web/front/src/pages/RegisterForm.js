@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import logo from "../style/logoPictoboomSmall.png";
 import { Link } from "react-router-dom";
 import "../style/style.css";
+import Swal from "sweetalert2";
+
+import { useNavigate } from "react-router-dom";
 
 export const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,9 +33,22 @@ export const RegisterForm = () => {
       });
       const json = await response.json();
       console.log("Response:", json);
-      //Cookie????
+      Swal.fire({
+        position: "bottom-end",
+        icon: "success",
+        title: "Please Login",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("../login");
     } catch (error) {
-      console.error("Error:", error);
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Invalid Credentials",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
