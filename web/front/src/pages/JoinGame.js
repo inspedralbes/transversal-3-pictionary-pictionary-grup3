@@ -5,15 +5,17 @@ import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { setUserData } from "../features/dataUserSlice";
 
+import Swal from 'sweetalert2'
+
 export const JoinGame = ({ socket }) => {
   const [nameUser, setNameUser] = useState("");
   const [lobbyCode, setLobbyCode] = useState("");
   const [inLobby, setInLobby] = useState(false);
-  const [error, setError] = useState("");
   const [usersReady, setUsersReady] = useState([]);
   const [ready, setReady] = useState(false);
   const [currentPlayers, setCurrentPlayers] = useState(0);
   const [maxPlayers, setMaxPlayers] = useState(0);
+  const [error, setError] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,11 +28,21 @@ export const JoinGame = ({ socket }) => {
         userId: uuidv4(),
         lobby_code: parseInt(lobbyCode),
       });
+      socket.on('not joined', (dataError) => {
+        setError(dataError);
+      })
       setInLobby(true);
       dispatch(setUserData(nameUser));
     } else {
-      setError("Fill in the blanks");
+      setError('Fill the blanks')
     }
+    Swal.fire({
+      position: "bottom-end",
+      icon: "error",
+      title: error,
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   const handleClickLeave = (e) => {
@@ -115,7 +127,6 @@ export const JoinGame = ({ socket }) => {
             >
               Send
             </button>
-            {error}
           </form>
         </div>
       ) : (
