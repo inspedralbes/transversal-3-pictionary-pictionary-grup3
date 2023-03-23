@@ -23,15 +23,15 @@ export const RankingGame = () => {
     
     return (
         <div>
-            <ul className="list-none p-0;">
+            <div className="list-none p-0;">
                 {scoreSort.map((player, index) => (
-                <li key={player.userId} className="flex justify-between align-center p-10 border-b-2 ">
+                <div key={player.userId} className="flex justify-between align-center p-10 border-b-2 ">
                     <span>{index+1}.</span>
-                    <span>{player.name}</span>
+                    <span className="uppercase font-semibold">{player.name}</span>
                     <span>{player.score}</span>
-                </li>
+                </div>
                 ))}
-            </ul>
+            </div>
         </div>
     )
   };
