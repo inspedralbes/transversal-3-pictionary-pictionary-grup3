@@ -236,10 +236,6 @@ export const PlayGame = ({ socket }) => {
     };
   }
 
-  function changeBackground(){
-
-  }
-
   return (
     <div className="flex -ml-72 bg-cover bg-center h-screen lg:bg-fixed bg-[url('../style/webBackground.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
