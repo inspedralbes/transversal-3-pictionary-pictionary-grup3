@@ -124,25 +124,25 @@ export const JoinGame = ({ socket }) => {
               Leave lobby
             </button>
           <div className="flex m-[auto] ">
-            <div className="flex-nowrap m-[auto]">
-              <h2 className="font-semibold text-5xl">Welcome <p className="font-bold text-yellow-400 inline">{nameUser}</p>!<br></br>Are you ready?!</h2>
+            <div className="flex flex-col m-[auto]">
+              <h2 className="font-semibold text-5xl text-center mb-10">Welcome <p className="font-bold text-yellow-400 inline">{nameUser}</p>!<br></br>Are you ready?!</h2>
                 {!ready ? (
                   <button
                     onClick={handleClickReady}
-                    className="default-button m-1 text-red-700 font-extrabold bg-red-200 red transition duration-100"
+                    className="default-button m-[auto]  text-red-700 font-extrabold bg-red-200 transition duration-100 hover:shadow-[0_20px_60px_-5px_rgba(0,0,0,0.7)] text-center w-60 h-16"
                   >
                     NOT READY
                   </button>
                 ) : (
                   <button
                     onClick={handleClickReady}
-                    className="default-button m-1 disabled text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50 transition duration-100"
+                    className="default-button m-[auto] text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50 transition duration-100 text-center w-60 h-16"
                     disabled
                   >
                     READY
                   </button>
                 )}
-            <div className="grid grid-cols-4 bg-rose-50 bg-opacity-25 w-fit rounded-lg">
+            <div className="grid grid-cols-4 bg-rose-50 bg-opacity-25 w-fit rounded-lg mt-8"> 
               {usersReady.map((user) => (
                 <div
                   className="col-span-1 rounded-full bg-pink-50  h-28 w-28 bg-opacity-60 m-4 flex border-dashed border-2 border-pink-600"
