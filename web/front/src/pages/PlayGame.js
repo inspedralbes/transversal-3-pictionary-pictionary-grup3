@@ -11,7 +11,7 @@ export const PlayGame = ({ socket }) => {
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(0);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
@@ -198,7 +198,10 @@ export const PlayGame = ({ socket }) => {
     socket.on("draw", function (data) {
       if (data.data.action == "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
-      } else {
+        canvas.style.backgroundColor = '#ffffff';
+      } else if(data.data.action=="z"){
+        canvas.style.backgroundColor = data.data.c;
+      }else {
         draw(
           data.data.x,
           data.data.y,
@@ -214,7 +217,15 @@ export const PlayGame = ({ socket }) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
-    socket.emit("draw", { x: null, y: null, action: "b" });
+    canvas.style.backgroundColor = '#ffffff';
+    socket.emit("draw", { x: null, y: null, action: "b"});
+  }
+  
+  const changeBackground = () => {
+    colorCanva = document.getElementById('colorPicker').value;
+    canvas.style.backgroundColor = colorCanva;
+
+    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva});
   }
 
   function getMousePos(canvas, evt) {
@@ -258,12 +269,18 @@ export const PlayGame = ({ socket }) => {
                 className="w-96 -ml-0.5 p-3 bg-white border-4 border-rose-500 "
               >
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-                  Choose your colors
+                  Painter Tools
                   <button
                     onClick={wipe}
                     className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                   >
                     Wipe
+                  </button>
+                  <button 
+                    onClick={changeBackground}
+                    className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  >
+                    Cubo
                   </button>
                 </h2>
                 <div className="flex items-center mb-4">
@@ -363,7 +380,7 @@ export const PlayGame = ({ socket }) => {
                   onChange={(e) => setWordInserted(e.target.value)}
                   className="w-64 border-2 border-gray-300 p-2 flex-1"
                   placeholder="Type the word"
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               ) : (
                 <form onSubmit={handleSubmit} className="flex items-center">
@@ -374,7 +391,7 @@ export const PlayGame = ({ socket }) => {
                     onChange={(e) => setWordInserted(e.target.value)}
                     className="inline w-40 border-2 border-gray-300 p-2 flex-1"
                     placeholder="Type the word"
-                    autocomplete="off"
+                    autoComplete="off"
                   />
                   <button
                     type="submit"

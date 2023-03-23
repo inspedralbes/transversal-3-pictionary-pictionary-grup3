@@ -43,7 +43,7 @@ export const CreateGame = ({ socket }) => {
       const data = await response.json();
       setWords(data);
       setLoading(false);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +87,6 @@ export const CreateGame = ({ socket }) => {
       words: words,
     });
     getLobby();
-    showLobby();
   };
 
   const getLobby = () => {
@@ -95,10 +94,6 @@ export const CreateGame = ({ socket }) => {
     socket.on('lobbies list', function (data) {
       setLobbies(data);
     });
-  };
-
-  const showLobby = () => {
-    console.log(lobbies);
   };
 
   return (
