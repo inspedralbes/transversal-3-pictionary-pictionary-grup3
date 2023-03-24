@@ -32,14 +32,21 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
+    canvas = canvasRef.current;
+    context = canvas.getContext("2d");
+  });
+
+  useEffect(() => {
     socket.emit("ready user");
     socket.on("start game", (data) => {
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
+        canvas.classList.add("pincel");
       } else {
         setPainter(false);
         painterAux = false;
+        canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
       let str = "";
@@ -92,9 +99,11 @@ export const PlayGame = ({ socket }) => {
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
+        canvas.classList.add("pincel");
       } else {
         setPainter(false);
         painterAux = false;
+        canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
       let str = "";
@@ -128,11 +137,6 @@ export const PlayGame = ({ socket }) => {
       setWordInserted("");
     }
   };
-
-  useEffect(() => {
-    canvas = canvasRef.current;
-    context = canvas.getContext("2d");
-  });
 
   useEffect(() => {
     canvas.addEventListener("mousedown", function (event) {
@@ -230,7 +234,7 @@ export const PlayGame = ({ socket }) => {
     canvas.style.backgroundColor = colorCanva;
 
     socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva });
-  };
+  }
 
   function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -241,7 +245,7 @@ export const PlayGame = ({ socket }) => {
   }
 
   return (
-    <div className="flex -ml-72 bg-cover bg-center h-screen lg:bg-fixed bg-[url('../style/webBackground.png')]">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
         <div
           className="absolute inset-0 z-[-1] bg-cover bg-center"
@@ -258,7 +262,7 @@ export const PlayGame = ({ socket }) => {
               <div className=" ml-5 mt-5 ">
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
-                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">                
+                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
                       <strong>{userCorrectWords.name}</strong>:{" "}
                       {userCorrectWords.score} {userCorrectWords.name === whoPaint ? '🖌️' : <></>}
                     </div>

@@ -36,6 +36,7 @@ io.on("connection", (socket) => {
                 category: data.category,
                 maxUsers: data.maxUsers,
                 created: new Date().getTime(),
+                teacher: data.teacher,
                 users: [],
                 userWords: [],
                 round: 0,
@@ -53,6 +54,7 @@ io.on("connection", (socket) => {
 
     socket.on("join room", (data) => {
         let available = true;
+        let joined = false;
         if (lobbies.length > 0) {
             lobbies.forEach((lobby) => {
                 if (lobby.lobby_code == data.lobby_code) {
@@ -74,6 +76,7 @@ io.on("connection", (socket) => {
                             socket.data.current_lobby = data.lobby_code;
                             socket.data.name = data.name;
                             socket.data.userId = data.userId;
+                            joined = true;
                             sendUserList(socket);
                         } else {
                             io.to(socket.id).emit("not joined", {
@@ -85,12 +88,13 @@ io.on("connection", (socket) => {
                             "errorMsg": "Lobby is full",
                         });
                     }
-                } else {
-                    io.to(socket.id).emit("not joined", {
-                        "errorMsg": "Lobby doesn't exist",
-                    });
                 }
             });
+            if (!joined) {
+                io.to(socket.id).emit("not joined", {
+                    "errorMsg": "Lobby doesn't exist",
+                });
+            }
         } else {
             io.to(socket.id).emit("not joined", {
                 "errorMsg": "Lobby doesn't exist",

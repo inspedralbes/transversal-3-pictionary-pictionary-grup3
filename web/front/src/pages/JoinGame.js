@@ -84,7 +84,7 @@ export const JoinGame = ({ socket }) => {
   });
 
   return (
-    <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center justify-center lg:bg-[url('../style/webBackground.png')] w-screen">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       {!inLobby ? (
         <div className="m-[auto] border-2 rounded-lg w-80 p-16 bg-pink-50 bg-opacity-60">
           <form onSubmit={handleSubmit}>
@@ -138,7 +138,7 @@ export const JoinGame = ({ socket }) => {
                   READY
                 </button>
               )}
-              <div className="grid grid-cols-4 bg-rose-50 bg-opacity-25 w-fit rounded-lg mt-8"> 
+              <div className="grid grid-cols-4 bg-rose-50 bg-opacity-25 w-fit rounded-lg mt-8">
                 {usersReady.map((user) => (
                   <div
                     className="col-span-1 rounded-full bg-pink-50  h-28 w-28 bg-opacity-60 m-4 flex border-dashed border-2 border-pink-600"
