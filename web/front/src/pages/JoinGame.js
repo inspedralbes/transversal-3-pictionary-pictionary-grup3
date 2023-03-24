@@ -56,6 +56,7 @@ export const JoinGame = ({ socket }) => {
     e.preventDefault();
     socket.emit("leave lobby");
     setInLobby(false);
+    setReady(false);
   };
 
   const handleClickReady = () => {
