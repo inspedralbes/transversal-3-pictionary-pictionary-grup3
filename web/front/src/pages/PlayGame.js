@@ -50,7 +50,6 @@ export const PlayGame = ({ socket }) => {
       setUserCorrectWords(data.lobby.users);
       // setTime(data.lobby.time);
     });
-    
   }, [socket]);
 
   // function setTime(time) {
@@ -115,14 +114,16 @@ export const PlayGame = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (word === wordInserted.toLowerCase()) {
-      setWordCorrect(true);
+    if (wordInserted !== "") {
+      if (word === wordInserted.toLowerCase()) {
+        setWordCorrect(true);
+      }
+      socket.emit("word inserted", {
+        word: wordInserted.toLowerCase(),
+        time: timer,
+      });
+      setWordInserted("");
     }
-    socket.emit("word inserted", {
-      word: wordInserted.toLowerCase(),
-      time: timer,
-    });
-    setWordInserted("");
   };
 
   useEffect(() => {
@@ -198,10 +199,10 @@ export const PlayGame = ({ socket }) => {
     socket.on("draw", function (data) {
       if (data.data.action == "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.style.backgroundColor = '#ffffff';
-      } else if(data.data.action=="z"){
+        canvas.style.backgroundColor = "#ffffff";
+      } else if (data.data.action == "z") {
         canvas.style.backgroundColor = data.data.c;
-      }else {
+      } else {
         draw(
           data.data.x,
           data.data.y,
@@ -217,16 +218,16 @@ export const PlayGame = ({ socket }) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.style.backgroundColor = '#ffffff';
-    socket.emit("draw", { x: null, y: null, action: "b"});
+    canvas.style.backgroundColor = "#ffffff";
+    socket.emit("draw", { x: null, y: null, action: "b" });
   }
-  
+
   const changeBackground = () => {
-    colorCanva = document.getElementById('colorPicker').value;
+    colorCanva = document.getElementById("colorPicker").value;
     canvas.style.backgroundColor = colorCanva;
 
-    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva});
-  }
+    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva });
+  };
 
   function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -276,7 +277,7 @@ export const PlayGame = ({ socket }) => {
                   >
                     Wipe
                   </button>
-                  <button 
+                  <button
                     onClick={changeBackground}
                     className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                   >
@@ -404,7 +405,7 @@ export const PlayGame = ({ socket }) => {
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
   );
 };
