@@ -153,7 +153,7 @@ export const CreateGame = ({ socket }) => {
               </button>
               <div className="mt-6 justify-center grid">
                 <Link
-                  to="/createCategories"
+                  to="/categories"
                   className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none"
                 >
                   Create category
