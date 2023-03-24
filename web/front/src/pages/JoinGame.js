@@ -34,7 +34,6 @@ export const JoinGame = ({ socket }) => {
 
     socket.on('not joined', (dataError) => {
       error = dataError.errorMsg;
-      console.log(error);
     });
 
     setTimeout(() => {
@@ -82,29 +81,6 @@ export const JoinGame = ({ socket }) => {
       navigate("/playGame");
     });
   });
-
-  // const [nameUser, setNameUser] = useState('');
-  // const [lobbyCode, setLobbyCode] = useState('');
-  // const [inLobby, setInLobby] = useState(false)
-
-  // const navigate = useNavigate();
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (nameUser != '') {
-  //     checkCodeRoom();
-  //   }
-  // };
-
-  // const checkCodeRoom = () => {
-  //   socket.emit('get lobbies');
-  //   socket.emit('join room', {
-  //     name: nameUser,
-  //     userId: uuidv4(),
-  //     lobby_code: lobbyCode,
-  //   });
-  //   navigate('/playGame');
-  // };
 
   return (
     <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center justify-center lg:bg-[url('../style/webBackground.png')] w-screen">
