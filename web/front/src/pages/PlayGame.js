@@ -99,9 +99,11 @@ export const PlayGame = ({ socket }) => {
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
+        canvas.classList.add("pincel");
       } else {
         setPainter(false);
         painterAux = false;
+        canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
       let str = "";
@@ -260,7 +262,7 @@ export const PlayGame = ({ socket }) => {
               <div className=" ml-5 mt-5 ">
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
-                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">                
+                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
                       <strong>{userCorrectWords.name}</strong>:{" "}
                       {userCorrectWords.score} {userCorrectWords.name === whoPaint ? '🖌️' : <></>}
                     </div>
