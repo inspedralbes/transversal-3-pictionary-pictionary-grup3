@@ -7,6 +7,7 @@ import { setScoreBoard } from "../features/scoreBoardSlice";
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
   const [painter, setPainter] = useState(false);
+  const [whoPaint, setWhoPaint] = useState(false);
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
@@ -52,6 +53,7 @@ export const PlayGame = ({ socket }) => {
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
+      setWhoPaint(data.lobby.painter)
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
@@ -106,6 +108,7 @@ export const PlayGame = ({ socket }) => {
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
+      setWhoPaint(data.lobby.painter)
       setWordLength(str);
       setRound(data.lobby.round);
       setTimer(90);
@@ -257,9 +260,9 @@ export const PlayGame = ({ socket }) => {
               <div className=" ml-5 mt-5 ">
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
-                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
+                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">                
                       <strong>{userCorrectWords.name}</strong>:{" "}
-                      {userCorrectWords.score}
+                      {userCorrectWords.score} {userCorrectWords.name === whoPaint ? '🖌️' : <></>}
                     </div>
                   </div>
                 ))}
