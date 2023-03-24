@@ -9,7 +9,10 @@ import {
   LoginForm,
   PlayGame,
   RankingGame,
-  Profile
+  Profile,
+  Categories,
+  CreateCategories,
+  AddWords,
 } from './pages';
 import Test from './pages/Test';
 
@@ -32,6 +35,9 @@ function App() {
           <Route path='/register' element={<RegisterForm />} />
           <Route path='/login' element={<LoginForm />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/categories' element={<Categories />} />
+          <Route path='/createCategories' element={<CreateCategories />} />+
+          <Route path='/addWords' element={<AddWords />} />
           <Route path='/test' element={<Test socket={socket} />} />
         </Routes>
       </Router>

@@ -36,6 +36,7 @@ io.on("connection", (socket) => {
                 category: data.category,
                 maxUsers: data.maxUsers,
                 created: new Date().getTime(),
+                teacher: data.teacher,
                 users: [],
                 userWords: [],
                 round: 0,
@@ -53,31 +54,52 @@ io.on("connection", (socket) => {
 
     socket.on("join room", (data) => {
         let available = true;
-        lobbies.forEach((lobby) => {
-            if (lobby.lobby_code == data.lobby_code) {
-                if (lobby.users.length < lobby.maxUsers) {
-                    lobby.users.forEach(user => {
-                        if (user.name == data.name) {
-                            available = false;
-                        }
-                    });
-                    if (available) {
-                        lobby.users.push({
-                            name: data.name,
-                            userId: data.userId,
-                            ready: false,
-                            score: 0,
-                            answered: false,
+        let joined = false;
+        if (lobbies.length > 0) {
+            lobbies.forEach((lobby) => {
+                if (lobby.lobby_code == data.lobby_code) {
+                    if (lobby.users.length < lobby.maxUsers) {
+                        lobby.users.forEach(user => {
+                            if (user.name == data.name) {
+                                available = false;
+                            }
                         });
-                        socket.join(data.lobby_code);
-                        socket.data.current_lobby = data.lobby_code;
-                        socket.data.name = data.name;
-                        socket.data.userId = data.userId;
-                        sendUserList(socket);
+                        if (available) {
+                            lobby.users.push({
+                                name: data.name,
+                                userId: data.userId,
+                                ready: false,
+                                score: 0,
+                                answered: false,
+                            });
+                            socket.join(data.lobby_code);
+                            socket.data.current_lobby = data.lobby_code;
+                            socket.data.name = data.name;
+                            socket.data.userId = data.userId;
+                            joined = true;
+                            sendUserList(socket);
+                        } else {
+                            io.to(socket.id).emit("not joined", {
+                                "errorMsg": "Name not available",
+                            });
+                        }
+                    } else {
+                        io.to(socket.id).emit("not joined", {
+                            "errorMsg": "Lobby is full",
+                        });
                     }
                 }
+            });
+            if (!joined) {
+                io.to(socket.id).emit("not joined", {
+                    "errorMsg": "Lobby doesn't exist",
+                });
             }
-        });
+        } else {
+            io.to(socket.id).emit("not joined", {
+                "errorMsg": "Lobby doesn't exist",
+            });
+        }
     });
 
     socket.on("get user list", () => {

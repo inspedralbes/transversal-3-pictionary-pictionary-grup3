@@ -7,6 +7,7 @@ import { setScoreBoard } from "../features/scoreBoardSlice";
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
   const [painter, setPainter] = useState(false);
+  const [whoPaint, setWhoPaint] = useState(false);
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
   const [wordInserted, setWordInserted] = useState("");
@@ -31,26 +32,33 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
+    canvas = canvasRef.current;
+    context = canvas.getContext("2d");
+  });
+
+  useEffect(() => {
     socket.emit("ready user");
     socket.on("start game", (data) => {
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
+        canvas.classList.add("pincel");
       } else {
         setPainter(false);
         painterAux = false;
+        canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
+      setWhoPaint(data.lobby.painter)
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
       // setTime(data.lobby.time);
     });
-    
   }, [socket]);
 
   // function setTime(time) {
@@ -91,15 +99,18 @@ export const PlayGame = ({ socket }) => {
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
+        canvas.classList.add("pincel");
       } else {
         setPainter(false);
         painterAux = false;
+        canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
+      setWhoPaint(data.lobby.painter)
       setWordLength(str);
       setRound(data.lobby.round);
       setTimer(90);
@@ -115,20 +126,17 @@ export const PlayGame = ({ socket }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (word === wordInserted.toLowerCase()) {
-      setWordCorrect(true);
+    if (wordInserted !== "") {
+      if (word === wordInserted.toLowerCase()) {
+        setWordCorrect(true);
+      }
+      socket.emit("word inserted", {
+        word: wordInserted.toLowerCase(),
+        time: timer,
+      });
+      setWordInserted("");
     }
-    socket.emit("word inserted", {
-      word: wordInserted.toLowerCase(),
-      time: timer,
-    });
-    setWordInserted("");
   };
-
-  useEffect(() => {
-    canvas = canvasRef.current;
-    context = canvas.getContext("2d");
-  });
 
   useEffect(() => {
     canvas.addEventListener("mousedown", function (event) {
@@ -198,10 +206,10 @@ export const PlayGame = ({ socket }) => {
     socket.on("draw", function (data) {
       if (data.data.action == "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.style.backgroundColor = '#ffffff';
-      } else if(data.data.action=="z"){
+        canvas.style.backgroundColor = "#ffffff";
+      } else if (data.data.action == "z") {
         canvas.style.backgroundColor = data.data.c;
-      }else {
+      } else {
         draw(
           data.data.x,
           data.data.y,
@@ -217,15 +225,15 @@ export const PlayGame = ({ socket }) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.style.backgroundColor = '#ffffff';
-    socket.emit("draw", { x: null, y: null, action: "b"});
+    canvas.style.backgroundColor = "#ffffff";
+    socket.emit("draw", { x: null, y: null, action: "b" });
   }
-  
+
   const changeBackground = () => {
-    colorCanva = document.getElementById('colorPicker').value;
+    colorCanva = document.getElementById("colorPicker").value;
     canvas.style.backgroundColor = colorCanva;
 
-    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva});
+    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva });
   }
 
   function getMousePos(canvas, evt) {
@@ -237,7 +245,7 @@ export const PlayGame = ({ socket }) => {
   }
 
   return (
-    <div className="flex -ml-72 bg-cover bg-center h-screen lg:bg-fixed bg-[url('../style/webBackground.png')]">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
         <div
           className="absolute inset-0 z-[-1] bg-cover bg-center"
@@ -256,7 +264,7 @@ export const PlayGame = ({ socket }) => {
                   <div key={key}>
                     <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
                       <strong>{userCorrectWords.name}</strong>:{" "}
-                      {userCorrectWords.score}
+                      {userCorrectWords.score} {userCorrectWords.name === whoPaint ? '🖌️' : <></>}
                     </div>
                   </div>
                 ))}
@@ -276,7 +284,7 @@ export const PlayGame = ({ socket }) => {
                   >
                     Wipe
                   </button>
-                  <button 
+                  <button
                     onClick={changeBackground}
                     className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                   >
@@ -404,7 +412,7 @@ export const PlayGame = ({ socket }) => {
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
   );
 };

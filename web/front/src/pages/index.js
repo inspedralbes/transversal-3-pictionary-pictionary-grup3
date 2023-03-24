@@ -5,4 +5,8 @@ export * from './LoginForm';
 export * from './RegisterForm';
 export * from './PlayGame';
 export * from './RankingGame';
-export * from './Profile'
+export * from './Profile';
+export * from './Categories';
+export * from './CreateCategories';
+export * from './AddWords';
+export * from './RankingGame';
