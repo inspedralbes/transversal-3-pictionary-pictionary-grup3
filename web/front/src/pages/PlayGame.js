@@ -247,17 +247,17 @@ export const PlayGame = ({ socket }) => {
         ></div>
         <div className="flex mt-10 ">
           <div className="-ml-5 h-44 w-96 absolute mx-4 shadow-2xl rounded-lg">
-            <div className="w-96 h-full -ml-0.5 mb-5 bg-white border-4 border-rose-500 rounded-lg">
+            <div className="w-96 h-full -ml-0.5 mb-5 overflow-y-scroll overflow-hidden bg-white border-4 border-rose-500 rounded-lg">
               <h3 className="text-lg text-center font-bold mb-2 px-2 py-1 bg-rose-300 text-white border-4 border-rose-300 ">
                 Players
               </h3>
-              <div className="grid gap-4 grid-cols-3 grid-rows-3 ml-5 mt-5">
+              <div className=" ml-5 mt-5 ">
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
-                    <span className="px-2 py-1 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
+                    <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
                       <strong>{userCorrectWords.name}</strong>:{" "}
                       {userCorrectWords.score}
-                    </span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -404,7 +404,7 @@ export const PlayGame = ({ socket }) => {
             </div>
           </div>
         </div>
-      </div>
+    </div>
     </div>
   );
 };
