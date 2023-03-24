@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { setUserData } from "../features/dataUserSlice";
+import logoSmall from '../style/logoPictoboomSmall.png';
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export const JoinGame = ({ socket }) => {
   const [nameUser, setNameUser] = useState("");
@@ -29,10 +30,10 @@ export const JoinGame = ({ socket }) => {
         lobby_code: parseInt(lobbyCode),
       });
     } else {
-      error = 'Fill the blanks'
+      error = "Fill the blanks";
     }
 
-    socket.on('not joined', (dataError) => {
+    socket.on("not joined", (dataError) => {
       error = dataError.errorMsg;
     });
 
@@ -86,15 +87,16 @@ export const JoinGame = ({ socket }) => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       {!inLobby ? (
-        <div className="m-[auto] border-2 rounded-lg w-80 p-16 bg-pink-50 bg-opacity-60">
-          <form onSubmit={handleSubmit}>
+        <div className="m-[auto] border-2 rounded-lg w-4/12 p-16 bg-pink-50 bg-opacity-60 flex items-center">
+          {/* <img className="w-80 m-[auto]" src={logoSmall} alt="Logo" /> */}
+          <form onSubmit={handleSubmit} className="w-full">
             <label>
               <input
                 type="number"
                 value={lobbyCode}
                 onChange={(e) => setLobbyCode(e.target.value)}
                 placeholder="Lobby code"
-                className="input-join"
+                className="input-join w-10/12 focus:outline-rose-500 caret-rose-500"
               ></input>
             </label>
             <label>
@@ -103,12 +105,12 @@ export const JoinGame = ({ socket }) => {
                 value={nameUser}
                 onChange={(e) => setNameUser(e.target.value)}
                 placeholder="Your name"
-                className="input-join"
+                className="input-join w-10/12 focus:outline-rose-500 caret-rose-500"
               ></input>
             </label>
             <button
               type="submit"
-              className="relative default-button block m-4 text-2xl font-extrabold text-orange-600 hover:text-white shadow-2xl hover:pink-to-orange-gr hover:outline-gray-100 outline-orange-600 hover:animate-bounce transition duration-200 p-12"
+              className="relative default-button block text-2xl font-extrabold text-rose-600 hover:text-white shadow-2xl hover:pink-to-orange-gr hover:outline-rose-100 outline-rose-600 h-12 w-10/12"
             >
               Send
             </button>
@@ -116,12 +118,19 @@ export const JoinGame = ({ socket }) => {
         </div>
       ) : (
         <div className="block w-full lg:h-full">
-          <button onClick={handleClickLeave} className="default-button m-1 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit lg:m-16">
+          <button
+            onClick={handleClickLeave}
+            className="default-button m-1 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit lg:m-16"
+          >
             Leave lobby
           </button>
           <div className="flex m-[auto] ">
             <div className="flex flex-col m-[auto]">
-              <h2 className="font-semibold text-5xl text-center mb-10">Welcome <p className="font-bold text-yellow-400 inline">{nameUser}</p>!<br></br>Are you ready?!</h2>
+              <h2 className="font-semibold text-5xl text-center mb-10">
+                Welcome{" "}
+                <p className="font-bold text-yellow-400 inline">{nameUser}</p>!
+                <br></br>Are you ready?!
+              </h2>
               {!ready ? (
                 <button
                   onClick={handleClickReady}
@@ -144,7 +153,9 @@ export const JoinGame = ({ socket }) => {
                     className="col-span-1 rounded-full bg-pink-50  h-28 w-28 bg-opacity-60 m-4 flex border-dashed border-2 border-pink-600"
                     key={user.userId}
                   >
-                    <p className="m-[auto] opacity-1 font-semibold">{user.name}</p>
+                    <p className="m-[auto] opacity-1 font-semibold">
+                      {user.name}
+                    </p>
                   </div>
                 ))}
               </div>
