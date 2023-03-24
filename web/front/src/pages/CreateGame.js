@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import Swal from "sweetalert2";
 
@@ -20,6 +21,7 @@ export const CreateGame = ({ socket }) => {
   useEffect(() => {
     codeGenerator();
     getCollection();
+    getLobby();
     // if (stateLoginToken && stateLoginUser) {
     //   navigate("../login");
     // }
@@ -149,20 +151,32 @@ export const CreateGame = ({ socket }) => {
               >
                 Continue
               </button>
+              <div className="mt-6 justify-center grid">
+                <Link
+                  to="/createCategories"
+                  className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none"
+                >
+                  Create category
+                </Link>
+              </div>
             </>
           )}
         </div>
       ) : (
         <div className="inline mx-[auto] bg-rose-100 lg:rounded-lg m-[auto] p-6 h-auto w-screen lg:w-auto md:w-auto">
-          <label className="font-bold">Here are your lobbies! Have FUN!</label>
-          <br></br>
-          <button
-            onClick={createNewLobby}
-            className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
-          >
-            Create a new lobby
-          </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center justify-center p-8">
+          <div className="grid justify-center">
+            <label className="font-bold">
+              Here are your lobbies! Have FUN!
+            </label>
+            <br></br>
+            <button
+              onClick={createNewLobby}
+              className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
+            >
+              Create a new lobby
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center justify-center mt-4">
             {lobbies.map(
               (lobby, index) =>
                 lobby.teacher === stateLoginUser && (
