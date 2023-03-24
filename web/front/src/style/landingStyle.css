@@ -1,3 +1,7 @@
+.pincel {
+    cursor: url(./pincel.png), auto;
+}
+
 body {
     background: linear-gradient(-45deg, #F97D36, #EF5D9A);
     background-size: 150% 150%;

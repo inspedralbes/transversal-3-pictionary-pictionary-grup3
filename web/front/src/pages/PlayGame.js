@@ -31,14 +31,21 @@ export const PlayGame = ({ socket }) => {
   let painterAux = false;
 
   useEffect(() => {
+    canvas = canvasRef.current;
+    context = canvas.getContext("2d");
+  });
+
+  useEffect(() => {
     socket.emit("ready user");
     socket.on("start game", (data) => {
       if (data.lobby.painter === nameUser) {
         setPainter(true);
         painterAux = true;
+        canvas.classList.add("pincel");
       } else {
         setPainter(false);
         painterAux = false;
+        canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
       let str = "";
@@ -50,7 +57,7 @@ export const PlayGame = ({ socket }) => {
       setUserCorrectWords(data.lobby.users);
       // setTime(data.lobby.time);
     });
-    
+
   }, [socket]);
 
   // function setTime(time) {
@@ -126,11 +133,6 @@ export const PlayGame = ({ socket }) => {
   };
 
   useEffect(() => {
-    canvas = canvasRef.current;
-    context = canvas.getContext("2d");
-  });
-
-  useEffect(() => {
     canvas.addEventListener("mousedown", function (event) {
       if (painterAux) {
         var mousePos = getMousePos(canvas, event);
@@ -199,9 +201,9 @@ export const PlayGame = ({ socket }) => {
       if (data.data.action == "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.backgroundColor = '#ffffff';
-      } else if(data.data.action=="z"){
+      } else if (data.data.action == "z") {
         canvas.style.backgroundColor = data.data.c;
-      }else {
+      } else {
         draw(
           data.data.x,
           data.data.y,
@@ -218,14 +220,14 @@ export const PlayGame = ({ socket }) => {
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     canvas.style.backgroundColor = '#ffffff';
-    socket.emit("draw", { x: null, y: null, action: "b"});
+    socket.emit("draw", { x: null, y: null, action: "b" });
   }
-  
+
   const changeBackground = () => {
     colorCanva = document.getElementById('colorPicker').value;
     canvas.style.backgroundColor = colorCanva;
 
-    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva});
+    socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva });
   }
 
   function getMousePos(canvas, evt) {
@@ -276,7 +278,7 @@ export const PlayGame = ({ socket }) => {
                   >
                     Wipe
                   </button>
-                  <button 
+                  <button
                     onClick={changeBackground}
                     className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                   >
@@ -404,7 +406,7 @@ export const PlayGame = ({ socket }) => {
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
   );
 };
