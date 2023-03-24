@@ -260,7 +260,7 @@ export const PlayGame = ({ socket }) => {
                   <div key={key}>
                     <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">                
                       <strong>{userCorrectWords.name}</strong>:{" "}
-                      {userCorrectWords.score} {userCorrectWords.name === whoPaint ? '🖌️' : <></>}
+                      {userCorrectWords.score} {userCorrectWords.name === whoPaint && '🖌️'}
                     </div>
                   </div>
                 ))}
