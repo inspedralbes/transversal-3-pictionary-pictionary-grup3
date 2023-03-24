@@ -75,8 +75,7 @@ export const CreateGame = ({ socket }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws",
-            // Authorization: `Bearer ${stateLoginToken}`,
+            Authorization: `Bearer ${stateLoginToken}`,
           },
           method: "get",
         }
@@ -164,34 +163,39 @@ export const CreateGame = ({ socket }) => {
             Create a new lobby
           </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center justify-center p-8">
-            {lobbies.map((lobby, index) => (
-              lobby.teacher === stateLoginUser &&
-              <div
-                className="h-48 w-60 rounded-lg pink-to-orange-gr p-1"
-                key={index}
-              >
-                <div className="h-full w-full bg-white back p-2 rounded-lg">
-                  <div className="max-w-sm rounded overflow-hidden" key={index}>
-                    <div className="">
-                      <div className="font-bold text-gray-800 text-xl">
-                        {lobby.lobby_code}
+            {lobbies.map(
+              (lobby, index) =>
+                lobby.teacher === stateLoginUser && (
+                  <div
+                    className="h-48 w-60 rounded-lg pink-to-orange-gr p-1"
+                    key={index}
+                  >
+                    <div className="h-full w-full bg-white back p-2 rounded-lg">
+                      <div
+                        className="max-w-sm rounded overflow-hidden"
+                        key={index}
+                      >
+                        <div className="">
+                          <div className="font-bold text-gray-800 text-xl">
+                            {lobby.lobby_code}
+                          </div>
+                          <p className="text-gray-800 text-base">
+                            {words.category}
+                          </p>
+                        </div>
+                        <div className="">
+                          {lobby.users.map((user, index) => (
+                            <span className="users" key={index}>
+                              {user.name}
+                            </span>
+                          ))}
+                        </div>
+                        <p>{lobby.maxUsers}</p>
                       </div>
-                      <p className="text-gray-800 text-base">
-                        {words.category}
-                      </p>
                     </div>
-                    <div className="">
-                      {lobby.users.map((user, index) => (
-                        <span className="users" key={index}>
-                          {user.name}
-                        </span>
-                      ))}
-                    </div>
-                    <p>{lobby.maxUsers}</p>
                   </div>
-                </div>
-              </div>
-            ))}
+                )
+            )}
           </div>
         </div>
       )}
