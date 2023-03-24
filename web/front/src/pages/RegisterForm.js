@@ -54,7 +54,7 @@ export const RegisterForm = () => {
 
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="flex h-screen w-screen py-12 px-4 sm:px-6 border-rose-600 md:rounded-lg bg-rose-50 shadow-2xl md:h-fit md:w-1/2 md:py-12 md:px-8 m-[auto]">
+      <div className="flex h-screen w-screen py-12 px-4 sm:px-6 border-rose-600 md:rounded-lg bg-rose-50 shadow-2xl md:h-fit md:w-[500px] md:py-12 md:px-8 m-[auto]">
         <Link to="/">
           <svg
             className="flex absolute h-5 w-5 text-rose-200 group-hover:text-indigo-400"
