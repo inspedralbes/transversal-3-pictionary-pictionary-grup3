@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export const CreateCategories = ({ socket }) => {
+export const CreateCategories = () => {
     const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
     const [titleCategories, setTitleCategories] = useState("");
     const [created, setCreated] = useState(false);

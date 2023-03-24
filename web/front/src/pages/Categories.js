@@ -2,18 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export const Categories = ({ socket }) => {
+export const Categories = () => {
     const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [idCategory, setIdCategory] = useState(1);
     const [words, setWords] = useState([]);
     const [isWords, setIsWords] = useState(false);
-    const [userWords, setUserWords] = useState([]);
-    const [word, setUserWord] = useState("");
-    const [description, setUserDescription] = useState("");
-    const [Cword, setUserCWord] = useState("");
-    const [Cdescription, setUserCDescription] = useState("");
 
     useEffect(() => {
         getCollection();

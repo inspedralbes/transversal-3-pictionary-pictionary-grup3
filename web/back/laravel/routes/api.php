@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\WordController;
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 Route::post('list-words', [WordController::class, 'listWords']);
-Route::post('create-word', [WordController::class, 'createWord']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('logout', [UserController::class, 'logout']);
@@ -16,4 +15,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('user-profile', [UserController::class, 'userProfile']);
     Route::post('create-category', [CategoryController::class, 'createCategory']);
     Route::get('list-categories', [CategoryController::class, 'listCategories']);
+    Route::post('create-word', [WordController::class, 'createWord']);
 });

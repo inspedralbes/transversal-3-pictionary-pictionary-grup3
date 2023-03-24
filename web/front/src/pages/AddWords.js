@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export const AddWords = ({ socket }) => {
-    const stateLoginToken = useSelector((state) => state.loginToken.loginToken);
-
+export const AddWords = () => {
+    const stateLoginToken = useSelector((state) => state.login.loginToken);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [words, setWords] = useState([]);
@@ -76,8 +75,9 @@ export const AddWords = ({ socket }) => {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/api/create-word`, {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                         // Authorization: 'Bearer ' + stateLoginToken,
+                        Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
                     },
                     method: 'POST',
                     body: JSON.stringify({
