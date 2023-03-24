@@ -68,14 +68,14 @@ export const CreateGame = ({ socket }) => {
   };
 
   const getCollection = async () => {
-    console.log(stateLoginToken)
+    console.log(stateLoginToken);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/list-categories`,
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws',
+            "Content-Type": "application/json",
+            Authorization: "Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws",
             // Authorization: `Bearer ${stateLoginToken}`,
           },
           method: "get",
@@ -104,6 +104,7 @@ export const CreateGame = ({ socket }) => {
       maxUsers: users,
       category: idCategory,
       words: words,
+      teacher: stateLoginUser,
     });
     getLobby();
   };
@@ -112,6 +113,7 @@ export const CreateGame = ({ socket }) => {
     socket.emit("get lobbies", {});
     socket.on("lobbies list", function (data) {
       setLobbies(data);
+      console.log(data);
     });
   };
 
@@ -153,9 +155,7 @@ export const CreateGame = ({ socket }) => {
         </div>
       ) : (
         <div className="inline mx-[auto] bg-rose-100 lg:rounded-lg m-[auto] p-6 h-auto w-screen lg:w-auto md:w-auto">
-          <label className="font-bold">
-            Here are your lobbies! Have FUN!
-          </label>
+          <label className="font-bold">Here are your lobbies! Have FUN!</label>
           <br></br>
           <button
             onClick={createNewLobby}
@@ -165,6 +165,7 @@ export const CreateGame = ({ socket }) => {
           </button>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 items-center justify-center p-8">
             {lobbies.map((lobby, index) => (
+              lobby.teacher === stateLoginUser &&
               <div
                 className="h-48 w-60 rounded-lg pink-to-orange-gr p-1"
                 key={index}
