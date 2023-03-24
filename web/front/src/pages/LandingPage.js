@@ -16,7 +16,7 @@ export const LandingPage = () => {
             <div className='absolute inset-2 bottom-5 bg-gray-100 w-[95%] blur-2xl h-28 animate-bounce opacity-75  group-hover:opacity-100 transition duration-200'></div>
             <Link
               to='/joinGame'
-              className='relative default-button block m-4 text-2xl font-extrabold text-orange-600 hover:text-white shadow-2xl hover:pink-to-orange-gr hover:outline-gray-100 outline-orange-600 animate-bounce p-12'
+              className='pincel relative default-button block m-4 text-2xl font-extrabold text-orange-600 hover:text-white shadow-2xl hover:pink-to-orange-gr hover:outline-gray-100 outline-orange-600 animate-bounce p-12'
             >
               Play now!
             </Link>
