@@ -83,6 +83,7 @@ export const Categories = ({ socket }) => {
                             <>
                                 <label>Look at the existing categories</label>
                                 <select onChange={handleSelect} className="font-semibold bg-rose-50 border-2 border-rose-400 text-gray-900 text-md rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full">
+                                    <option hidden value="">Select category</option>
                                     {categories.categoriesList.map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.category}

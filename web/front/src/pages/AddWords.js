@@ -42,7 +42,7 @@ export const AddWords = ({ socket }) => {
         }
     }
 
-    const getWords = async () => {
+    const getWords = async (id) => {
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
                 headers: {
@@ -50,7 +50,7 @@ export const AddWords = ({ socket }) => {
                 },
                 method: 'post',
                 body: JSON.stringify({
-                    idCategory: auxIdCategory,
+                    idCategory: id,
                 }),
             });
             const data = await response.json();
@@ -65,7 +65,7 @@ export const AddWords = ({ socket }) => {
         setIsWords(false);
         auxIdCategory = e.target.value;
         setIdCategory(e.target.value);
-        getWords();
+        getWords(auxIdCategory);
     };
 
     const handleSubmit = async (e) => {
@@ -99,7 +99,7 @@ export const AddWords = ({ socket }) => {
         setUserDescription("");
         setUserCWord("");
         setUserCDescription("");
-        getWords();
+        getWords(idCategory);
     };
 
     return (
@@ -107,14 +107,14 @@ export const AddWords = ({ socket }) => {
             <div className='mx-auto max-w-2xl'>
                 <div className='hidden sm:mb-8 sm:flex sm:justify-center'></div>
                 <div className='text-center'>
-                    <div className='bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen'>
+                    <div className='bg-rose-100 h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block'>
                         {loading ? (
                             'Loading'
                         ) : (
                             <>
                                 <label>Select a category to add words</label>
                                 <select onChange={handleSelect} className="font-semibold bg-rose-50 border-2 border-rose-400 text-gray-900 text-md rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full">
-                                    <option hidden selected>Select category</option>
+                                    <option hidden value="">Select category</option>
                                     {categories.categoriesList.map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.category}
@@ -126,8 +126,8 @@ export const AddWords = ({ socket }) => {
                     </div>
                 </div>
                 {isWords ? (
-                    <div className='mt-5 flex justify-center'>
-                        <div className='bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg p-6 block mr-5'>
+                    <div className='mt-5 lg:flex justify-center'>
+                        <div className='bg-rose-100 lg:h-auto h-fit lg:w-[32rem] opacity-70 lg:rounded-lg p-6 block mr-5'>
                             <Link to="/categories">Back</Link>
                             <form className='mt-8 space-y-6' action='#' onSubmit={handleSubmit}>
                                 <label>English word</label>
@@ -153,7 +153,7 @@ export const AddWords = ({ socket }) => {
                                 <button type="submit" className='rounded-lg w-24 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold'>Add Word</button>
                             </form>
                         </div>
-                        <div className='bg-rose-100 lg:w-[32rem] lg:h-auto opacity-70 lg:rounded-lg p-6 block h-screen w-screen'>
+                        <div className='bg-rose-100 lg:w-[32rem] h-fit lg:h-auto opacity-70 lg:rounded-lg p-6 block h-screen w-screen'>
                             <div className='overflow-y-scroll h-[400px]'>
                                 <table className='text-left'>
                                     <thead>
