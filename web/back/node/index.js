@@ -87,13 +87,13 @@ io.on("connection", (socket) => {
                     }
                 } else {
                     io.to(socket.id).emit("not joined", {
-                        "errorMsg": "Lobby don't exist",
+                        "errorMsg": "Lobby doesn't exist",
                     });
                 }
             });
         } else {
             io.to(socket.id).emit("not joined", {
-                "errorMsg": "Lobby don't exist",
+                "errorMsg": "Lobby doesn't exist",
             });
         }
     });

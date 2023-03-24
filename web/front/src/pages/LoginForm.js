@@ -97,8 +97,8 @@ export const LoginForm = () => {
   };
 
   return (
-    <div>
-      <div className="flex h-screen py-12 px-4 sm:px-6 border-rose-600 rounded-lg bg-rose-50 shadow-2xl lg:h-1/3 lg:w-1/2 lg:mt-20 lg:py-12 lg:px-8 m-[auto]">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
+      <div className="flex h-screen py-12 px-4 sm:px-6 border-rose-600 rounded-lg bg-rose-50 shadow-2xl lg:h-fit lg:w-1/2 lg:py-12 lg:px-8 m-[auto]">
         <Link to="/">
           <svg
             className="flex absolute h-5 w-5 text-rose-200 group-hover:text-indigo-400"
@@ -163,7 +163,7 @@ export const LoginForm = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     autoComplete="username"
                     required
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
+                    className="login-register-input"
                     placeholder="Username"
                   ></input>
               </div>
@@ -196,7 +196,7 @@ export const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     required
-                    className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500"
+                    className="login-register-input"
                     placeholder="Password"
                   ></input>
                 </div>
@@ -217,7 +217,7 @@ export const LoginForm = () => {
               <div>
                 <button
                   type="submit"
-                  className="group relative flex w-full justify-center rounded-lg bg-rose-500 py-2 px-3 text-sm font-semibold text-white hover:pink-to-orange-gr focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="group relative flex w-full justify-center rounded-lg bg-rose-500 py-2 px-3 text-md font-semibold text-white hover:pink-to-orange-gr focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg
