@@ -15,12 +15,12 @@ export const JoinGame = ({ socket }) => {
   const [ready, setReady] = useState(false);
   const [currentPlayers, setCurrentPlayers] = useState(0);
   const [maxPlayers, setMaxPlayers] = useState(0);
-  const [error, setError] = useState('')
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    let error = null;
     e.preventDefault();
     if (nameUser !== "" || lobbyCode !== "") {
       socket.emit("join room", {
@@ -29,12 +29,15 @@ export const JoinGame = ({ socket }) => {
         lobby_code: parseInt(lobbyCode),
       });
       socket.on('not joined', (dataError) => {
-        setError(dataError);
+        error =dataError.errorMsg;
+        console.log(error)
       })
-      setInLobby(true);
-      dispatch(setUserData(nameUser));
+      if(error === null){
+        dispatch(setUserData(nameUser));
+        setInLobby(true);
+      }
     } else {
-      setError('Fill the blanks')
+      error = 'Fill the blanks'
     }
     Swal.fire({
       position: "bottom-end",
