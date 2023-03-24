@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { setUserData } from "../features/dataUserSlice";
 import { Link } from "react-router-dom";
-import logoSmall from '../style/logoPictoboomSmall.png';
+import logoSmall from "../style/logoPictoboomSmall.png";
 
 import Swal from "sweetalert2";
 
@@ -88,8 +88,8 @@ export const JoinGame = ({ socket }) => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       {!inLobby ? (
-        <div className="m-[auto] border-2 rounded-lg w-80 p-8">
-          <div className="h-fit">
+        <div className="m-[auto] border-2 rounded-lg w-80 p-8 bg-rose-50 bg-opacity-50">
+          <div className="h-fit w-fit">
             <Link to="/" className="h-[20px] block">
               <svg
                 className="flex absolute h-5 w-5 text-rose-200 group-hover:text-indigo-400"
@@ -116,27 +116,42 @@ export const JoinGame = ({ socket }) => {
           </div>
           <div className="flex justify-center text-center mt-4">
             <form onSubmit={handleSubmit}>
-              <label>
+              <div class="relative">
                 <input
-                  type="number"
+                  type="text"
+                  id="floating_outlined"
                   value={lobbyCode}
                   onChange={(e) => setLobbyCode(e.target.value)}
-                  placeholder="Lobby code"
-                  className="input-join"
-                ></input>
-              </label>
-              <label>
+                  class="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_outlined"
+                  class="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
+                >
+                  Lobby code
+                </label>
+              </div>
+
+              <div class="relative mt-8">
                 <input
                   type="text"
                   value={nameUser}
                   onChange={(e) => setNameUser(e.target.value)}
-                  placeholder="Your name"
-                  className="input-join"
-                ></input>
-              </label>
+                  class="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_outlined"
+                  class="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
+                >
+                  Your name
+                </label>
+              </div>
+
               <button
                 type="submit"
-                className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none mt-3"
+                className="font-semibold text-gray-900 text-xl default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none mt-3 w-10/12"
               >
                 Send
               </button>
