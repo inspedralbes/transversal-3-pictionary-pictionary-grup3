@@ -86,7 +86,7 @@ export const JoinGame = ({ socket }) => {
   return (
     <div className="h-screen flex bg-[url('../style/spinning-bg-pinchitos.png')] bg-cover bg-center items-center justify-center lg:bg-[url('../style/webBackground.png')] w-screen">
       {!inLobby ? (
-        <div className="m-[auto] border-2 rounded-lg w-80 p-16">
+        <div className="m-[auto] border-2 rounded-lg w-80 p-16 bg-pink-50 bg-opacity-60">
           <form onSubmit={handleSubmit}>
             <label>
               <input
@@ -108,7 +108,7 @@ export const JoinGame = ({ socket }) => {
             </label>
             <button
               type="submit"
-              className="default-button font-semibold outline outline-1 p-1 rounded-lg hover:bg-gray-800 hover:text-gray-50"
+              className="relative default-button block m-4 text-2xl font-extrabold text-orange-600 hover:text-white shadow-2xl hover:pink-to-orange-gr hover:outline-gray-100 outline-orange-600 hover:animate-bounce transition duration-200 p-12"
             >
               Send
             </button>
