@@ -77,13 +77,13 @@ export const LoginForm = () => {
         ";" +
         expires +
         ";path=/";
-        Swal.fire({
-          position: 'bottom-end',
-          icon: 'success',
-          title: 'Success',
-          showConfirmButton: false,
-          timer: 1500
-        })
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Success',
+        showConfirmButton: false,
+        timer: 1500
+      })
       navigate("../createGame");
     } catch (error) {
       Swal.fire({
@@ -98,7 +98,7 @@ export const LoginForm = () => {
 
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="flex h-screen w-screen py-12 px-4 sm:px-6 border-rose-600 md:rounded-lg bg-rose-50 shadow-2xl md:h-fit md:w-1/2 md:py-12 md:px-8 m-[auto]">
+      <div className="flex h-screen w-screen py-12 px-4 sm:px-6 border-rose-600 md:rounded-lg bg-rose-50 shadow-2xl md:h-fit md:w-[500px] md:py-12 md:px-8 m-[auto]">
         <Link to="/">
           <svg
             className="flex absolute h-5 w-5 text-rose-200 group-hover:text-indigo-400"
@@ -138,34 +138,34 @@ export const LoginForm = () => {
           <form className="mt-8 space-y-6" action="#" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" value="true"></input>
             <div className="-space-y-px rounded-lg shadow-sm">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    id="username-address"
-                    name="username"
-                    type="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    autoComplete="username"
-                    required
-                    className="login-register-input"
-                    placeholder="Username"
-                  ></input>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  id="username-address"
+                  name="username"
+                  type="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
+                  required
+                  className="login-register-input"
+                  placeholder="Username"
+                ></input>
               </div>
               <div className="relative">
                 <label htmlFor="password" className="sr-only">

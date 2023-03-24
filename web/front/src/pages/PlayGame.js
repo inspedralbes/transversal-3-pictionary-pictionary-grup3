@@ -245,7 +245,7 @@ export const PlayGame = ({ socket }) => {
   }
 
   return (
-    <div className="flex -ml-72 bg-cover bg-center h-screen lg:bg-fixed bg-[url('../style/webBackground.png')]">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className="relative w-full max-w-screen-lg mx-auto">
         <div
           className="absolute inset-0 z-[-1] bg-cover bg-center"

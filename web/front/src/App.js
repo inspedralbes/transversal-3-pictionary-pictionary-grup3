@@ -9,6 +9,7 @@ import {
   LoginForm,
   PlayGame,
   RankingGame,
+  Profile,
   Categories,
   CreateCategories,
   AddWords,
@@ -33,6 +34,7 @@ function App() {
           <Route path='/rankingGame' element={<RankingGame />} />
           <Route path='/register' element={<RegisterForm />} />
           <Route path='/login' element={<LoginForm />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/categories' element={<Categories />} />
           <Route path='/createCategories' element={<CreateCategories />} />+
           <Route path='/addWords' element={<AddWords />} />
