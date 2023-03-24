@@ -36,6 +36,7 @@ io.on("connection", (socket) => {
                 category: data.category,
                 maxUsers: data.maxUsers,
                 created: new Date().getTime(),
+                teacher: data.teacher,
                 users: [],
                 userWords: [],
                 round: 0,
