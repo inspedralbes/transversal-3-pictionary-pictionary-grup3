@@ -117,9 +117,9 @@ export const CreateGame = ({ socket }) => {
   };
 
   return (
-    <div className="h-screen flex bg-cover bg-center bg-[url('../style/webBackground.png')]">
+    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       {!isSelected ? (
-        <div className="bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen">
+        <div className="bg-rose-100 md:h-auto md:w-[32rem] opacity-70 md:rounded-lg mx-auto md:m-[auto] p-6 block h-screen w-screen">
           {loading ? (
             "Loading"
           ) : (
