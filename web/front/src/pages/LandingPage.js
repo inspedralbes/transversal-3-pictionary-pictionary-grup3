@@ -6,9 +6,17 @@ export const LandingPage = () => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className='mx-auto max-w-2xl'>
+        <div className='flex ml-5 md:ml-0 lg:ml-0'>
+        <Link to='/profile'>
+          <button 
+            className='text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none'>
+              PROFILE
+          </button>
+        </Link>
+        </div>
         <div className='hidden sm:mb-8 sm:flex sm:justify-center'></div>
         <div className='text-center '>
-          <img className='w-96 m-[auto]' src={logoSmall} alt='Logo' />
+          <img className='w-72 md:w-96 lg:w-96 m-[auto]' src={logoSmall} alt='Logo' />
           <p className='mt-6 text-lg leading-8 text-slate-700 font-semibold'>
             ¡PictoBoom, where your drawings come alive!<br></br>
           </p>
