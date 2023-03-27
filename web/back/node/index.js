@@ -278,7 +278,6 @@ setInterval(function () {
             } else {
                 lobby.timer = lobby.timer - 1;
             }
-            console.log(lobby.timer);
         }
     });
 }, 1000);
