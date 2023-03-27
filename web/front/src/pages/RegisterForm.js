@@ -36,9 +36,9 @@ export const RegisterForm = () => {
       Swal.fire({
         position: "bottom-end",
         icon: "success",
-        title: "Please Login",
+        title: "Please wait for an admin to verificate your account, and Login",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 3500,
       });
       navigate("../login");
     } catch (error) {

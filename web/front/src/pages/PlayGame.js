@@ -10,12 +10,13 @@ export const PlayGame = ({ socket }) => {
   const [whoPaint, setWhoPaint] = useState(false);
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
+  const [description, setDescription] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(0);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
+  const [showWord, setShowWord] = useState(true);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,42 +50,27 @@ export const PlayGame = ({ socket }) => {
         canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
+      setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
-      setWhoPaint(data.lobby.painter)
+      setWhoPaint(data.lobby.painter);
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
-      // setTime(data.lobby.time);
     });
   }, [socket]);
 
-  // function setTime(time) {
-  //   const interval = setInterval(() => {
-  //     setTimer((time) => time - 1);
-  //     if (time === 0) {
-  //       clearInterval(interval);
-  //       console.log('ha terminado el tiempo');
-  //       // socket.emit('call next turn');
-  //     }
-  //   }, 1000);
-  // };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prevSeconds) => prevSeconds - 1);
-    }, 1000);
-    if (timer === 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [timer]);
-
-  // socket.on("next round", function (data) {
-  //   console.log("next round", data);
-  // });
+  let timer = 90;
+  socket.on("timer", (data) => {
+    timer = data
+  });
+  setInterval(() => {
+    timer--;
+    document.getElementById('timer').innerHTML = timer
+    console.log(timer)
+  }, 1000);
 
   useEffect(() => {
     socket.on("word inserted", (data) => {
@@ -106,14 +92,15 @@ export const PlayGame = ({ socket }) => {
         canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
+      setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
+      setShowWord(true);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
-      setWhoPaint(data.lobby.painter)
+      setWhoPaint(data.lobby.painter);
       setWordLength(str);
       setRound(data.lobby.round);
-      setTimer(90);
       setWordCorrect(false);
       wipe();
     });
@@ -136,6 +123,11 @@ export const PlayGame = ({ socket }) => {
       });
       setWordInserted("");
     }
+  };
+
+  const handleClick = () => {
+    if (showWord) setShowWord(false);
+    else setShowWord(true);
   };
 
   useEffect(() => {
@@ -234,7 +226,7 @@ export const PlayGame = ({ socket }) => {
     canvas.style.backgroundColor = colorCanva;
 
     socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva });
-  }
+  };
 
   function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -246,25 +238,26 @@ export const PlayGame = ({ socket }) => {
 
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="flex w-fit mx-auto">
+      <div className="block md:flex w-fit h-screen md:h-fit mx-auto">
         <div
           className="absolute inset-0 z-[-1] bg-cover bg-center"
           style={{
             backgroundImage: "url('../style/spinning-bg-pinchitos.png')",
           }}
         ></div>
-        <div className="h-fit w-[380px] mr-5">
-          <div className="h-fit shadow-2xl rounded-lg">
-            <div className="h-fit bg-white border-4 border-rose-500 rounded-lg">
+        <div className="h-[13%] md:h-fit w-[100%] md:w-[380px] md:mr-5">
+          <div className="h-[100%] w-[45%] md:w-[100%] md:h-fit md:shadow-2xl md:rounded-lg float-left">
+            <div className="h-[100%] md:h-fit bg-white border-4 border-rose-500 md:rounded-lg overflow-y-scroll md:overflow-hidden">
               <h3 className="text-lg text-center font-bold mb-2 px-2 py-1 bg-rose-300 text-white border-4 border-rose-300 ">
                 Players
               </h3>
-              <div className="ml-5 mt-5 ">
+              <div className="ml-2 md:ml-5 md:mt-5">
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
                     <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
-                      <strong>{userCorrectWords.name}</strong>:{" "}
-                      {userCorrectWords.score} {userCorrectWords.name === whoPaint && '🖌️'}
+                      <strong>{userCorrectWords.name}</strong>:
+                      {userCorrectWords.score}
+                      {userCorrectWords.name === whoPaint && "🖌️"}
                     </div>
                   </div>
                 ))}
@@ -275,21 +268,24 @@ export const PlayGame = ({ socket }) => {
             // COLORES
             <div
               id="colores"
-              className="h-fit p-3 bg-white border-4 border-rose-500 mt-5"
+              className="w-[55%] md:w-[100%] h-[100%] md:h-fit p-3 bg-white border-4 border-rose-500 md:mt-5 float-right overflow-y-scroll"
             >
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
                 Painter Tools
                 <button
                   onClick={wipe}
-                  className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  className="md:ml-4 px-1 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
-                  Wipe
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+
                 </button>
                 <button
                   onClick={changeBackground}
-                  className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  className="ml-4 px-1 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
-                  Cubo
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7.00914 17.9998L2.99914 13.9898C1.65914 12.6498 1.65914 11.3198 2.99914 9.9798L9.67914 3.2998L17.0291 10.6498C17.3991 11.0198 17.3991 11.6198 17.0291 11.9898L11.0091 18.0098C9.68914 19.3298 8.34914 19.3298 7.00914 17.9998Z" stroke="#ffffff" strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8.34961 1.9502L9.68961 3.29016" stroke="#ffffff" strokeWidth="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="0.4" d="M2.07031 11.9197L17.1903 11.2598" stroke="#ffffff" strokeWidth="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 22H16" stroke="#ffffff" strokeWidth="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="0.4" d="M18.85 15C18.85 15 17 17.01 17 18.24C17 19.26 17.83 20.09 18.85 20.09C19.87 20.09 20.7 19.26 20.7 18.24C20.7 17.01 18.85 15 18.85 15Z" stroke="#ffffff" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </button>
               </h2>
               <div className="flex items-center mb-4">
@@ -328,46 +324,59 @@ export const PlayGame = ({ socket }) => {
             <></>
           )}
         </div>
-        <div className="w-fit">
-          <div className="h-36 w-[100%] px-4 py-12 mx-auto border-4 border-rose-500 bg-rose-100 shadow-2xl rounded-lg">
-            <div className="flex items-center justify-between">
+        <div className="w-screen md:w-fit h-[87%] md:h-fit">
+          <div className="overflow-y-scroll md:overflow-hidden h-[15%] md:h-36 w-[100%] p-2 md:px-4 md:py-12 mx-auto border-4 border-rose-500 bg-rose-100 md:shadow-2xl md:rounded-lg">
+            <div className="flex items-center justify-between ">
               <div className="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold text-lg">
-                {timer}
+                <div id="timer"></div>
               </div>
               {painter ? (
-                <div className="ml-8">
-                  <h1 className="uppercase -mt-16 font-bold text-xl">{word}</h1>
+                <div className="ml-8 flex items-start">
+                  {showWord ? (
+                    <h1 className="uppercase md:-mt-16 font-bold text-xl">
+                      {word}
+                    </h1>
+                  ) : (
+                    <h1 className="uppercase md:-mt-16 font-bold text-xl">
+                      {wordLength}
+                    </h1>
+                  )}
+                  <button onClick={handleClick} className="md:-mt-16 ml-3">
+                    👁️
+                  </button>
                 </div>
               ) : (
                 <div className="ml-8">
-                  <h2 className="uppercase -mt-16 font-bold text-xl">
+                  <h2 className="uppercase md:-mt-16 font-bold text-xl">
                     {wordLength}
                   </h2>
                 </div>
               )}
               <div className="font-bold text-xl">ROUND: {round} / 3</div>
             </div>
+            {painter && showWord && (
+              <p className="flex justify-center opacity-50">{description}</p>
+            )}
           </div>
-          <div className="flex mt-5">
+          <div className="block md:flex md:mt-5 h-[85%] md:h-fit">
             {/* CANVAS */}
-            <div id="canvas" className="flex items-center justify-center">
+            <div id="canvas" className="flex items-center justify-center h-[70%] md:h-fit">
               <canvas
                 ref={canvasRef}
                 width="633px"
                 height="600px"
-                className="mx-auto bg-white border-4 border-rose-500"
+                className="mx-auto bg-white border-4 border-rose-500 w-[100%] md:w-[633px] h-[100%] md:h-[600px]"
               ></canvas>
             </div>
 
             {/* CHAT */}
-            <br></br>
-            <div className="ml-5">
-              <div className="w-64 h-[550px] overflow-y-scroll border-4 border-rose-500 rounded-lg bg-white p-4">
+            <div className="md:ml-5 h-[30%] md:h-fit">
+              <div className="w-[100%] md:w-64 h-[65%] md:h-[550px] overflow-y-scroll border-4 border-rose-500 md:rounded-lg bg-white p-4">
                 <ul className="flex flex-col items-center justify-start">
                   {userWords.map((userWords, key) => (
                     <li
                       key={key}
-                      className={`rounded-lg p-2 mb-3 ml-auto bg-gray-200 text-black mr-auto'}`}
+                      className={`md:rounded-lg p-2 mb-3 ml-auto bg-gray-200 text-black mr-auto'}`}
                     >
                       <span className="inline-block bg-white border-2 border-rose-500 px-2 py-1 rounded-full font-semibold text-rose-500">
                         {userWords.name}
@@ -377,7 +386,7 @@ export const PlayGame = ({ socket }) => {
                   ))}
                 </ul>
               </div>
-              <div className="flex gap-4 mt-2">
+              <div className="flex items-center justify-center gap-4 md:mt-2 h-[35%] md:h-fit">
                 {painter ? (
                   <></>
                 ) : wordCorrect ? (
@@ -391,19 +400,19 @@ export const PlayGame = ({ socket }) => {
                     autoComplete="off"
                   />
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex items-center">
+                  <form onSubmit={handleSubmit} className="flex justify-center items-center h-[35%] md:h-fit">
                     <input
                       name="word"
                       type="text"
                       value={wordInserted}
                       onChange={(e) => setWordInserted(e.target.value)}
-                      className="inline w-40 border-2 border-gray-300 p-2 flex-1"
+                      className="inline w-40 border-2 border-gray-300 px-1 md:p-2 flex-1"
                       placeholder="Type the word"
                       autoComplete="off"
                     />
                     <button
                       type="submit"
-                      className="bg-rose-500 text-white ml-1 px-5 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                      className="bg-rose-500 text-white ml-1 px-1 md:px-5 md:py-2 md:rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                     >
                       Enviar
                     </button>
