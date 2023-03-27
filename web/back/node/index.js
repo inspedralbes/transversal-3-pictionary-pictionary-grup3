@@ -274,10 +274,10 @@ setInterval(function () {
             if (lobby.timer == 0) {
                 lobby.timer = 90;
                 nextTurn(lobby.lobby_code);
+                io.to(lobby.lobby_code).emit("timer", lobby.timer);
             } else {
                 lobby.timer = lobby.timer - 1;
             }
-            io.to(lobby.lobby_code).emit("timer", lobby.timer);
         }
     });
 }, 1000);
