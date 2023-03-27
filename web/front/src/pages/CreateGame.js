@@ -65,12 +65,11 @@ export const CreateGame = ({ socket }) => {
       setLoading(false);
       // console.log(data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
   const getCollection = async () => {
-    console.log(stateLoginToken);
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/list-categories`,
@@ -87,7 +86,7 @@ export const CreateGame = ({ socket }) => {
       setCategories(data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -114,7 +113,7 @@ export const CreateGame = ({ socket }) => {
     socket.emit("get lobbies", {});
     socket.on("lobbies list", function (data) {
       setLobbies(data);
-      console.log(data);
+      // console.log(data);
     });
   };
 
