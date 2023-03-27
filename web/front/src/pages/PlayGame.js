@@ -31,6 +31,20 @@ export const PlayGame = ({ socket }) => {
   let context;
   let isDrawing = false;
   let painterAux = false;
+  let timer = 90;
+
+  socket.on("timer", (data) => {
+    console.log("socket timer: " + data);
+    timer = data
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      timer--;
+      document.getElementById('timer').innerHTML = timer;
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     canvas = canvasRef.current;
@@ -61,16 +75,6 @@ export const PlayGame = ({ socket }) => {
       setUserCorrectWords(data.lobby.users);
     });
   }, [socket]);
-
-  let timer = 90;
-  socket.on("timer", (data) => {
-    timer = data
-  });
-  setInterval(() => {
-    timer--;
-    document.getElementById('timer').innerHTML = timer
-    console.log(timer)
-  }, 1000);
 
   useEffect(() => {
     socket.on("word inserted", (data) => {
