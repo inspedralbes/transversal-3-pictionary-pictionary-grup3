@@ -187,7 +187,8 @@ io.on("connection", (socket) => {
                     }
                 });
                 if (usersAnswered == lobby.users.length - 1) {
-                    nextTurn(socket.data.current_lobby);
+                    // nextTurn(socket.data.current_lobby);
+                    lobby.timer = 0;
                 }
             }
         });
@@ -261,7 +262,6 @@ function nextTurn(current_lobby) {
                 lobby.users.forEach((user) => {
                     user.answered = false;
                 });
-                lobby.timer = 0;
                 io.to(current_lobby).emit("next turn", { lobby });
             }
         }
@@ -273,12 +273,12 @@ setInterval(function () {
         if (lobby.totalTurns > 0) {
             if (lobby.timer == 0) {
                 lobby.timer = 90;
-                io.to(lobby.lobby_code).emit("timer", lobby.timer);
-            } else if (lobby.timer == 1) {
                 nextTurn(lobby.lobby_code);
+                io.to(lobby.lobby_code).emit("timer", lobby.timer);
             } else {
                 lobby.timer = lobby.timer - 1;
             }
+            console.log(lobby.timer);
         }
     });
 }, 1000);
