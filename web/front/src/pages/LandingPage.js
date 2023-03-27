@@ -6,7 +6,7 @@ export const LandingPage = () => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className='mx-auto max-w-2xl'>
-        <div className='flex ml-5 md:ml-0 lg:ml-0'>
+        <div className='flex justify-end mr-5'>
         <Link to='/profile'>
           <button 
             className='text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none'>
