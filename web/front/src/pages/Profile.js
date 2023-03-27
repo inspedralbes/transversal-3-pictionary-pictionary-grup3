@@ -2,11 +2,13 @@ import avatar from "../style/avatar.png";
 import banner from "../style/banner.jpg";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const stateLoginToken = useSelector((state) => state.login.loginToken);
   const [nameUser, setNameUser] = useState("");
   const [emailUser, setEmailUser] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProfile();
@@ -32,6 +34,8 @@ export const Profile = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    document.cookie = 'sessionCookie=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    navigate("../");
   }
   return (
     <div className="h-screen overflow-y-hidden items-center bg-cover bg-center bg-[url('../style/spinning-bg-only-pinchitos.png')]">
