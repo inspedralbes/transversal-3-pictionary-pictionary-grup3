@@ -10,12 +10,14 @@ export const PlayGame = ({ socket }) => {
   const [whoPaint, setWhoPaint] = useState(false);
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
+  const [description, setDescription] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
   const [timer, setTimer] = useState(0);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
+  const [showWord, setShowWord] = useState(true);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,11 +51,12 @@ export const PlayGame = ({ socket }) => {
         canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
+      setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
-      setWhoPaint(data.lobby.painter)
+      setWhoPaint(data.lobby.painter);
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
@@ -106,11 +109,13 @@ export const PlayGame = ({ socket }) => {
         canvas.classList.remove("pincel");
       }
       setWord(data.lobby.word);
+      setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
+      setShowWord(true)
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
       }
-      setWhoPaint(data.lobby.painter)
+      setWhoPaint(data.lobby.painter);
       setWordLength(str);
       setRound(data.lobby.round);
       setTimer(90);
@@ -136,6 +141,11 @@ export const PlayGame = ({ socket }) => {
       });
       setWordInserted("");
     }
+  };
+
+  const handleClick = () => {
+    if (showWord) setShowWord(false);
+    else setShowWord(true);
   };
 
   useEffect(() => {
@@ -234,7 +244,7 @@ export const PlayGame = ({ socket }) => {
     canvas.style.backgroundColor = colorCanva;
 
     socket.emit("draw", { x: null, y: null, action: "z", c: colorCanva });
-  }
+  };
 
   function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -263,8 +273,9 @@ export const PlayGame = ({ socket }) => {
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
                     <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
-                      <strong>{userCorrectWords.name}</strong>:{" "}
-                      {userCorrectWords.score} {userCorrectWords.name === whoPaint ? '🖌️' : <></>}
+                      <strong>{userCorrectWords.name}</strong>:
+                      {userCorrectWords.score}
+                      {userCorrectWords.name === whoPaint && "🖌️"}
                     </div>
                   </div>
                 ))}
@@ -335,8 +346,19 @@ export const PlayGame = ({ socket }) => {
                 {timer}
               </div>
               {painter ? (
-                <div className="ml-8">
-                  <h1 className="uppercase -mt-16 font-bold text-xl">{word}</h1>
+                <div className="ml-8 flex items-start">
+                  {showWord ? (
+                    <h1 className="uppercase -mt-16 font-bold text-xl">
+                      {word}
+                    </h1>
+                  ) : (
+                    <h1 className="uppercase -mt-16 font-bold text-xl">
+                      {wordLength}
+                    </h1>
+                  )}
+                  <button onClick={handleClick} className="-mt-16 ml-3">
+                    👁️
+                  </button>
                 </div>
               ) : (
                 <div className="ml-8">
@@ -347,6 +369,9 @@ export const PlayGame = ({ socket }) => {
               )}
               <div className="font-bold text-xl">ROUND: {round} / 3</div>
             </div>
+            {painter && showWord && (
+              <p className="flex justify-center opacity-50">{description}</p>
+            )}
           </div>
           <div className="block md:flex md:mt-5 h-[85%] md:h-fit">
             {/* CANVAS */}
