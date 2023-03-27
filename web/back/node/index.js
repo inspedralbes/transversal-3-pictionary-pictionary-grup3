@@ -43,10 +43,10 @@ io.on("connection", (socket) => {
                 turn: 0,
                 totalTurns: 0,
                 painter: null,
-                // drawings: [],
                 word: "",
-                time: 10,
                 words: randomWords.sort(random),
+                timer: 0,
+                // drawings: [],
             });
             sendLobbyList();
         }
@@ -155,7 +155,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("next turn", () => {
-        nextTurn(socket);
+        nextTurn(socket.data.current_lobby);
     });
 
     socket.on("word inserted", (data) => {
@@ -187,7 +187,8 @@ io.on("connection", (socket) => {
                     }
                 });
                 if (usersAnswered == lobby.users.length - 1) {
-                    nextTurn(socket);
+                    // nextTurn(socket.data.current_lobby);
+                    lobby.timer = 0;
                 }
             }
         });
@@ -241,11 +242,11 @@ function sendLobbyList() {
     io.emit("lobbies list", lobbies);
 }
 
-function nextTurn(socket) {
+function nextTurn(current_lobby) {
     lobbies.forEach((lobby, index) => {
-        if (lobby.lobby_code == socket.data.current_lobby) {
+        if (lobby.lobby_code == current_lobby) {
             if (lobby.turn == lobby.users.length && lobby.round == 3) {
-                io.to(socket.data.current_lobby).emit("finished game", { "scoreBoard": lobby.users });
+                io.to(current_lobby).emit("finished game", { "scoreBoard": lobby.users });
                 lobbies.splice(index, 1);
                 sendLobbyList();
             } else {
@@ -261,11 +262,25 @@ function nextTurn(socket) {
                 lobby.users.forEach((user) => {
                     user.answered = false;
                 });
-                io.to(socket.data.current_lobby).emit("next turn", { lobby });
+                io.to(current_lobby).emit("next turn", { lobby });
             }
         }
     });
 };
+
+setInterval(function () {
+    lobbies.forEach((lobby) => {
+        if (lobby.totalTurns > 0) {
+            if (lobby.timer == 0) {
+                lobby.timer = 90;
+                nextTurn(lobby.lobby_code);
+                io.to(lobby.lobby_code).emit("timer", lobby.timer);
+            } else {
+                lobby.timer = lobby.timer - 1;
+            }
+        }
+    });
+}, 1000);
 
 setInterval(function () {
     lobbies.forEach((lobby, index) => {
