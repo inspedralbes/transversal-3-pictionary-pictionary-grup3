@@ -31,7 +31,7 @@ export const Categories = () => {
       setCategories(data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -48,10 +48,10 @@ export const Categories = () => {
       });
       const data = await response.json();
       setWords(data);
-      console.log(data);
+      // console.log(data);
       setIsWords(true);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -68,8 +68,8 @@ export const Categories = () => {
         <div className="text-center ">
           <div className="bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen">
             <Link to="/createGame" className="h-[20px] w-[20px] block">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
               </svg>
             </Link>
             <div className="flex justify-center">
