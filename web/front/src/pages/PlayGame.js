@@ -238,20 +238,20 @@ export const PlayGame = ({ socket }) => {
 
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="flex w-fit mx-auto">
+      <div className="block md:flex w-fit h-screen md:h-fit mx-auto">
         <div
           className="absolute inset-0 z-[-1] bg-cover bg-center"
           style={{
             backgroundImage: "url('../style/spinning-bg-pinchitos.png')",
           }}
         ></div>
-        <div className="h-fit w-[380px] mr-5">
-          <div className="h-fit shadow-2xl rounded-lg">
-            <div className="h-fit bg-white border-4 border-rose-500 rounded-lg">
+        <div className="h-[13%] md:h-fit w-[100%] md:w-[380px] md:mr-5">
+          <div className="h-[100%] w-[45%] md:w-[100%] md:h-fit md:shadow-2xl md:rounded-lg float-left">
+            <div className="h-[100%] md:h-fit bg-white border-4 border-rose-500 md:rounded-lg overflow-y-scroll md:overflow-hidden">
               <h3 className="text-lg text-center font-bold mb-2 px-2 py-1 bg-rose-300 text-white border-4 border-rose-300 ">
                 Players
               </h3>
-              <div className="ml-5 mt-5 ">
+              <div className="ml-2 md:ml-5 md:mt-5">
                 {userCorrectWords.map((userCorrectWords, key) => (
                   <div key={key}>
                     <div className="inline-block px-2 py-1 mb-3 bg-white border-2 border-rose-500 rounded-full font-semibold text-rose-500">
@@ -268,13 +268,13 @@ export const PlayGame = ({ socket }) => {
             // COLORES
             <div
               id="colores"
-              className="h-fit p-3 bg-white border-4 border-rose-500 mt-5"
+              className="w-[55%] md:w-[100%] h-[100%] md:h-fit p-3 bg-white border-4 border-rose-500 md:mt-5 float-right overflow-y-scroll"
             >
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
                 Painter Tools
                 <button
                   onClick={wipe}
-                  className="ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  className="md:ml-4 px-3 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
                   Wipe
                 </button>
@@ -321,30 +321,30 @@ export const PlayGame = ({ socket }) => {
             <></>
           )}
         </div>
-        <div className="w-fit">
-          <div className="h-36 w-[100%] px-4 py-12 mx-auto border-4 border-rose-500 bg-rose-100 shadow-2xl rounded-lg">
-            <div className="flex items-center justify-between">
+        <div className="w-screen md:w-fit h-[87%] md:h-fit">
+          <div className="overflow-y-scroll md:overflow-hidden h-[15%] md:h-36 w-[100%] p-2 md:px-4 md:py-12 mx-auto border-4 border-rose-500 bg-rose-100 md:shadow-2xl md:rounded-lg">
+            <div className="flex items-center justify-between ">
               <div className="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold text-lg">
                 <div id="timer"></div>
               </div>
               {painter ? (
                 <div className="ml-8 flex items-start">
                   {showWord ? (
-                    <h1 className="uppercase -mt-16 font-bold text-xl">
+                    <h1 className="uppercase md:-mt-16 font-bold text-xl">
                       {word}
                     </h1>
                   ) : (
-                    <h1 className="uppercase -mt-16 font-bold text-xl">
+                    <h1 className="uppercase md:-mt-16 font-bold text-xl">
                       {wordLength}
                     </h1>
                   )}
-                  <button onClick={handleClick} className="-mt-16 ml-3">
+                  <button onClick={handleClick} className="md:-mt-16 ml-3">
                     👁️
                   </button>
                 </div>
               ) : (
                 <div className="ml-8">
-                  <h2 className="uppercase -mt-16 font-bold text-xl">
+                  <h2 className="uppercase md:-mt-16 font-bold text-xl">
                     {wordLength}
                   </h2>
                 </div>
@@ -355,26 +355,23 @@ export const PlayGame = ({ socket }) => {
               <p className="flex justify-center opacity-50">{description}</p>
             )}
           </div>
-          <div className="flex mt-5">
+          <div className="block md:flex md:mt-5 h-[85%] md:h-fit">
             {/* CANVAS */}
-            <div id="canvas" className="flex items-center justify-center">
+            <div id="canvas" className="flex items-center justify-center h-[70%] md:h-fit">
               <canvas
                 ref={canvasRef}
-                width="633px"
-                height="600px"
-                className="mx-auto bg-white border-4 border-rose-500"
+                className="mx-auto bg-white border-4 border-rose-500 w-[100%] md:w-[633px] h-[100%] md:h-[600px]"
               ></canvas>
             </div>
 
             {/* CHAT */}
-            <br></br>
-            <div className="ml-5">
-              <div className="w-64 h-[550px] overflow-y-scroll border-4 border-rose-500 rounded-lg bg-white p-4">
+            <div className="md:ml-5 h-[30%] md:h-fit">
+              <div className="w-[100%] md:w-64 h-[65%] md:h-[550px] overflow-y-scroll border-4 border-rose-500 md:rounded-lg bg-white p-4">
                 <ul className="flex flex-col items-center justify-start">
                   {userWords.map((userWords, key) => (
                     <li
                       key={key}
-                      className={`rounded-lg p-2 mb-3 ml-auto bg-gray-200 text-black mr-auto'}`}
+                      className={`md:rounded-lg p-2 mb-3 ml-auto bg-gray-200 text-black mr-auto'}`}
                     >
                       <span className="inline-block bg-white border-2 border-rose-500 px-2 py-1 rounded-full font-semibold text-rose-500">
                         {userWords.name}
@@ -384,7 +381,7 @@ export const PlayGame = ({ socket }) => {
                   ))}
                 </ul>
               </div>
-              <div className="flex gap-4 mt-2">
+              <div className="flex items-center justify-center gap-4 md:mt-2 h-[35%] md:h-fit">
                 {painter ? (
                   <></>
                 ) : wordCorrect ? (
@@ -398,19 +395,19 @@ export const PlayGame = ({ socket }) => {
                     autoComplete="off"
                   />
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex items-center">
+                  <form onSubmit={handleSubmit} className="flex justify-center items-center h-[35%] md:h-fit">
                     <input
                       name="word"
                       type="text"
                       value={wordInserted}
                       onChange={(e) => setWordInserted(e.target.value)}
-                      className="inline w-40 border-2 border-gray-300 p-2 flex-1"
+                      className="inline w-40 border-2 border-gray-300 px-1 md:p-2 flex-1"
                       placeholder="Type the word"
                       autoComplete="off"
                     />
                     <button
                       type="submit"
-                      className="bg-rose-500 text-white ml-1 px-5 py-2 rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                      className="bg-rose-500 text-white ml-1 px-1 md:px-5 md:py-2 md:rounded-lg hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                     >
                       Enviar
                     </button>
