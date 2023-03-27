@@ -121,7 +121,7 @@ export const CreateGame = ({ socket }) => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       {!isSelected ? (
-        <div className="bg-rose-100 md:h-auto md:w-[32rem] opacity-70 md:rounded-lg mx-auto md:m-[auto] p-6 block h-screen w-screen">
+        <div className="bg-rose-100 md:h-auto md:w-[32rem] bg-opacity-70 md:rounded-lg mx-auto md:m-[auto] p-6 block h-screen w-screen">
           {loading ? (
             "Loading"
           ) : (
@@ -187,7 +187,7 @@ export const CreateGame = ({ socket }) => {
           )}
         </div>
       ) : (
-        <div className="inline mx-[auto] bg-rose-100 lg:rounded-lg m-[auto] p-6 h-auto w-screen lg:w-auto md:w-auto">
+        <div className="inline mx-[auto] bg-rose-100 bg-opacity-60 lg:rounded-lg m-[auto] p-6 h-auto w-screen md:w-screen lg:w-auto md:w-auto">
           <div className="grid justify-center">
             <label className="font-bold">
               Here are your lobbies! Have FUN!
@@ -195,7 +195,7 @@ export const CreateGame = ({ socket }) => {
             <br></br>
             <button
               onClick={createNewLobby}
-              className="default-button text-sm font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr m-1"
+              className="default-button text-md font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr hover:text-rose-50 m-1"
             >
               Create a new lobby
             </button>
@@ -205,7 +205,7 @@ export const CreateGame = ({ socket }) => {
               (lobby, index) =>
                 lobby.teacher === stateLoginUser && (
                   <div
-                    className="h-48 w-60 rounded-lg pink-to-orange-gr p-1"
+                    className="h-48 w-60 rounded-lg pink-to-orange-gr p-1 m-[auto]"
                     key={index}
                   >
                     <div className="h-full w-full bg-white back p-2 rounded-lg">
