@@ -69,7 +69,7 @@ export const CreateCategories = () => {
                 id="title-category"
                 value={titleCategories}
                 onChange={(e) => setTitleCategories(e.target.value)}
-                className="w-6/12 mx-[auto] mt-0 input-join outline outline-1 focus:outline-2 focus:outline-rose-500 bg-opacity-1 bg-slate-50"
+                className="w-6/12 mx-[auto] mt-0 input-join outline outline-1 focus:outline-2 focus:outline-rose-500 bg-opacity-1 bg-slate-50 caret-rose-500"
               ></input>
               <button
                 type="submit"
