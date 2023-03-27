@@ -110,6 +110,7 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
+      setShowWord(true)
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
