@@ -8,8 +8,8 @@ export const LandingPage = () => {
       <div className='mx-auto max-w-2xl'>
         <div className='hidden sm:mb-8 sm:flex sm:justify-center'></div>
         <div className='text-center '>
-          <img className='lg:w-96 md:w-96 w-72 m-[auto]' src={logoSmall} alt='Logo' />
-          <p className='mt-6 mx-4 lg:m-0 text-lg leading-8 text-slate-700 font-semibold'>
+          <img className='w-72 md:w-96 lg:w-96 m-[auto]' src={logoSmall} alt='Logo' />
+          <p className='mt-6 text-lg leading-8 text-slate-700 font-semibold'>
             ¡PictoBoom, where your drawings come alive!<br></br>
           </p>
           <div className='mt-10 block gap-x-6 relative group'>

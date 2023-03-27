@@ -175,12 +175,18 @@ export const CreateGame = ({ socket }) => {
               >
                 Continue
               </button>
-              <div className="mt-6 justify-center grid">
+              <div className="mt-6 justify-center flex">
                 <Link
                   to="/categories"
                   className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none"
                 >
                   Create category
+                </Link>
+                <Link
+                  to="/profile"
+                  className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none ml-5"
+                >
+                  Profile
                 </Link>
               </div>
             </>
