@@ -116,35 +116,35 @@ export const JoinGame = ({ socket }) => {
           </div>
           <div className="flex justify-center text-center mt-4">
             <form onSubmit={handleSubmit}>
-              <div class="relative">
+              <div className="relative">
                 <input
                   type="text"
                   id="lobby_code"
                   value={lobbyCode}
                   onChange={(e) => setLobbyCode(e.target.value)}
-                  class="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
+                  className="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
                   placeholder=" "
                 />
                 <label
-                  for="lobby_code"
-                  class="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
+                  htmlFor="lobby_code"
+                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
                 >
                   Lobby code
                 </label>
               </div>
 
-              <div class="relative mt-8">
+              <div className="relative mt-8">
                 <input
                   id="player_name"
                   type="text"
                   value={nameUser}
                   onChange={(e) => setNameUser(e.target.value)}
-                  class="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
+                  className="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
                   placeholder=" "
                 />
                 <label
-                  for="player_name"
-                  class="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
+                  htmlFor="player_name"
+                  className="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
                 >
                   Your name
                 </label>

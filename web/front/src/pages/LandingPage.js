@@ -6,14 +6,6 @@ export const LandingPage = () => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className='mx-auto max-w-2xl'>
-        <div className='flex justify-end mr-5'>
-        <Link to='/profile'>
-          <button 
-            className='text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none'>
-              PROFILE
-          </button>
-        </Link>
-        </div>
         <div className='hidden sm:mb-8 sm:flex sm:justify-center'></div>
         <div className='text-center '>
           <img className='w-72 md:w-96 lg:w-96 m-[auto]' src={logoSmall} alt='Logo' />
