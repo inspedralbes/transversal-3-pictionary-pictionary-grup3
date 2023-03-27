@@ -13,7 +13,6 @@ export const PlayGame = ({ socket }) => {
   const [description, setDescription] = useState("");
   const [wordInserted, setWordInserted] = useState("");
   const [round, setRound] = useState(0);
-  const [timer, setTimer] = useState(0);
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
@@ -60,34 +59,18 @@ export const PlayGame = ({ socket }) => {
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
-      // setTime(data.lobby.time);
     });
   }, [socket]);
 
-  // function setTime(time) {
-  //   const interval = setInterval(() => {
-  //     setTimer((time) => time - 1);
-  //     if (time === 0) {
-  //       clearInterval(interval);
-  //       console.log('ha terminado el tiempo');
-  //       // socket.emit('call next turn');
-  //     }
-  //   }, 1000);
-  // };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prevSeconds) => prevSeconds - 1);
-    }, 1000);
-    if (timer === 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [timer]);
-
-  // socket.on("next round", function (data) {
-  //   console.log("next round", data);
-  // });
+  let timer = 90;
+  socket.on("timer", (data) => {
+    timer = data    
+  });
+  setInterval(() => {
+    timer--;
+    document.getElementById('timer').innerHTML = timer
+    console.log(timer)
+  }, 1000);
 
   useEffect(() => {
     socket.on("word inserted", (data) => {
@@ -110,7 +93,7 @@ export const PlayGame = ({ socket }) => {
       }
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
-      setShowWord(true)
+      setShowWord(true);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
@@ -118,7 +101,6 @@ export const PlayGame = ({ socket }) => {
       setWhoPaint(data.lobby.painter);
       setWordLength(str);
       setRound(data.lobby.round);
-      setTimer(90);
       setWordCorrect(false);
       wipe();
     });
@@ -343,7 +325,7 @@ export const PlayGame = ({ socket }) => {
           <div className="h-36 w-[100%] px-4 py-12 mx-auto border-4 border-rose-500 bg-rose-100 shadow-2xl rounded-lg">
             <div className="flex items-center justify-between">
               <div className="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center text-white font-bold text-lg">
-                {timer}
+                <div id="timer"></div>
               </div>
               {painter ? (
                 <div className="ml-8 flex items-start">
