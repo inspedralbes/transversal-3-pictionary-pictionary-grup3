@@ -158,6 +158,12 @@ export const CreateGame = ({ socket }) => {
                 >
                   Create category
                 </Link>
+                <Link
+              to="/profile"
+              className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none"
+            >
+              Profile
+            </Link>
               </div>
             </>
           )}
