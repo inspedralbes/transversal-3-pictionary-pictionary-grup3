@@ -5,8 +5,9 @@ import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { setUserData } from "../features/dataUserSlice";
 import { Link } from "react-router-dom";
+import logoSmall from "../style/logoPictoboomSmall.png";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export const JoinGame = ({ socket }) => {
   const [nameUser, setNameUser] = useState("");
@@ -30,10 +31,10 @@ export const JoinGame = ({ socket }) => {
         lobby_code: parseInt(lobbyCode),
       });
     } else {
-      error = 'Fill the blanks'
+      error = "Fill the blanks";
     }
 
-    socket.on('not joined', (dataError) => {
+    socket.on("not joined", (dataError) => {
       error = dataError.errorMsg;
     });
 
@@ -57,6 +58,7 @@ export const JoinGame = ({ socket }) => {
     e.preventDefault();
     socket.emit("leave lobby");
     setInLobby(false);
+    setReady(false);
   };
 
   const handleClickReady = () => {
@@ -86,8 +88,8 @@ export const JoinGame = ({ socket }) => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       {!inLobby ? (
-        <div className="m-[auto] border-2 rounded-lg w-80 p-8">
-          <div className="h-fit">
+        <div className="m-[auto] border-2 rounded-lg w-80 p-8 bg-rose-50 bg-opacity-50">
+          <div className="h-fit w-fit">
             <Link to="/" className="h-[20px] block">
               <svg
                 className="flex absolute h-5 w-5 text-rose-200 group-hover:text-indigo-400"
@@ -114,27 +116,43 @@ export const JoinGame = ({ socket }) => {
           </div>
           <div className="flex justify-center text-center mt-4">
             <form onSubmit={handleSubmit}>
-              <label>
+              <div class="relative">
                 <input
-                  type="number"
+                  type="text"
+                  id="lobby_code"
                   value={lobbyCode}
                   onChange={(e) => setLobbyCode(e.target.value)}
-                  placeholder="Lobby code"
-                  className="input-join"
-                ></input>
-              </label>
-              <label>
+                  class="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
+                  placeholder=" "
+                />
+                <label
+                  for="lobby_code"
+                  class="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
+                >
+                  Lobby code
+                </label>
+              </div>
+
+              <div class="relative mt-8">
                 <input
+                  id="player_name"
                   type="text"
                   value={nameUser}
                   onChange={(e) => setNameUser(e.target.value)}
-                  placeholder="Your name"
-                  className="input-join"
-                ></input>
-              </label>
+                  class="block px-2.5 pb-2.5 pt-3 w-full text-sm text-gray-900 caret-rose-500 bg-rose-50 bg-opacity-60 outline-2 outline-rose-500 rounded-lg appearance-none peer"
+                  placeholder=" "
+                />
+                <label
+                  for="player_name"
+                  class="absolute text-sm text-gray-500 duration-300 transform -translate-y-7 scale-80 top-2 z-10 origin-[0] px-2 peer-focus:px-2 peer-focus:text-rose-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:-translate-y-7 left-1"
+                >
+                  Your name
+                </label>
+              </div>
+
               <button
                 type="submit"
-                className="text-sm font-semibold text-gray-900 default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none mt-3"
+                className="font-semibold text-gray-900 text-xl default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none mt-3 w-10/12"
               >
                 Send
               </button>
@@ -143,12 +161,19 @@ export const JoinGame = ({ socket }) => {
         </div>
       ) : (
         <div className="block w-full lg:h-full">
-          <button onClick={handleClickLeave} className="default-button m-1 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit lg:m-16">
+          <button
+            onClick={handleClickLeave}
+            className="default-button m-1 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit lg:m-16"
+          >
             Leave lobby
           </button>
           <div className="flex m-[auto] ">
             <div className="flex flex-col m-[auto]">
-              <h2 className="font-semibold text-5xl text-center mb-10">Welcome <p className="font-bold text-yellow-400 inline">{nameUser}</p>!<br></br>Are you ready?!</h2>
+              <h2 className="font-semibold text-5xl text-center mb-10">
+                Welcome{" "}
+                <p className="font-bold text-yellow-400 inline">{nameUser}</p>!
+                <br></br>Are you ready?!
+              </h2>
               {!ready ? (
                 <button
                   onClick={handleClickReady}
@@ -171,7 +196,9 @@ export const JoinGame = ({ socket }) => {
                     className="col-span-1 rounded-full bg-pink-50  h-28 w-28 bg-opacity-60 m-4 flex border-dashed border-2 border-pink-600"
                     key={user.userId}
                   >
-                    <p className="m-[auto] opacity-1 font-semibold">{user.name}</p>
+                    <p className="m-[auto] opacity-1 font-semibold">
+                      {user.name}
+                    </p>
                   </div>
                 ))}
               </div>
