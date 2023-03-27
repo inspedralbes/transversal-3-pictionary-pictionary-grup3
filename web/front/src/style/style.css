@@ -22,4 +22,8 @@
     .login-register-input{
         @apply mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500
     }
+
+    .addWordsInput{
+        @apply rounded-lg caret-rose-500 p-1 focus:outline-rose-500 w-full mt-0.5
+    }
 }

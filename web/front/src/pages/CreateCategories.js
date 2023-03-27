@@ -43,7 +43,7 @@ export const CreateCategories = () => {
       <div className="mx-auto max-w-2xl">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center ">
-          <div className="bg-rose-100 lg:h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen">
+          <div className="bg-rose-100 lg:h-auto lg:w-[32rem] bg-opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen">
             <Link to="/categories">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
