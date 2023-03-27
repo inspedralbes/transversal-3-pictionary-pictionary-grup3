@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 
 export const Profile = () => {
     return (
-        <div className="h-screen overflow-y-hidden items-center bg-cover bg-center bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-            <div class="mt-44">
-                <h1 class="w-2/5 mx-auto text-center text-4xl font-bold rounded-md bg-rose-50 text-rose-400 leading-tight">USER PROFILE</h1>
+        <div className="h-screen overflow-y-hidden bg-cover bg-center bg-[url('../style/spinning-bg-only-pinchitos.png')]">
+            <div className="mt-5">
+                <h1 className="w-2/5 mx-auto text-center text-4xl font-bold rounded-md bg-rose-50 text-rose-400 leading-tight">USER PROFILE</h1>
             </div>
-            <div className="mx-auto mt-5 container border-4 border-rose-500 bg-rose-300 rounded-lg lg:w-2/6 xl:w-2/7 sm:w-full md:w-2/3shadow-lg transform duration-200 easy-in-out">
+            <div className="w-11/12 mx-auto mt-5 container border-4 border-rose-500 bg-rose-300 rounded-lg lg:w-2/6 xl:w-2/7 sm:w-full md:w-2/3shadow-lg transform duration-200 easy-in-out">
                 <div className="bg-rose-200">
                     <div className="h-32 overflow-hidden">
-                        <img className="w-full" src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80" alt=""></img>
+                        <img className="w-full" src="https://www.riolettcustomaerosols.co.uk/img/slides/2000.webp" alt=""></img>
                     </div>
                     <div className="flex justify-center px-5 -mt-12">
                         <img className="h-32 w-32 bg-rose-500 p-2 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-KvmYtfhk5J3DDze-qCIyGGNLA_QxfIZosn7h-etCZw&s" alt=""></img>
