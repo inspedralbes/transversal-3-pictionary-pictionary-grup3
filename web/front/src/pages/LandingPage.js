@@ -6,9 +6,38 @@ export const LandingPage = () => {
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className='mx-auto -mt-5 max-w-2xl'>
-        <div className='flex justify-end mr-5'>
+        <div className='flex justify-end mr-5 md:mr-0 lg:mr-0 '>
           <Link to='/profile'>
-              <svg className='w-14' fill="#000000" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M228,128A100,100,0,1,0,60.71,201.90967a3.97048,3.97048,0,0,0,.842.751,99.79378,99.79378,0,0,0,132.8982-.00195,3.96558,3.96558,0,0,0,.83813-.74756A99.76267,99.76267,0,0,0,228,128ZM36,128a92,92,0,1,1,157.17139,64.87207,75.616,75.616,0,0,0-44.50782-34.04053,44,44,0,1,0-41.32714,0,75.61784,75.61784,0,0,0-44.50782,34.04A91.70755,91.70755,0,0,1,36,128Zm92,28a36,36,0,1,1,36-36A36.04061,36.04061,0,0,1,128,156ZM68.86475,198.417a68.01092,68.01092,0,0,1,118.27.00049,91.80393,91.80393,0,0,1-118.27-.00049Z"></path> </g></svg>
+          <svg 
+            className='w-14' 
+            alt='Perfil' 
+            fill="#f23636" 
+            viewBox="-25.6 -25.6 307.20 307.20" 
+            id="Flat" 
+            xmlns="http://www.w3.org/2000/svg" 
+            stroke="#f23636">
+            <g 
+              id="SVGRepo_bgCarrier" 
+              stroke-width="0">
+              <path 
+                transform="translate(-25.6, -25.6), scale(19.2)" 
+                fill="#110909" 
+                d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z" 
+                strokewidth="0">
+              </path>
+            </g>
+            <g 
+              id="SVGRepo_tracerCarrier" 
+              stroke-linecap="round" 
+              stroke-linejoin="round">
+            </g>
+            <g 
+              id="SVGRepo_iconCarrier"> 
+              <path 
+                d="M228,128A100,100,0,1,0,60.71,201.90967a3.97048,3.97048,0,0,0,.842.751,99.79378,99.79378,0,0,0,132.8982-.00195,3.96558,3.96558,0,0,0,.83813-.74756A99.76267,99.76267,0,0,0,228,128ZM36,128a92,92,0,1,1,157.17139,64.87207,75.616,75.616,0,0,0-44.50782-34.04053,44,44,0,1,0-41.32714,0,75.61784,75.61784,0,0,0-44.50782,34.04A91.70755,91.70755,0,0,1,36,128Zm92,28a36,36,0,1,1,36-36A36.04061,36.04061,0,0,1,128,156ZM68.86475,198.417a68.01092,68.01092,0,0,1,118.27.00049,91.80393,91.80393,0,0,1-118.27-.00049Z">
+              </path> 
+            </g>
+          </svg>
           </Link>
         </div>
         <div className='hidden sm:mb-8 sm:flex sm:justify-center'></div>
