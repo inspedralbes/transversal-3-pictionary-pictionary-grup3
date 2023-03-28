@@ -144,7 +144,7 @@ export const PlayGame = ({ socket }) => {
         setWordCorrect(true);
         Swal.fire({
           position: "bottom-end",
-          icon: "correct",
+          icon: "success",
           title: "Answered Correctly!",
           showConfirmButton: false,
           timer: 1000,
