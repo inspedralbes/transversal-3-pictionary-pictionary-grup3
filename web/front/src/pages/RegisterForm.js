@@ -32,7 +32,7 @@ export const RegisterForm = () => {
         body: JSON.stringify(data),
       });
       const json = await response.json();
-      console.log("Response:", json);
+      // console.log("Response:", json);
       Swal.fire({
         position: "bottom-end",
         icon: "success",

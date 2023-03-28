@@ -36,7 +36,7 @@ export const AddWords = () => {
       setCategories(data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -55,7 +55,7 @@ export const AddWords = () => {
       setWords(data);
       setIsWords(true);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -67,7 +67,6 @@ export const AddWords = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(idCategory);
     e.preventDefault();
 
     if (word != "" && description != "" && Cword != "" && Cdescription != "") {
@@ -90,7 +89,7 @@ export const AddWords = () => {
 
         setIsWords(true);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     }
 
@@ -106,14 +105,14 @@ export const AddWords = () => {
       <div className="mx-auto max-w-2xl">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center">
-          <div className="bg-rose-100 h-auto lg:w-[32rem] opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block">
+          <div className="bg-rose-100 h-auto lg:w-[32rem] bg-opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block">
             {loading ? (
               "Loading"
             ) : (
               <>
                 <Link to="/categories" className="h-[20px] w-[20px] block">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
                   </svg>
                 </Link>
                 <label>Select a category to add words</label>
@@ -136,40 +135,72 @@ export const AddWords = () => {
         </div>
         {isWords ? (
           <div className="mt-5 lg:flex justify-center">
-            <div className="bg-rose-100 lg:h-auto h-fit lg:w-[32rem] opacity-70 lg:rounded-lg p-6 block mr-5">
+            <div className="bg-rose-100 lg:h-auto h-fit lg:w-[32rem] bg-opacity-70 lg:rounded-lg p-6 block mr-5">
+              <Link to="/categories">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                  />
+                </svg>
+              </Link>
               <form
                 className="mt-8 space-y-6"
                 action="#"
                 onSubmit={handleSubmit}
               >
-                <label>English word</label>
-                <input
-                  type="text"
-                  value={word}
-                  onChange={(e) => setUserWord(e.target.value)}
-                ></input>
-                <br></br>
-                <label>English description</label>
-                <textarea
-                  type="text"
-                  value={description}
-                  onChange={(e) => setUserDescription(e.target.value)}
-                ></textarea>
-                <br></br>
-                <label>Catalan word</label>
-                <input
-                  type="text"
-                  value={Cword}
-                  onChange={(e) => setUserCWord(e.target.value)}
-                ></input>
-                <br></br>
-                <label>Catalan description</label>
-                <textarea
-                  type="text"
-                  value={Cdescription}
-                  onChange={(e) => setUserCDescription(e.target.value)}
-                ></textarea>
-                <br></br>
+                <div>
+                  <label for="english_word">English word: </label>
+                  <input
+                    id="english_word"
+                    type="text"
+                    value={word}
+                    onChange={(e) => setUserWord(e.target.value)}
+                    className="addWordsInput"
+                  ></input>
+                </div>
+
+                <div>
+                  <label for="english_definition">English definition: </label>
+                  <textarea
+                    id="english_definition"
+                    type="text"
+                    value={description}
+                    onChange={(e) => setUserDescription(e.target.value)}
+                    className="addWordsInput"
+                  ></textarea>
+                </div>
+
+                <div>
+                  <label for="catalan_translation">Catalan translation: </label>
+                  <input
+                    id="catalan_translation"
+                    type="text"
+                    value={Cword}
+                    onChange={(e) => setUserCWord(e.target.value)}
+                    className="addWordsInput"
+                  ></input>
+                </div>
+
+                <div>
+                  <label for="catalan_definition">Catalan definition: </label>
+                  <textarea
+                    id="catalan_definition"
+                    type="text"
+                    value={Cdescription}
+                    onChange={(e) => setUserCDescription(e.target.value)}
+                    className="addWordsInput"
+                  ></textarea>
+                </div>
+
                 <button
                   type="submit"
                   className="rounded-lg w-24 p-1.5 m-1 outline outline-2 outline-orange-500 text-gray-900 hover:pink-to-orange-gr hover:outline-none hover:text-rose-50 font-semibold"

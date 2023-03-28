@@ -60,8 +60,6 @@ export const LoginForm = () => {
         body: JSON.stringify(data),
       });
       const json = await response.json();
-      console.log("Response:", json);
-      console.log(json.token)
       dispatch(setLoginToken(json.token));
       dispatch(setLoginUser(json.user.username));
       let sessionCookie = {
