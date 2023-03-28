@@ -14,8 +14,6 @@ import {
   CreateCategories,
   AddWords,
 } from './pages';
-import Test from './pages/Test';
-
 
 import { Provider } from 'react-redux';
 import { store } from './app/store';
@@ -38,7 +36,6 @@ function App() {
           <Route path='/categories' element={<Categories />} />
           <Route path='/createCategories' element={<CreateCategories />} />+
           <Route path='/addWords' element={<AddWords />} />
-          <Route path='/test' element={<Test socket={socket} />} />
         </Routes>
       </Router>
     </Provider>
