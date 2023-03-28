@@ -69,25 +69,22 @@ export const CreateGame = ({ socket }) => {
     }
   };
 
-  const getCollection = async () => {
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/list-categories`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${stateLoginToken}`,
-          },
-          method: "get",
-        }
-      );
-
-      const data = await response.json();
-      setCategories(data);
-      setLoading(false);
-    } catch (error) {
-      // console.error(error);
-    }
+  const getCollection = () => {
+    fetch(`http://127.0.0.1:8000/api/list-categories`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${stateLoginToken}`,
+      },
+      method: "get",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
   };
 
   const codeGenerator = () => {
@@ -196,8 +193,19 @@ export const CreateGame = ({ socket }) => {
       ) : (
         <div className="inline mx-[auto] bg-rose-100 bg-opacity-60 lg:rounded-lg m-[auto] p-6 h-auto w-screen md:w-screen lg:w-auto md:w-auto">
           <button onClick={() => setIsSelected(false)}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+              />
             </svg>
           </button>
           <div className="grid justify-center">
@@ -248,8 +256,7 @@ export const CreateGame = ({ socket }) => {
             )}
           </div>
         </div>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
