@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
                 painter: null,
                 word: "",
                 words: randomWords.sort(random),
-                timer: 90,
+                timer: 93,
                 // drawings: [],
             });
             sendLobbyList();
@@ -273,7 +273,7 @@ setInterval(function () {
     lobbies.forEach((lobby) => {
         if (lobby.totalTurns > 0) {
             if (lobby.timer == 0) {
-                lobby.timer = 90;
+                lobby.timer = 93;
                 nextTurn(lobby.lobby_code);
                 io.to(lobby.lobby_code).emit("timer", lobby.timer);
             } else {
