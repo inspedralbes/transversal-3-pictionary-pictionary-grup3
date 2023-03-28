@@ -7,7 +7,6 @@ export const Profile = () => {
   const stateLoginToken = useSelector((state) => state.login.loginToken);
   const [nameUser, setNameUser] = useState("");
   const [emailUser, setEmailUser] = useState("");
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export const Profile = () => {
       .then((data) => {
         setEmailUser(data.userData.email);
         setNameUser(data.userData.username);
-        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -56,21 +54,15 @@ export const Profile = () => {
             ></img>
           </div>
           <div className="text-center px-14">
-            {loading ? (
-              "Loading"
-            ) : (
-              <>
-                <h2 className="text-gray-800 text-3xl font-bold">{nameUser}</h2>
-                <p className="text-gray-800 font-semibold mt-2 hover:text-blue-500">
-                  {emailUser}
-                </p>
-              </>
-            )}
+            <h2 className="text-gray-800 text-3xl font-bold">{nameUser}</h2>
+            <p className="text-gray-800 font-semibold mt-2 hover:text-blue-500">
+              {emailUser}
+            </p>
           </div>
           <hr className="mt-6"></hr>
           <div className="flex bg-rose-50">
             <button className="text-center w-1/2 p-4 hover:bg-rose-300 cursor-pointer">
-              <p>CHANGE PASSWORD</p>
+              CHANGE PASSWORD
             </button>
             <div className="border"></div>
             <button
