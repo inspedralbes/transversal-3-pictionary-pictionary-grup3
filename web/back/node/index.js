@@ -168,14 +168,14 @@ io.on("connection", (socket) => {
                             user.answered = true;
                             user.score = user.score + (data.time + 10);
                             io.to(socket.data.current_lobby).emit("correct word", { lobby });
-                            lobby.userWords.shift({
+                            lobby.userWords.unshift({
                                 name: socket.data.name,
                                 word: "Answered correctly",
                             });
                         }
                     });
                 } else {
-                    lobby.userWords.shift({
+                    lobby.userWords.unshift({
                         name: socket.data.name,
                         word: "Answered wrong",
                     });
