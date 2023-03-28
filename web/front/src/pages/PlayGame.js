@@ -458,7 +458,7 @@ export const PlayGame = ({ socket }) => {
         </div>
       </div>
       <div id="modal" className="hidden fixed z-1 top-0 left-0 w-screen h-screen overflow-auto bg-slate-700 bg-opacity-20">
-        <div className="bg-white mx-[auto] mt-10 p-10 w-[180px] text-center">
+        <div className="bg-white mx-[auto] mt-10 p-10 w-[180px] text-center rounded-lg">
           <div id="countdown" className="text-[48px]">3</div>
           <div className="text-center">NEXT TURN</div>
         </div>
