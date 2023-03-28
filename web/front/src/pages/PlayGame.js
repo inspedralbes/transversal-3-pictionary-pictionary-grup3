@@ -32,7 +32,7 @@ export const PlayGame = ({ socket }) => {
   let context;
   let isDrawing = false;
   let painterAux = false;
-  let timer = 90;
+  let timer = 93;
 
   socket.on("timer", (data) => {
     timer = data;
