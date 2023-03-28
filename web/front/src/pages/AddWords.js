@@ -36,7 +36,7 @@ export const AddWords = () => {
       setCategories(data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -55,7 +55,7 @@ export const AddWords = () => {
       setWords(data);
       setIsWords(true);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -67,7 +67,6 @@ export const AddWords = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(idCategory);
     e.preventDefault();
 
     if (word != "" && description != "" && Cword != "" && Cdescription != "") {
@@ -90,7 +89,7 @@ export const AddWords = () => {
 
         setIsWords(true);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     }
 
@@ -102,15 +101,16 @@ export const AddWords = () => {
   };
 
   return (
-    <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="mx-auto">
-        <div className=""></div>
-        {/* <div className="text-center"> */}
-          <div className="bg-rose-100 h-auto lg:w-[32rem] md:w-full w-screen bg-opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 text-center block mt-[8rem]">
+    <div className="flex items-center justify-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
+      <div className="overflow-y-scroll md:overflow-y-hidden h-screen md:h-fit">
+        <div className="flex justify-center text-center">
+          <div className="bg-rose-100 w-screen md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block">
             {loading ? (
-              "Loading"
+              <div className="w-[100%] flex items-center justify-center">
+                <span className="loader"></span>
+              </div>
             ) : (
-              <>
+              <div className="opacity-animation">
                 <Link to="/categories" className="h-[20px] w-[20px] block">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
@@ -130,29 +130,12 @@ export const AddWords = () => {
                     </option>
                   ))}
                 </select>
-              </>
+              </div>
             )}
           </div>
-        {/* </div> */}
         {isWords ? (
-          <div className="lg:mt-5 lg:flex justify-center">
-            <div className="bg-rose-100 lg:h-auto h-fit lg:w-[32rem] bg-opacity-70 lg:rounded-lg p-6 lg:mr-5">
-              {/* <Link to="/categories">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                  />
-                </svg>
-              </Link> */}
+          <div className="md:flex justify-center md:mt-5 opacity-animation">
+            <div className="bg-rose-100 md:h-auto h-fit md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block md:mr-5">
               <form
                 className="mt-8 space-y-6"
                 action="#"
@@ -210,8 +193,8 @@ export const AddWords = () => {
                 </button>
               </form>
             </div>
-            <div className="bg-rose-100 lg:w-[32rem] h-fit lg:h-auto opacity-70 lg:rounded-lg p-6 w-screen">
-              <div className="overflow-y-scroll h-[400px]">
+            <div className="bg-rose-100 md:w-[32rem] h-fit md:h-auto opacity-70 md:rounded-lg p-6 block w-screen pt-10 md:pt-6">
+              <div className="overflow-y-scroll h-[430px]">
                 <table className="text-left">
                   <thead>
                     <tr>

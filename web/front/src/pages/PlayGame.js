@@ -3,6 +3,7 @@ import "../style/style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setScoreBoard } from "../features/scoreBoardSlice";
+import Swal from "sweetalert2";
 
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
@@ -34,13 +35,14 @@ export const PlayGame = ({ socket }) => {
   let timer = 90;
 
   socket.on("timer", (data) => {
-    console.log("socket timer: " + data);
     timer = data
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      timer--;
+      if (timer > 0) {
+        timer--;
+      }
       document.getElementById('timer').innerHTML = timer;
     }, 1000);
     return () => clearInterval(interval);
@@ -95,6 +97,7 @@ export const PlayGame = ({ socket }) => {
         painterAux = false;
         canvas.classList.remove("pincel");
       }
+      countdown();
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
       setShowWord(true);
@@ -109,6 +112,26 @@ export const PlayGame = ({ socket }) => {
       wipe();
     });
 
+    function countdown() {
+      console.log("SEXOOOOO");
+      const modal = document.getElementById("modal");
+      const countdown = document.getElementById("countdown");
+
+      let count = 3;
+
+      modal.style.display = "block";
+      let countdownInterval = setInterval(function () {
+        count--;
+        countdown.textContent = count;
+        if (count === 0) {
+          clearInterval(countdownInterval);
+          modal.style.display = "none";
+          count = 3;
+          countdown.textContent = count;
+        }
+      }, 1000);
+    }
+
     socket.on("finished game", (data) => {
       dispatch(setScoreBoard(data));
       navigate("../rankingGame");
@@ -120,6 +143,13 @@ export const PlayGame = ({ socket }) => {
     if (wordInserted !== "") {
       if (word === wordInserted.toLowerCase()) {
         setWordCorrect(true);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "correct",
+          title: "Answered Correctly!",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
       socket.emit("word inserted", {
         word: wordInserted.toLowerCase(),
@@ -425,6 +455,12 @@ export const PlayGame = ({ socket }) => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div id="modal" className="hidden fixed z-1 top-0 left-0 w-screen h-screen overflow-auto bg-slate-700 bg-opacity-20">
+        <div className="bg-white mx-[auto] mt-10 p-10 w-[180px] text-center rounded-lg">
+          <div id="countdown" className="text-[48px]">3</div>
+          <div className="text-center">NEXT TURN</div>
         </div>
       </div>
     </div>

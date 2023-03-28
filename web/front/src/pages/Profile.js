@@ -1,7 +1,7 @@
 import avatar from "../style/avatar.png";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export const Profile = () => {
   const stateLoginToken = useSelector((state) => state.login.loginToken);
@@ -26,7 +26,9 @@ export const Profile = () => {
         setEmailUser(data.userData.email);
         setNameUser(data.userData.username);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => 
+      console.error(error)
+      );
   };
 
   const handleClick = (e) => {
@@ -38,15 +40,37 @@ export const Profile = () => {
 
   return (
     <div className="h-screen overflow-y-hidden items-center bg-cover bg-center bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="mt-44">
+      <div className="mt-10 md:mt-44 lg:mt-44">
         <h1 className="w-2/5 mx-auto text-center text-4xl font-bold rounded-md bg-rose-50 text-rose-400 leading-tight">
           USER PROFILE
         </h1>
       </div>
       <div className="mx-auto mt-5 container border-4 border-rose-500 bg-rose-300 rounded-lg lg:w-2/6 xl:w-2/7 sm:w-full md:w-2/3shadow-lg transform duration-200 easy-in-out">
+        <div className="h-32 overflow-hidden" >
+          <img className="w-full" src="https://www.riolettcustomaerosols.co.uk/img/slides/2000.webp" alt="Banner Image" />
+        </div>
         <div className="bg-rose-200">
+          <div>
+            <Link to="/createGame" className="h-[20px] w-[20px] block ml-5 pt-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-8 h-10"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+                />
+              </svg>
+            </Link>
+          </div>
+          
           <div className="h-16 overflow-hidden"></div>
-          <div className="flex justify-center px-5 -mt-12">
+          <div className="flex justify-center px-5 -mt-32 mb-10">
             <img
               className="h-32 w-32 bg-rose-500 p-2 rounded-full"
               src={avatar}
