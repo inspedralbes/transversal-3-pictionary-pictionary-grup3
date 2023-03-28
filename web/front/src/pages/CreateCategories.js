@@ -10,21 +10,31 @@ export const CreateCategories = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/create-category",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${stateLoginToken}`,
-          },
-          body: JSON.stringify({ idUser: 1, category: titleCategories }),
-        }
-      );
-      setCreated(true);
-    } catch (error) {
-      // console.error("Error:", error);
+    if (titleCategories != "") {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/create-category",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${stateLoginToken}`,
+            },
+            body: JSON.stringify({ idUser: 1, category: titleCategories }),
+          }
+        );
+        setCreated(true);
+      } catch (error) {
+        // console.error("Error:", error);
+      }
+    } else {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Fill the blank",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
