@@ -153,7 +153,7 @@ export const AddWords = () => {
                   onSubmit={handleSubmit}
                 >
                   <div>
-                    <label for="english_word">English word: </label>
+                    <label htmlFor="english_word">English word: </label>
                     <input
                       id="english_word"
                       type="text"
@@ -164,7 +164,7 @@ export const AddWords = () => {
                   </div>
 
                   <div>
-                    <label for="english_definition">English definition: </label>
+                    <label htmlFor="english_definition">English definition: </label>
                     <textarea
                       id="english_definition"
                       type="text"
@@ -175,7 +175,7 @@ export const AddWords = () => {
                   </div>
 
                   <div>
-                    <label for="catalan_translation">
+                    <label htmlFor="catalan_translation">
                       Catalan translation:{" "}
                     </label>
                     <input
@@ -188,7 +188,7 @@ export const AddWords = () => {
                   </div>
 
                   <div>
-                    <label for="catalan_definition">Catalan definition: </label>
+                    <label htmlFor="catalan_definition">Catalan definition: </label>
                     <textarea
                       id="catalan_definition"
                       type="text"
