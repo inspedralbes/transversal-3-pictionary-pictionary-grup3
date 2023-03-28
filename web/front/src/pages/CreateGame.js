@@ -122,9 +122,11 @@ export const CreateGame = ({ socket }) => {
       {!isSelected ? (
         <div className="bg-rose-100 md:h-auto md:w-[32rem] bg-opacity-70 md:rounded-lg mx-auto md:m-[auto] p-6 block h-screen w-screen">
           {loading ? (
-            "Loading"
+            <div className="w-[100%] flex items-center justify-center">
+              <span className="loader"></span>
+            </div>
           ) : (
-            <>
+            <div className="opacity-animation">
               <Link to="/" className="h-[20px] block mb-[15px]">
                 <svg
                   className="flex absolute h-5 w-5 text-rose-200 group-hover:text-indigo-400"
@@ -188,7 +190,7 @@ export const CreateGame = ({ socket }) => {
                   Profile
                 </Link>
               </div>
-            </>
+            </div>
           )}
         </div>
       ) : (

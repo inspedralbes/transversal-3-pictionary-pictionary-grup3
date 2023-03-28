@@ -87,9 +87,11 @@ export const Categories = () => {
               </Link>
             </div>
             {loading ? (
-              "Loading"
+              <div className="w-[100%] flex items-center justify-center">
+                <span className="loader"></span>
+              </div>
             ) : (
-              <>
+              <div className="opacity-animation">
                 <label>Look at the existing categories</label>
                 <select
                   onChange={handleSelect}
@@ -104,7 +106,7 @@ export const Categories = () => {
                     </option>
                   ))}
                 </select>
-              </>
+              </div>
             )}
             {isWords ? (
               <div className="max-h-72 overflow-scroll">

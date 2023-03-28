@@ -70,7 +70,7 @@ export const CreateCategories = () => {
                 />
               </svg>
             </Link>
-            <form className="mt-8 space-y-6" action="#" onSubmit={handleSubmit}>
+            <form className="space-y-6 mb-3" action="#" onSubmit={handleSubmit}>
               <label for="title-category" className="text-lg font-semibold">
                 Set the category title:{" "}
               </label>
