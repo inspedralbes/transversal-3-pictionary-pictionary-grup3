@@ -49,26 +49,6 @@ export const CreateGame = ({ socket }) => {
     setIdCategory(e.target.value);
   };
 
-  const getWords = async () => {
-    try {
-      const response = await fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-words`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "post",
-        body: JSON.stringify({
-          idCategory: idCategory,
-        }),
-      });
-      const data = await response.json();
-      setWords(data);
-      setLoading(false);
-      // console.log(data);
-    } catch (error) {
-      // console.error(error);
-    }
-  };
-
   const getCollection = () => {
     fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-categories`, {
       headers: {
@@ -85,6 +65,24 @@ export const CreateGame = ({ socket }) => {
       .catch((error) => {
         // console.error(error);
       });
+  };
+
+  const getWords = async () => {
+    try {
+      const response = await fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-words`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "post",
+        body: JSON.stringify({
+          idCategory: idCategory,
+        }),
+      });
+      const data = await response.json();
+      setWords(data);
+    } catch (error) {
+      // console.error(error);
+    }
   };
 
   const codeGenerator = () => {
