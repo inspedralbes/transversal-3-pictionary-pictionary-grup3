@@ -18,7 +18,14 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
-const socket = socketIO.connect('wss://tr3-g3.alumnes.inspedralbes.cat');
+let socket = socketIO('wss://tr3-g3.alumnes.inspedralbes.cat/', {
+  withCredentials: true,
+  cors: {
+    origin: "*",
+    credentials: true,
+  },
+  path: "/node/",
+});
 
 function App() {
   return (
