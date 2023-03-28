@@ -10,21 +10,31 @@ export const CreateCategories = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        "//tr3-laravel.alumnes.inspedralbes.cat/public/api/create-category",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${stateLoginToken}`,
-          },
-          body: JSON.stringify({ idUser: 1, category: titleCategories }),
-        }
-      );
-      setCreated(true);
-    } catch (error) {
-      // console.error("Error:", error);
+    if (titleCategories != "") {
+      try {
+        const response = await fetch(
+          "//tr3-laravel.alumnes.inspedralbes.cat/public/api/create-category",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${stateLoginToken}`,
+            },
+            body: JSON.stringify({ idUser: 1, category: titleCategories }),
+          }
+        );
+        setCreated(true);
+      } catch (error) {
+        // console.error("Error:", error);
+      }
+    } else {
+      Swal.fire({
+        position: "bottom-end",
+        icon: "error",
+        title: "Fill the blank",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -45,22 +55,11 @@ export const CreateCategories = () => {
         <div className="text-center ">
           <div className="bg-rose-100 lg:h-auto lg:w-[32rem] bg-opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block h-screen w-screen">
             <Link to="/categories">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
               </svg>
             </Link>
-            <form className="mt-8 space-y-6" action="#" onSubmit={handleSubmit}>
+            <form className="space-y-6 mb-3" action="#" onSubmit={handleSubmit}>
               <label for="title-category" className="text-lg font-semibold">
                 Set the category title:{" "}
               </label>
