@@ -295,4 +295,7 @@ setInterval(function () {
 
 server.listen(port, host, () => {
     console.log("Listening on " + host + ":" + port);
+    setInterval(function () {
+        console.log("Server is on - " + new Date().toLocaleString());
+    }, 1000 * 60);
 });
