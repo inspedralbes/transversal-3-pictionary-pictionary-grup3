@@ -147,17 +147,18 @@ export const CreateGame = ({ socket }) => {
                   </g>
                 </svg>
               </Link>
-              <select
-                onChange={handleSelect}
-                className="font-semibold bg-rose-50 border-2 border-rose-400 text-gray-900 text-md rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full"
-              >
-                {categories.categoriesList.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.category}
-                  </option>
-                ))}
-              </select>
-
+              {categories.categoriesList.length > 0 && (
+                <select
+                  onChange={handleSelect}
+                  className="font-semibold bg-rose-50 border-2 border-rose-400 text-gray-900 text-md rounded-lg focus:ring-rose-500 focus:border-rose-500 p-1.5 m-1 w-full"
+                >
+                  {categories.categoriesList.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.category}
+                    </option>
+                  ))}
+                </select>
+              )}
               <label className="font-semibold m-1 mb-0">Nº Users: </label>
               <input
                 id="users"
