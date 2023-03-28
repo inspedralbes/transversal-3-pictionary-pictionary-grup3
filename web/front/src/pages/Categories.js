@@ -87,11 +87,11 @@ export const Categories = () => {
               </Link>
             </div>
             {loading ? (
-              <div className="w-[100%] flex items-center justify-center">
+              <div className="w-[100%] flex items-center justify-center mt-5">
                 <span className="loader"></span>
               </div>
             ) : (
-              <div className="opacity-animation">
+              <div className="opacity-animation mt-5">
                 <label>Look at the existing categories</label>
                 <select
                   onChange={handleSelect}

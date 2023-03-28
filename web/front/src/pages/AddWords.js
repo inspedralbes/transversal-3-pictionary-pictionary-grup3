@@ -135,7 +135,7 @@ export const AddWords = () => {
           </div>
         </div>
         {isWords ? (
-          <div className="md:flex justify-center md:mt-5">
+          <div className="md:flex justify-center md:mt-5 opacity-animation">
             <div className="bg-rose-100 md:h-auto h-fit md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block md:mr-5">
               <form
                 className="mt-8 space-y-6"
