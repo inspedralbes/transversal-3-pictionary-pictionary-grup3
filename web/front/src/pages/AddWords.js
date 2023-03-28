@@ -103,10 +103,10 @@ export const AddWords = () => {
 
   return (
     <div className="flex items-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
-      <div className="mx-auto max-w-2xl">
-        <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
-        <div className="text-center">
-          <div className="bg-rose-100 h-auto lg:w-[32rem] bg-opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 block">
+      <div className="mx-auto">
+        <div className=""></div>
+        {/* <div className="text-center"> */}
+          <div className="bg-rose-100 h-auto lg:w-[32rem] md:w-full w-screen bg-opacity-70 lg:rounded-lg mx-auto lg:m-[auto] p-6 text-center block mt-[8rem]">
             {loading ? (
               "Loading"
             ) : (
@@ -133,11 +133,11 @@ export const AddWords = () => {
               </>
             )}
           </div>
-        </div>
+        {/* </div> */}
         {isWords ? (
-          <div className="mt-5 lg:flex justify-center">
-            <div className="bg-rose-100 lg:h-auto h-fit lg:w-[32rem] bg-opacity-70 lg:rounded-lg p-6 block mr-5">
-              <Link to="/categories">
+          <div className="lg:mt-5 lg:flex justify-center">
+            <div className="bg-rose-100 lg:h-auto h-fit lg:w-[32rem] bg-opacity-70 lg:rounded-lg p-6 lg:mr-5">
+              {/* <Link to="/categories">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -152,7 +152,7 @@ export const AddWords = () => {
                     d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
                   />
                 </svg>
-              </Link>
+              </Link> */}
               <form
                 className="mt-8 space-y-6"
                 action="#"
@@ -210,7 +210,7 @@ export const AddWords = () => {
                 </button>
               </form>
             </div>
-            <div className="bg-rose-100 lg:w-[32rem] h-fit lg:h-auto opacity-70 lg:rounded-lg p-6 block h-screen w-screen">
+            <div className="bg-rose-100 lg:w-[32rem] h-fit lg:h-auto opacity-70 lg:rounded-lg p-6 w-screen">
               <div className="overflow-y-scroll h-[400px]">
                 <table className="text-left">
                   <thead>
