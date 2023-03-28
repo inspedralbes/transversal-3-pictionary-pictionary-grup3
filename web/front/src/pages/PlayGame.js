@@ -3,6 +3,7 @@ import "../style/style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setScoreBoard } from "../features/scoreBoardSlice";
+import Swal from "sweetalert2";
 
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
@@ -16,7 +17,7 @@ export const PlayGame = ({ socket }) => {
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
-  const [showWord, setShowWord] = useState(true);
+  const [showWord, setShowWord] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
