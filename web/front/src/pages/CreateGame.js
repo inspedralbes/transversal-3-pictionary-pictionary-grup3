@@ -70,7 +70,7 @@ export const CreateGame = ({ socket }) => {
   };
 
   const getCollection = () => {
-    fetch(`http://127.0.0.1:8000/api/list-categories`, {
+    fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-categories`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${stateLoginToken}`,
