@@ -22,7 +22,7 @@ export const AddWords = () => {
   const getCollection = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/list-categories`,
+        `//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-categories`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const AddWords = () => {
 
   const getWords = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
+      const response = await fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-words`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -71,11 +71,10 @@ export const AddWords = () => {
 
     if (word != "" && description != "" && Cword != "" && Cdescription != "") {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/create-word`, {
+        const response = await fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/create-word`, {
           headers: {
             "Content-Type": "application/json",
-            // Authorization: 'Bearer ' + stateLoginToken,
-            Authorization: "Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws",
+            Authorization: `Bearer ${stateLoginToken}`,
           },
           method: "POST",
           body: JSON.stringify({

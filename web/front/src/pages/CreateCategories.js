@@ -12,7 +12,7 @@ export const CreateCategories = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/create-category",
+        "//tr3-laravel.alumnes.inspedralbes.cat/public/api/create-category",
         {
           method: "POST",
           headers: {
