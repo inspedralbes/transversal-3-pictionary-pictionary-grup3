@@ -20,7 +20,7 @@ import Test from './pages/Test';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
-const socket = socketIO.connect('http://localhost:7500');
+const socket = socketIO.connect('wss://tr3-g3.alumnes.inspedralbes.cat');
 
 function App() {
   return (
