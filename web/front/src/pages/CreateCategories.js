@@ -24,7 +24,7 @@ export const CreateCategories = () => {
       );
       setCreated(true);
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
     }
   };
 
