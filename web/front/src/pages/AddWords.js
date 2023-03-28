@@ -36,7 +36,7 @@ export const AddWords = () => {
       setCategories(data);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -55,7 +55,7 @@ export const AddWords = () => {
       setWords(data);
       setIsWords(true);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -67,7 +67,6 @@ export const AddWords = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(idCategory);
     e.preventDefault();
 
     if (word != "" && description != "" && Cword != "" && Cdescription != "") {
@@ -90,7 +89,7 @@ export const AddWords = () => {
 
         setIsWords(true);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     }
 

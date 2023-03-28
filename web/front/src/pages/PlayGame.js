@@ -34,7 +34,6 @@ export const PlayGame = ({ socket }) => {
   let timer = 90;
 
   socket.on("timer", (data) => {
-    console.log("socket timer: " + data);
     timer = data
   });
 
