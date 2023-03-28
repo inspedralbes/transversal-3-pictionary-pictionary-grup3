@@ -17,7 +17,7 @@ export const PlayGame = ({ socket }) => {
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
-  const [showWord, setShowWord] = useState(true);
+  const [showWord, setShowWord] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -100,7 +100,7 @@ export const PlayGame = ({ socket }) => {
       countdown();
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
-      setShowWord(true);
+      setShowWord(false);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
