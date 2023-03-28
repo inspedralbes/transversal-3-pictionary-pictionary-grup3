@@ -12,6 +12,7 @@ const io = require("socket.io")(server, {
         origin: true,
         credentials: true,
     },
+    path: "/node/",
 });
 
 io.on("connection", (socket) => {
