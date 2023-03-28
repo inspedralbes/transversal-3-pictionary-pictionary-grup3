@@ -160,40 +160,50 @@ export const JoinGame = ({ socket }) => {
           </div>
         </div>
       ) : (
-        <div className="block w-full lg:h-full">
-          <button
-            onClick={handleClickLeave}
-            className="default-button m-1 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit lg:m-16"
-          >
-            Leave lobby
-          </button>
+        <div className="block w-full lg:h-full md:h-full">
           <div className="flex m-[auto] ">
-            <div className="flex flex-col m-[auto]">
+            <div className="flex flex-col mx-[auto] lg:my-24 md:my-24 mt-40">
               <h2 className="font-semibold text-5xl text-center mb-10">
                 Welcome{" "}
                 <p className="font-bold text-yellow-400 inline">{nameUser}</p>!
                 <br></br>Are you ready?!
               </h2>
               {!ready ? (
-                <button
-                  onClick={handleClickReady}
-                  className="default-button m-[auto]  text-red-700 font-extrabold bg-red-200 transition duration-100 hover:shadow-[0_20px_60px_-5px_rgba(0,0,0,0.7)] text-center w-60 h-16"
-                >
-                  NOT READY
-                </button>
+                <>
+                  <button
+                    onClick={handleClickReady}
+                    className="default-button m-[auto]  text-red-700 font-extrabold bg-red-200 transition duration-100 hover:shadow-[0_20px_60px_-5px_rgba(0,0,0,0.7)] text-center w-60 h-16"
+                  >
+                    NOT READY
+                  </button>
+                  <button
+                    onClick={handleClickLeave}
+                    className="leave-lobby-btn"
+                  >
+                    Leave lobby
+                  </button>
+                </>
               ) : (
-                <button
-                  onClick={handleClickReady}
-                  className="default-button m-[auto] text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50 transition duration-100 text-center w-60 h-16"
-                  disabled
-                >
-                  READY
-                </button>
+                <>
+                  <button
+                    onClick={handleClickReady}
+                    className="default-button m-[auto] text-green-900 font-extrabold bg-green-200 disabled:text-green-300 disabled:bg-gray-50 transition duration-100 text-center w-60 h-16"
+                    disabled
+                  >
+                    READY
+                  </button>
+                  <button
+                    onClick={handleClickLeave}
+                    className="leave-lobby-btn"
+                  >
+                    Leave lobby
+                  </button>
+                </>
               )}
-              <div className="grid grid-cols-4 bg-rose-50 bg-opacity-25 w-fit rounded-lg mt-8">
+              <div className="grid lg:grid-cols-4 md:grid-cols-4 gird-cols-3 bg-rose-50 bg-opacity-25 lg:w-fit md:w-fit md:rounded-lg w-screen lg:rounded-lg mt-12 p-8 m-[auto] ">
                 {usersReady.map((user) => (
                   <div
-                    className="col-span-1 rounded-full bg-pink-50  h-28 w-28 bg-opacity-60 m-4 flex border-dashed border-2 border-pink-600"
+                    className="col-span-1 rounded-full bg-pink-50 lg:h-28 lg:w-28 md:h-28 md:w-28 h-36 w-36 bg-opacity-60 lg:m-4 flex border-dashed border-2 md:m-4 border-pink-600 mx-[auto] my-4 text-xl text-gray-900"
                     key={user.userId}
                   >
                     <p className="m-[auto] opacity-1 font-semibold">

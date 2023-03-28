@@ -26,4 +26,8 @@
     .addWordsInput{
         @apply rounded-lg caret-rose-500 p-1 focus:outline-rose-500 w-full mt-0.5
     }
+
+    .leave-lobby-btn{
+        @apply default-button mt-4 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit w-fit mx-[auto]
+    }
 }
