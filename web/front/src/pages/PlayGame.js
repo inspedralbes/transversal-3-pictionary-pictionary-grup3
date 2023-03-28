@@ -100,7 +100,7 @@ export const PlayGame = ({ socket }) => {
       countdown();
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
-      setShowWord(true);
+      setShowWord(false);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
