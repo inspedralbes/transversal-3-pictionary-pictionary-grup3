@@ -152,7 +152,7 @@ export const PlayGame = ({ socket }) => {
       }
       socket.emit("word inserted", {
         word: wordInserted.toLowerCase(),
-        time: timer,
+        time: parseInt(document.getElementById("timer").textContent),
       });
       setWordInserted("");
     }
