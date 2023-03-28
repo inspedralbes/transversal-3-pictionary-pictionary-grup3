@@ -80,7 +80,7 @@ export const Profile = () => {
           <div className="text-center px-14">
             <h2 className="text-gray-800 text-3xl font-bold">{nameUser}</h2>
             <p className="text-gray-800 font-semibold mt-2 hover:text-blue-500">
-              {emailUser} carlos@inspedralbes.cat
+              {emailUser}
             </p>
           </div>
           <hr className="mt-6"></hr>
