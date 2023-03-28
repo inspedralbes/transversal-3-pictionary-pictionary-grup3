@@ -103,8 +103,8 @@ export const AddWords = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className="overflow-y-scroll md:overflow-y-hidden h-screen md:h-fit">
-        <div className="flex justify-center text-center">
-          <div className="bg-rose-100 w-screen md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block">
+        <div className="block justify-center text-center">
+          <div className="bg-rose-100 w-screen md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block md:mx-auto">
             {loading ? (
               <div className="w-[100%] flex items-center justify-center">
                 <span className="loader"></span>
