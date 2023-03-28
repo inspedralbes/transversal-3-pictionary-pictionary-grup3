@@ -17,7 +17,7 @@ export const PlayGame = ({ socket }) => {
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
-  const [showWord, setShowWord] = useState(true);
+  const [showWord, setShowWord] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const PlayGame = ({ socket }) => {
   let timer = 90;
 
   socket.on("timer", (data) => {
-    timer = data
+    timer = data;
   });
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export const PlayGame = ({ socket }) => {
       if (timer > 0) {
         timer--;
       }
-      document.getElementById('timer').innerHTML = timer;
+      document.getElementById("timer").innerHTML = timer;
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -100,7 +100,7 @@ export const PlayGame = ({ socket }) => {
       countdown();
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
-      setShowWord(true);
+      setShowWord(false);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
@@ -113,13 +113,12 @@ export const PlayGame = ({ socket }) => {
     });
 
     function countdown() {
-      console.log("SEXOOOOO");
       const modal = document.getElementById("modal");
       const countdown = document.getElementById("countdown");
 
       let count = 3;
 
-      modal.style.display = "block";
+      modal.style.display = "flex";
       let countdownInterval = setInterval(function () {
         count--;
         countdown.textContent = count;
@@ -145,7 +144,7 @@ export const PlayGame = ({ socket }) => {
         setWordCorrect(true);
         Swal.fire({
           position: "bottom-end",
-          icon: "correct",
+          icon: "success",
           title: "Answered Correctly!",
           showConfirmButton: false,
           timer: 1000,
@@ -153,7 +152,7 @@ export const PlayGame = ({ socket }) => {
       }
       socket.emit("word inserted", {
         word: wordInserted.toLowerCase(),
-        time: timer,
+        time: parseInt(document.getElementById("timer").textContent),
       });
       setWordInserted("");
     }
@@ -310,16 +309,84 @@ export const PlayGame = ({ socket }) => {
                   onClick={wipe}
                   className="md:ml-4 px-1 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                    />
                   </svg>
-
                 </button>
                 <button
                   onClick={changeBackground}
                   className="ml-4 px-1 py-1 rounded text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7.00914 17.9998L2.99914 13.9898C1.65914 12.6498 1.65914 11.3198 2.99914 9.9798L9.67914 3.2998L17.0291 10.6498C17.3991 11.0198 17.3991 11.6198 17.0291 11.9898L11.0091 18.0098C9.68914 19.3298 8.34914 19.3298 7.00914 17.9998Z" stroke="#ffffff" strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8.34961 1.9502L9.68961 3.29016" stroke="#ffffff" strokeWidth="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="0.4" d="M2.07031 11.9197L17.1903 11.2598" stroke="#ffffff" strokeWidth="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 22H16" stroke="#ffffff" strokeWidth="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path> <path opacity="0.4" d="M18.85 15C18.85 15 17 17.01 17 18.24C17 19.26 17.83 20.09 18.85 20.09C19.87 20.09 20.7 19.26 20.7 18.24C20.7 17.01 18.85 15 18.85 15Z" stroke="#ffffff" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="#ffffff"
+                  >
+                    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M7.00914 17.9998L2.99914 13.9898C1.65914 12.6498 1.65914 11.3198 2.99914 9.9798L9.67914 3.2998L17.0291 10.6498C17.3991 11.0198 17.3991 11.6198 17.0291 11.9898L11.0091 18.0098C9.68914 19.3298 8.34914 19.3298 7.00914 17.9998Z"
+                        stroke="#ffffff"
+                        strokeWidth="1.5"
+                        strokeMiterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M8.34961 1.9502L9.68961 3.29016"
+                        stroke="#ffffff"
+                        strokeWidth="1.5"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        opacity="0.4"
+                        d="M2.07031 11.9197L17.1903 11.2598"
+                        stroke="#ffffff"
+                        strokeWidth="1.5"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        d="M3 22H16"
+                        stroke="#ffffff"
+                        strokeWidth="1.5"
+                        stroke-miterlimit="10"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                      <path
+                        opacity="0.4"
+                        d="M18.85 15C18.85 15 17 17.01 17 18.24C17 19.26 17.83 20.09 18.85 20.09C19.87 20.09 20.7 19.26 20.7 18.24C20.7 17.01 18.85 15 18.85 15Z"
+                        stroke="#ffffff"
+                        strokeWidth="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
                 </button>
               </h2>
               <div className="flex items-center mb-4">
@@ -394,7 +461,10 @@ export const PlayGame = ({ socket }) => {
           </div>
           <div className="block md:flex md:mt-5 h-[85%] md:h-fit">
             {/* CANVAS */}
-            <div id="canvas" className="flex items-center justify-center h-[70%] md:h-fit">
+            <div
+              id="canvas"
+              className="flex items-center justify-center h-[70%] md:h-fit"
+            >
               <canvas
                 ref={canvasRef}
                 width="633px"
@@ -434,7 +504,10 @@ export const PlayGame = ({ socket }) => {
                     autoComplete="off"
                   />
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex justify-center items-center h-[35%] md:h-fit">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex justify-center items-center h-[35%] md:h-fit"
+                  >
                     <input
                       name="word"
                       type="text"
@@ -457,10 +530,17 @@ export const PlayGame = ({ socket }) => {
           </div>
         </div>
       </div>
-      <div id="modal" className="hidden fixed z-1 top-0 left-0 w-screen h-screen overflow-auto bg-slate-700 bg-opacity-20">
-        <div className="bg-white mx-[auto] mt-10 p-10 w-[180px] text-center rounded-lg">
-          <div id="countdown" className="text-[48px]">3</div>
-          <div className="text-center">NEXT TURN</div>
+      <div
+        id="modal"
+        className="hidden fixed z-1 top-0 left-0 w-screen h-screen overflow-auto bg-slate-700 bg-opacity-20 justify-center items-center"
+      >
+        <div className="bg-rose-100 p-10 w-60 h-60 text-center rounded-full flex justify-center items-center">
+          <div className="w-fit h-fit">
+            <div id="countdown" className="text-[48px] ">
+              3
+            </div>
+            <div className="text-center">NEXT TURN</div>
+          </div>
         </div>
       </div>
     </div>
