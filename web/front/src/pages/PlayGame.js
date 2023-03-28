@@ -39,7 +39,9 @@ export const PlayGame = ({ socket }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      timer--;
+      if(timer>0){
+        timer--;
+      }
       document.getElementById('timer').innerHTML = timer;
     }, 1000);
     return () => clearInterval(interval);
