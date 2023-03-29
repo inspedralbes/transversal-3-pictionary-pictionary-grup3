@@ -533,16 +533,18 @@ export const PlayGame = ({ socket }) => {
       </div>
       <div
         id="modal"
-        className="hidden fixed z-1 top-0 left-0 w-screen h-screen overflow-auto bg-slate-700 bg-opacity-20 justify-center items-center"
+        className="hidden absolute z-1 top-0 left-0 w-screen h-screen overflow-auto bg-slate-700 bg-opacity-20 justify-center items-center "
       >
-        <div className="bg-rose-100 p-10 w-60 h-60 text-center rounded-full flex justify-center items-center">
-          <div className="w-fit h-fit">
-            <div id="countdown" className="text-[48px] ">
-              3
-            </div>
-            <div className="text-center">NEXT TURN</div>
-            {painter ? (<div className="text-center">You are the painter</div>) : (<div className="text-center">{whoPaint} is going to paint</div>)} 
+        <div className="bg-rose-100 p-10 w-80 h-80 rounded-full flex justify-center items-center flex-col transition duration-0 hover:duration-150 hover:bg-rose-200 ">
+          <div id="countdown" className="text-5xl font-bold animate-ping">
+            3
           </div>
+          <div className="text-xl font-bold mt-4">NEXT TURN</div>
+          {painter ? (
+            <div className="text-center mt-4">You are the painter</div>
+          ) : (
+            <div className="text-center mt-4 uppercase"> <p className="w-16 animate-pulse mx-auto uppercase font-semibold rounded-sm bg-rose-400">{whoPaint}</p> is going to paint</div>
+          )}
         </div>
       </div>
     </div>
