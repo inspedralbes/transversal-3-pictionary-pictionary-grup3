@@ -20,7 +20,7 @@ export const CreateCategories = () => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${stateLoginToken}`,
             },
-            body: JSON.stringify({ idUser: 1, category: titleCategories }),
+            body: JSON.stringify({ idUser: 1, category: titleCategories.toLowerCase() }),
           }
         );
         setCreated(true);

@@ -79,7 +79,7 @@ export const AddWords = () => {
           method: "POST",
           body: JSON.stringify({
             idCategory: idCategory,
-            word: word,
+            word: word.toLowerCase(),
             description: description,
             word_ca: Cword,
             description_ca: Cdescription,
