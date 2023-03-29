@@ -52,7 +52,7 @@ export const LoginForm = () => {
     };
 
     try {
-      const response = await fetch("//127.0.0.1:8000/api/login", {
+      const response = await fetch("//tr3-laravel.alumnes.inspedralbes.cat/public/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

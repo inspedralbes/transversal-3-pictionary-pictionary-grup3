@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
 
     socket.on("join room", (data) => {
         let available = true;
-        let joined = false;
+        let joinedOrError = false;
         if (lobbies.length > 0) {
             lobbies.forEach((lobby) => {
                 if (lobby.lobby_code == data.lobby_code) {
@@ -72,26 +72,29 @@ io.on("connection", (socket) => {
                                 ready: false,
                                 score: 0,
                                 answered: false,
+                                status: "connected",
                             });
                             socket.join(data.lobby_code);
                             socket.data.current_lobby = data.lobby_code;
                             socket.data.name = data.name;
                             socket.data.userId = data.userId;
-                            joined = true;
+                            joinedOrError = true;
                             sendUserList(socket);
                         } else {
                             io.to(socket.id).emit("not joined", {
                                 "errorMsg": "Name not available",
                             });
+                            joinedOrError = true;
                         }
                     } else {
                         io.to(socket.id).emit("not joined", {
                             "errorMsg": "Lobby is full",
                         });
+                        joinedOrError = true;
                     }
                 }
             });
-            if (!joined) {
+            if (!joinedOrError) {
                 io.to(socket.id).emit("not joined", {
                     "errorMsg": "Lobby doesn't exist",
                 });
@@ -183,12 +186,11 @@ io.on("connection", (socket) => {
                 io.to(socket.data.current_lobby).emit("word inserted", lobby.userWords);
                 let usersAnswered = 0;
                 lobby.users.forEach((user) => {
-                    if (user.answered) {
+                    if (user.answered || user.status == "disconnected") {
                         usersAnswered++;
                     }
                 });
                 if (usersAnswered == lobby.users.length - 1) {
-                    // nextTurn(socket.data.current_lobby);
                     lobby.timer = 0;
                 }
             }
@@ -196,12 +198,12 @@ io.on("connection", (socket) => {
     });
 
     socket.on("leave lobby", () => {
-        leaveLobby(socket);
+        leaveLobby(socket, "leave");
         sendLobbyList();
     });
 
     socket.on("disconnect", () => {
-        leaveLobby(socket);
+        leaveLobby(socket, "disconnect");
     });
 
 });
@@ -224,12 +226,16 @@ function sendUserList(socket) {
     }
 }
 
-function leaveLobby(socket) {
+function leaveLobby(socket, type) {
     lobbies.forEach((lobby) => {
         if (lobby.lobby_code == socket.data.current_lobby) {
-            lobby.users.forEach((member, index) => {
-                if (member.name == socket.data.name) {
-                    lobby.users.splice(index, 1);
+            lobby.users.forEach((user, index) => {
+                if (user.name == socket.data.name) {
+                    if (type == "disconnect") {
+                        user.status = "disconnected";
+                    } else {
+                        lobby.users.splice(index, 1);
+                    }
                 }
             });
         }
@@ -258,7 +264,11 @@ function nextTurn(current_lobby) {
                     lobby.turn = lobby.turn + 1;
                 }
                 lobby.totalTurns = lobby.totalTurns + 1;
-                lobby.painter = lobby.users[lobby.turn - 1].name;
+                if (lobby.users[lobby.turn - 1].status == "connected") {
+                    lobby.painter = lobby.users[lobby.turn - 1].name;
+                } else {
+                    lobby.timer = 0;
+                }
                 lobby.word = lobby.words[lobby.totalTurns - 1].word;
                 lobby.users.forEach((user) => {
                     user.answered = false;
