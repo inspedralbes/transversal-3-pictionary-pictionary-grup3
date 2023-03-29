@@ -13,7 +13,7 @@ export const CreateCategories = () => {
     if (titleCategories != "") {
       try {
         const response = await fetch(
-          "//tr3-laravel.alumnes.inspedralbes.cat/public/api/create-category",
+          "//localhost/api/create-category",
           {
             method: "POST",
             headers: {

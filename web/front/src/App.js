@@ -18,7 +18,7 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
-let socket = socketIO('http://tr3-g3.alumnes.inspedralbes.cat:7500', {
+let socket = socketIO('http://localhost:7500', {
   withCredentials: true,
   cors: {
     origin: "*",
