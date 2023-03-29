@@ -15,7 +15,7 @@ export const Profile = () => {
   }, []);
 
   const getProfile = () => {
-    fetch(`//127.0.0.1:8000/api/user-profile`, {
+    fetch(`//tr3-g3.alumnes.inspedralbes.cat/public/api/user-profile`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${stateLoginToken}`,
