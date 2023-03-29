@@ -204,6 +204,66 @@ export const PlayGame = ({ socket }) => {
       isDrawing = false;
     });
 
+    document.body.addEventListener(
+      "touchstart",
+      function (event) {
+        if (event.target === canvas) {
+          if (painterAux) {
+            isDrawing = true;
+            let clientX = event.touches[0].clientX;
+            let clientY = event.touches[0].clientY;
+            if (isDrawing) {
+              let brushSize = document.getElementById("brushSize").value;
+              let colorCanva = document.getElementById("colorPicker").value;
+              [lastX, lastY] = [clientX, clientY];
+              socket.emit("draw", {
+                x: clientX,
+                y: clientY,
+                b: brushSize,
+                c: colorCanva,
+                action: "i",
+              });
+            }
+          }
+        }
+      },
+      false
+    );
+
+    document.body.addEventListener(
+      "touchend",
+      function (event) {
+        if (event.target === canvas) {
+          isDrawing = false;
+        }
+      },
+      false
+    );
+
+    document.body.addEventListener(
+      "touchmove",
+      function (event) {
+        if (event.target === canvas) {
+          if (painterAux) {
+            event.offsetX = event.targetTouches[0].clientX;
+            event.offsetY = event.targetTouches[0].clientY;
+            if (isDrawing) {
+              let brushSize = document.getElementById("brushSize").value;
+              let colorCanva = document.getElementById("colorPicker").value;
+              socket.emit("draw", {
+                x: event.offsetX,
+                y: event.offsetY,
+                b: brushSize,
+                c: colorCanva,
+                action: "p",
+              });
+            }
+          }
+        }
+      },
+      false
+    );
+
     function draw(x, y, b, c, action) {
       context.beginPath();
 
