@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
   const [painter, setPainter] = useState(false);
-  const [whoPaint, setWhoPaint] = useState(false);
+  const [whoPaint, setWhoPaint] = useState('');
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
   const [description, setDescription] = useState("");
@@ -75,6 +75,7 @@ export const PlayGame = ({ socket }) => {
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
+      countdown();
     });
   }, [socket]);
 
@@ -112,25 +113,6 @@ export const PlayGame = ({ socket }) => {
       wipe();
     });
 
-    function countdown() {
-      const modal = document.getElementById("modal");
-      const countdown = document.getElementById("countdown");
-
-      let count = 3;
-
-      modal.style.display = "flex";
-      let countdownInterval = setInterval(function () {
-        count--;
-        countdown.textContent = count;
-        if (count === 0) {
-          clearInterval(countdownInterval);
-          modal.style.display = "none";
-          count = 3;
-          countdown.textContent = count;
-        }
-      }, 1000);
-    }
-
     socket.on("finished game", (data) => {
       dispatch(setScoreBoard(data));
       navigate("../rankingGame");
@@ -157,6 +139,25 @@ export const PlayGame = ({ socket }) => {
       setWordInserted("");
     }
   };
+
+  function countdown() {
+    const modal = document.getElementById("modal");
+    const countdown = document.getElementById("countdown");
+
+    let count = 3;
+
+    modal.style.display = "flex";
+    let countdownInterval = setInterval(function () {
+      count--;
+      countdown.textContent = count;
+      if (count === 0) {
+        clearInterval(countdownInterval);
+        modal.style.display = "none";
+        count = 3;
+        countdown.textContent = count;
+      }
+    }, 1000);
+  }
 
   const handleClick = () => {
     if (showWord) setShowWord(false);
@@ -540,6 +541,7 @@ export const PlayGame = ({ socket }) => {
               3
             </div>
             <div className="text-center">NEXT TURN</div>
+            {painter ? (<div className="text-center">You are the painter</div>) : (<div className="text-center">{whoPaint} is going to paint</div>)} 
           </div>
         </div>
       </div>

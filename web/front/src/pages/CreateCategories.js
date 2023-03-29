@@ -45,6 +45,7 @@ export const CreateCategories = () => {
       icon: "success",
       confirmButtonText: "Ok",
     });
+    setTitleCategories('')
     setCreated(false);
   }
 
