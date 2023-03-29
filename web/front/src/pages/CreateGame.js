@@ -50,7 +50,7 @@ export const CreateGame = ({ socket }) => {
   };
 
   const getCollection = () => {
-    fetch(`//tr3-g3.alumnes.inspedralbes.cat/public/api/list-categories`, {
+    fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-categories`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${stateLoginToken}`,
@@ -69,7 +69,7 @@ export const CreateGame = ({ socket }) => {
 
   const getWords = async () => {
     try {
-      const response = await fetch(`//tr3-g3.alumnes.inspedralbes.cat/public/api/list-words`, {
+      const response = await fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/list-words`, {
         headers: {
           "Content-Type": "application/json",
         },

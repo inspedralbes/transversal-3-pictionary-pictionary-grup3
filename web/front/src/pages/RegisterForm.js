@@ -24,7 +24,7 @@ export const RegisterForm = () => {
     };
 
     try {
-      const response = await fetch("//tr3-g3.alumnes.inspedralbes.cat/public/api/register", {
+      const response = await fetch("//tr3-laravel.alumnes.inspedralbes.cat/public/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
