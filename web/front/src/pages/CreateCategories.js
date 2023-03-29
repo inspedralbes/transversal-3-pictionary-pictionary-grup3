@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,17 +10,17 @@ export const CreateCategories = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (titleCategories != "") {
+    if (titleCategories !== "") {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/api/create-category",
+          "//127.0.0.1:8000/api/create-category",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${stateLoginToken}`,
             },
-            body: JSON.stringify({ idUser: 1, category: titleCategories }),
+            body: JSON.stringify({ idUser: 1, category: titleCategories.toLowerCase() }),
           }
         );
         setCreated(true);
@@ -45,6 +45,7 @@ export const CreateCategories = () => {
       icon: "success",
       confirmButtonText: "Ok",
     });
+    setTitleCategories('')
     setCreated(false);
   }
 
@@ -60,7 +61,7 @@ export const CreateCategories = () => {
               </svg>
             </Link>
             <form className="space-y-6 mb-3" action="#" onSubmit={handleSubmit}>
-              <label for="title-category" className="text-lg font-semibold">
+              <label htmlFor="title-category" className="text-lg font-semibold">
                 Set the category title:{" "}
               </label>
               <input

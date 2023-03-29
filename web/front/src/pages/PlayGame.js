@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
   const [painter, setPainter] = useState(false);
-  const [whoPaint, setWhoPaint] = useState(false);
+  const [whoPaint, setWhoPaint] = useState('');
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
   const [description, setDescription] = useState("");
@@ -17,7 +17,7 @@ export const PlayGame = ({ socket }) => {
   const [userWords, setUserWords] = useState([]);
   const [userCorrectWords, setUserCorrectWords] = useState([]);
   const [wordLength, setWordLength] = useState("");
-  const [showWord, setShowWord] = useState(true);
+  const [showWord, setShowWord] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const PlayGame = ({ socket }) => {
   let context;
   let isDrawing = false;
   let painterAux = false;
-  let timer = 90;
+  let timer = 93;
 
   socket.on("timer", (data) => {
     timer = data;
@@ -46,7 +46,7 @@ export const PlayGame = ({ socket }) => {
       document.getElementById("timer").innerHTML = timer;
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [timer]);
 
   useEffect(() => {
     canvas = canvasRef.current;
@@ -75,6 +75,7 @@ export const PlayGame = ({ socket }) => {
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
+      countdown();
     });
   }, [socket]);
 
@@ -100,7 +101,7 @@ export const PlayGame = ({ socket }) => {
       countdown();
       setWord(data.lobby.word);
       setDescription(data.lobby.words[data.lobby.totalTurns - 1].description);
-      setShowWord(true);
+      setShowWord(false);
       let str = "";
       for (let i = 0; i < data.lobby.word.length; i++) {
         str += "_ ";
@@ -111,25 +112,6 @@ export const PlayGame = ({ socket }) => {
       setWordCorrect(false);
       wipe();
     });
-
-    function countdown() {
-      const modal = document.getElementById("modal");
-      const countdown = document.getElementById("countdown");
-
-      let count = 3;
-
-      modal.style.display = "flex";
-      let countdownInterval = setInterval(function () {
-        count--;
-        countdown.textContent = count;
-        if (count === 0) {
-          clearInterval(countdownInterval);
-          modal.style.display = "none";
-          count = 3;
-          countdown.textContent = count;
-        }
-      }, 1000);
-    }
 
     socket.on("finished game", (data) => {
       dispatch(setScoreBoard(data));
@@ -157,6 +139,25 @@ export const PlayGame = ({ socket }) => {
       setWordInserted("");
     }
   };
+
+  function countdown() {
+    const modal = document.getElementById("modal");
+    const countdown = document.getElementById("countdown");
+
+    let count = 3;
+
+    modal.style.display = "flex";
+    let countdownInterval = setInterval(function () {
+      count--;
+      countdown.textContent = count;
+      if (count === 0) {
+        clearInterval(countdownInterval);
+        modal.style.display = "none";
+        count = 3;
+        countdown.textContent = count;
+      }
+    }, 1000);
+  }
 
   const handleClick = () => {
     if (showWord) setShowWord(false);
@@ -207,7 +208,7 @@ export const PlayGame = ({ socket }) => {
     function draw(x, y, b, c, action) {
       context.beginPath();
 
-      if (action == "p") {
+      if (action === "p") {
         context.moveTo(lastX, lastY);
         lastX = x;
         lastY = y;
@@ -229,10 +230,10 @@ export const PlayGame = ({ socket }) => {
     }
 
     socket.on("draw", function (data) {
-      if (data.data.action == "b") {
+      if (data.data.action === "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.backgroundColor = "#ffffff";
-      } else if (data.data.action == "z") {
+      } else if (data.data.action === "z") {
         canvas.style.backgroundColor = data.data.c;
       } else {
         draw(
@@ -318,8 +319,8 @@ export const PlayGame = ({ socket }) => {
                     className="w-6 h-6"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
                     />
                   </svg>
@@ -339,8 +340,8 @@ export const PlayGame = ({ socket }) => {
                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                     <g
                       id="SVGRepo_tracerCarrier"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     ></g>
                     <g id="SVGRepo_iconCarrier">
                       {" "}
@@ -349,41 +350,41 @@ export const PlayGame = ({ socket }) => {
                         stroke="#ffffff"
                         strokeWidth="1.5"
                         strokeMiterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>{" "}
                       <path
                         d="M8.34961 1.9502L9.68961 3.29016"
                         stroke="#ffffff"
                         strokeWidth="1.5"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeMiterlimit="10"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>{" "}
                       <path
                         opacity="0.4"
                         d="M2.07031 11.9197L17.1903 11.2598"
                         stroke="#ffffff"
                         strokeWidth="1.5"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeMiterlimit="10"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>{" "}
                       <path
                         d="M3 22H16"
                         stroke="#ffffff"
                         strokeWidth="1.5"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeMiterlimit="10"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>{" "}
                       <path
                         opacity="0.4"
                         d="M18.85 15C18.85 15 17 17.01 17 18.24C17 19.26 17.83 20.09 18.85 20.09C19.87 20.09 20.7 19.26 20.7 18.24C20.7 17.01 18.85 15 18.85 15Z"
                         stroke="#ffffff"
                         strokeWidth="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       ></path>{" "}
                     </g>
                   </svg>
@@ -578,6 +579,7 @@ export const PlayGame = ({ socket }) => {
               3
             </div>
             <div className="text-center">NEXT TURN</div>
+            {painter ? (<div className="text-center">You are the painter</div>) : (<div className="text-center">{whoPaint} is going to paint</div>)} 
           </div>
         </div>
       </div>

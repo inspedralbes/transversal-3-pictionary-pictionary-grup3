@@ -22,7 +22,7 @@ export const AddWords = () => {
   const getCollection = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/list-categories`,
+        `//127.0.0.1:8000/api/list-categories`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const AddWords = () => {
 
   const getWords = async (id) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/list-words`, {
+      const response = await fetch(`//127.0.0.1:8000/api/list-words`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -69,18 +69,17 @@ export const AddWords = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (word != "" && description != "" && Cword != "" && Cdescription != "") {
+    if (word !== "" && description !== "" && Cword !== "" && Cdescription !== "") {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/create-word`, {
+        const response = await fetch(`//127.0.0.1:8000/api/create-word`, {
           headers: {
             "Content-Type": "application/json",
-            // Authorization: 'Bearer ' + stateLoginToken,
-            Authorization: "Bearer 15|CnfwDeENfDfNg8FFjUOnSRNvYclasEaxMZ3f2cws",
+            Authorization: `Bearer ${stateLoginToken}`,
           },
           method: "POST",
           body: JSON.stringify({
             idCategory: idCategory,
-            word: word,
+            word: word.toLowerCase(),
             description: description,
             word_ca: Cword,
             description_ca: Cdescription,
@@ -103,8 +102,8 @@ export const AddWords = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-cover bg-center w-screen bg-[url('../style/spinning-bg-only-pinchitos.png')]">
       <div className="overflow-y-scroll md:overflow-y-hidden h-screen md:h-fit">
-        <div className="flex justify-center text-center">
-          <div className="bg-rose-100 w-screen md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block">
+        <div className="block justify-center text-center">
+          <div className="bg-rose-100 w-screen md:w-[32rem] bg-opacity-70 md:rounded-lg p-6 block md:mx-auto">
             {loading ? (
               <div className="w-[100%] flex items-center justify-center">
                 <span className="loader"></span>
@@ -153,7 +152,7 @@ export const AddWords = () => {
                   onSubmit={handleSubmit}
                 >
                   <div>
-                    <label for="english_word">English word: </label>
+                    <label htmlFor="english_word">English word: </label>
                     <input
                       id="english_word"
                       type="text"
@@ -164,7 +163,7 @@ export const AddWords = () => {
                   </div>
 
                   <div>
-                    <label for="english_definition">English definition: </label>
+                    <label htmlFor="english_definition">English definition: </label>
                     <textarea
                       id="english_definition"
                       type="text"
@@ -175,7 +174,7 @@ export const AddWords = () => {
                   </div>
 
                   <div>
-                    <label for="catalan_translation">
+                    <label htmlFor="catalan_translation">
                       Catalan translation:{" "}
                     </label>
                     <input
@@ -188,7 +187,7 @@ export const AddWords = () => {
                   </div>
 
                   <div>
-                    <label for="catalan_definition">Catalan definition: </label>
+                    <label htmlFor="catalan_definition">Catalan definition: </label>
                     <textarea
                       id="catalan_definition"
                       type="text"
