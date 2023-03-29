@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 export const PlayGame = ({ socket }) => {
   const stateUserData = useSelector((state) => state.dataUser.dataUser);
   const [painter, setPainter] = useState(false);
-  const [whoPaint, setWhoPaint] = useState(false);
+  const [whoPaint, setWhoPaint] = useState('');
   const [wordCorrect, setWordCorrect] = useState(false);
   const [word, setWord] = useState("");
   const [description, setDescription] = useState("");
@@ -75,6 +75,7 @@ export const PlayGame = ({ socket }) => {
       setWordLength(str);
       setRound(data.lobby.round);
       setUserCorrectWords(data.lobby.users);
+      countdown();
     });
   }, [socket]);
 
@@ -112,25 +113,6 @@ export const PlayGame = ({ socket }) => {
       wipe();
     });
 
-    function countdown() {
-      const modal = document.getElementById("modal");
-      const countdown = document.getElementById("countdown");
-
-      let count = 3;
-
-      modal.style.display = "flex";
-      let countdownInterval = setInterval(function () {
-        count--;
-        countdown.textContent = count;
-        if (count === 0) {
-          clearInterval(countdownInterval);
-          modal.style.display = "none";
-          count = 3;
-          countdown.textContent = count;
-        }
-      }, 1000);
-    }
-
     socket.on("finished game", (data) => {
       dispatch(setScoreBoard(data));
       navigate("../rankingGame");
@@ -157,6 +139,25 @@ export const PlayGame = ({ socket }) => {
       setWordInserted("");
     }
   };
+
+  function countdown() {
+    const modal = document.getElementById("modal");
+    const countdown = document.getElementById("countdown");
+
+    let count = 3;
+
+    modal.style.display = "flex";
+    let countdownInterval = setInterval(function () {
+      count--;
+      countdown.textContent = count;
+      if (count === 0) {
+        clearInterval(countdownInterval);
+        modal.style.display = "none";
+        count = 3;
+        countdown.textContent = count;
+      }
+    }, 1000);
+  }
 
   const handleClick = () => {
     if (showWord) setShowWord(false);
@@ -494,17 +495,55 @@ export const PlayGame = ({ socket }) => {
               {painter ? (
                 <div className="ml-8 flex items-start">
                   {showWord ? (
-                    <h1 className="uppercase md:-mt-16 font-bold text-xl">
-                      {word}
-                    </h1>
+                    <>
+                      <h1 className="uppercase md:-mt-16 font-bold text-xl">
+                        {word}
+                      </h1>
+                      <button onClick={handleClick} className="md:-mt-16 ml-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                          />
+                        </svg>
+                      </button>
+                    </>
                   ) : (
-                    <h1 className="uppercase md:-mt-16 font-bold text-xl">
-                      {wordLength}
-                    </h1>
+                    <>
+                      <h1 className="uppercase md:-mt-16 font-bold text-xl">
+                        {wordLength}
+                      </h1>
+                      <button onClick={handleClick} className="md:-mt-16 ml-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                      </button>
+                    </>
                   )}
-                  <button onClick={handleClick} className="md:-mt-16 ml-3">
-                    👁️
-                  </button>
                 </div>
               ) : (
                 <div className="ml-8">
@@ -600,6 +639,7 @@ export const PlayGame = ({ socket }) => {
               3
             </div>
             <div className="text-center">NEXT TURN</div>
+            {painter ? (<div className="text-center">You are the painter</div>) : (<div className="text-center">{whoPaint} is going to paint</div>)} 
           </div>
         </div>
       </div>

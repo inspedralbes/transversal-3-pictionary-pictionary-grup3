@@ -133,7 +133,7 @@ export const JoinGame = ({ socket }) => {
                 </label>
               </div>
 
-              <div className="relative mt-8">
+              <div className="relative mt-6">
                 <input
                   id="player_name"
                   type="text"
@@ -152,7 +152,7 @@ export const JoinGame = ({ socket }) => {
 
               <button
                 type="submit"
-                className="font-semibold text-gray-900 text-xl default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none mt-3 w-10/12"
+                className="font-semibold text-gray-900 text-xl default-button hover:bg-gray-900 hover:text-gray-100 hover:outline-none mt-[1.5rem] w-10/12"
               >
                 Send
               </button>
