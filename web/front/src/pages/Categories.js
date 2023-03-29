@@ -17,7 +17,7 @@ export const Categories = () => {
   const getCollection = async () => {
     try {
       const response = await fetch(
-        `//127.0.0.1:8000:8000/api/list-categories`,
+        `//127.0.0.1:8000/api/list-categories`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const Categories = () => {
 
   const getWords = async () => {
     try {
-      const response = await fetch(`//127.0.0.1:8000:8000/api/list-words`, {
+      const response = await fetch(`//127.0.0.1:8000/api/list-words`, {
         headers: {
           "Content-Type": "application/json",
         },
