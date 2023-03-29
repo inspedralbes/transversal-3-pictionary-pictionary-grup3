@@ -12,6 +12,7 @@ const io = require("socket.io")(server, {
         origin: true,
         credentials: true,
     },
+    path: "/node/",
 });
 
 io.on("connection", (socket) => {
@@ -45,7 +46,7 @@ io.on("connection", (socket) => {
                 painter: null,
                 word: "",
                 words: randomWords.sort(random),
-                timer: 90,
+                timer: 93,
                 // drawings: [],
             });
             sendLobbyList();
@@ -167,14 +168,14 @@ io.on("connection", (socket) => {
                             user.answered = true;
                             user.score = user.score + (data.time + 10);
                             io.to(socket.data.current_lobby).emit("correct word", { lobby });
-                            lobby.userWords.push({
+                            lobby.userWords.unshift({
                                 name: socket.data.name,
                                 word: "Answered correctly",
                             });
                         }
                     });
                 } else {
-                    lobby.userWords.push({
+                    lobby.userWords.unshift({
                         name: socket.data.name,
                         word: "Answered wrong",
                     });
@@ -272,7 +273,7 @@ setInterval(function () {
     lobbies.forEach((lobby) => {
         if (lobby.totalTurns > 0) {
             if (lobby.timer == 0) {
-                lobby.timer = 90;
+                lobby.timer = 93;
                 nextTurn(lobby.lobby_code);
                 io.to(lobby.lobby_code).emit("timer", lobby.timer);
             } else {
@@ -294,4 +295,7 @@ setInterval(function () {
 
 server.listen(port, host, () => {
     console.log("Listening on " + host + ":" + port);
+    setInterval(function () {
+        console.log("Server is on - " + new Date().toLocaleString());
+    }, 1000 * 60);
 });

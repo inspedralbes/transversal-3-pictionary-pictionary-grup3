@@ -35,10 +35,10 @@ export const LoginForm = () => {
     let ca = decodedCookie.split(";");
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) == " ") {
+      while (c.charAt(0) === " ") {
         c = c.substring(1);
       }
-      if (c.indexOf(name) == 0) {
+      if (c.indexOf(name) === 0) {
         return c.substring(name.length, c.length);
       }
     }
@@ -52,7 +52,7 @@ export const LoginForm = () => {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
+      const response = await fetch("//127.0.0.1:8000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
