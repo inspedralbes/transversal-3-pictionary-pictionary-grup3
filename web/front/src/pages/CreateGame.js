@@ -214,7 +214,7 @@ export const CreateGame = ({ socket }) => {
             <br></br>
             <button
               onClick={createNewLobby}
-              className="default-button text-md font-semibold text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr hover:text-rose-50 m-1"
+              className="default-button text-md font-semibold bg-white text-gray-900 shadow-sm outline-orange-500 hover:outline-none hover:pink-to-orange-gr hover:text-white m-1"
             >
               Create a new lobby
             </button>
@@ -224,7 +224,7 @@ export const CreateGame = ({ socket }) => {
               (lobby, index) =>
                 lobby.teacher === stateLoginUser && (
                   <div
-                    className="h-48 w-60 rounded-lg pink-to-orange-gr p-1 m-[auto] opacity-animation"
+                    className="h-72 w-60 rounded-lg pink-to-orange-gr p-1 m-[auto] opacity-animation"
                     key={index}
                   >
                     <div className="h-full w-full bg-white back p-2 rounded-lg">
@@ -233,21 +233,31 @@ export const CreateGame = ({ socket }) => {
                         key={index}
                       >
                         <div className="">
-                          <div className="font-bold text-gray-800 text-xl">
-                            {lobby.lobby_code}
+                          <div className="font-bold text-gray-800 text-xl divide-y-2 divide-rose-500 divide-y-reverse">
+                            <h1>Your lobby's code</h1>
+                            <p className="hover:text-rose-500 w-fit">
+                              {lobby.lobby_code}
+                            </p>
                           </div>
-                          <p className="text-gray-800 text-base">
-                            {words.category}
-                          </p>
+                          <div className="text-gray-800 text-base divide-y-2 divide-rose-500 divide-y-reverse mt-2">
+                            <h2 className="inline font-bold ">Category: </h2>
+                            <p className="inline">{words.category}</p>
+                          </div>
                         </div>
-                        <div className="">
+                        <div className="divide-y-2 divide-rose-500 divide-y-reverse">
+                          <h1 className="font-bold text-gray-800 mt-2">Player list: </h1>
                           {lobby.users.map((user, index) => (
                             <span className="users" key={index}>
                               {user.name}
                             </span>
                           ))}
                         </div>
-                        <p>{lobby.maxUsers}</p>
+                        <h2 className="font-semibold mt-2">
+                          Lobby size:{" "}
+                          <p className="font-normal">
+                            {lobby.maxUsers} players
+                          </p>
+                        </h2>
                       </div>
                     </div>
                   </div>
