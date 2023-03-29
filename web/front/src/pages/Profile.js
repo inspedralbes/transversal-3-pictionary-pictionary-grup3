@@ -15,7 +15,7 @@ export const Profile = () => {
   }, []);
 
   const getProfile = () => {
-    fetch(`//tr3-laravel.alumnes.inspedralbes.cat/public/api/user-profile`, {
+    fetch(`//127.0.0.1:8000/api/user-profile`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${stateLoginToken}`,
