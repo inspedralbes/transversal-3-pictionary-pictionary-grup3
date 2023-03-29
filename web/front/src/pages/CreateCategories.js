@@ -13,7 +13,7 @@ export const CreateCategories = () => {
     if (titleCategories !== "") {
       try {
         const response = await fetch(
-          "//localhost/api/create-category",
+          "//127.0.0.1:8000/api/create-category",
           {
             method: "POST",
             headers: {
