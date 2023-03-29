@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,7 +10,7 @@ export const CreateCategories = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (titleCategories != "") {
+    if (titleCategories !== "") {
       try {
         const response = await fetch(
           "//localhost/api/create-category",

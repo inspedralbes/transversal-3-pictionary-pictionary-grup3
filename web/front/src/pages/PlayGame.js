@@ -46,7 +46,7 @@ export const PlayGame = ({ socket }) => {
       document.getElementById("timer").innerHTML = timer;
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [timer]);
 
   useEffect(() => {
     canvas = canvasRef.current;
@@ -207,7 +207,7 @@ export const PlayGame = ({ socket }) => {
     function draw(x, y, b, c, action) {
       context.beginPath();
 
-      if (action == "p") {
+      if (action === "p") {
         context.moveTo(lastX, lastY);
         lastX = x;
         lastY = y;
@@ -229,10 +229,10 @@ export const PlayGame = ({ socket }) => {
     }
 
     socket.on("draw", function (data) {
-      if (data.data.action == "b") {
+      if (data.data.action === "b") {
         context.clearRect(0, 0, canvas.width, canvas.height);
         canvas.style.backgroundColor = "#ffffff";
-      } else if (data.data.action == "z") {
+      } else if (data.data.action === "z") {
         canvas.style.backgroundColor = data.data.c;
       } else {
         draw(

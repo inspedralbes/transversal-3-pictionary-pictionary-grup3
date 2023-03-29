@@ -1,4 +1,5 @@
 import avatar from "../style/avatar.png";
+import banner from '../style/banner.png'
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -46,7 +47,7 @@ export const Profile = () => {
         </h1>
         <div className="mt-5 container border-4 border-rose-500 bg-rose-300 rounded-lg md:w-[600px] w-full md:shadow-lg transform duration-200 easy-in-out">
           <div className="h-32 overflow-hidden" >
-            <img className="w-full" src="https://www.riolettcustomaerosols.co.uk/img/slides/2000.webp" alt="Banner Image" />
+            <img className="w-full" src={banner} alt="Banner Img" />
           </div>
           <div className="bg-rose-200">
             <Link to="/createGame" className="h-[20px] w-[20px] block pt-5 ml-5">

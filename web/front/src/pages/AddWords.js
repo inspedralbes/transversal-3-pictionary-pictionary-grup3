@@ -69,7 +69,7 @@ export const AddWords = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (word != "" && description != "" && Cword != "" && Cdescription != "") {
+    if (word !== "" && description !== "" && Cword !== "" && Cdescription !== "") {
       try {
         const response = await fetch(`//localhost/api/create-word`, {
           headers: {
