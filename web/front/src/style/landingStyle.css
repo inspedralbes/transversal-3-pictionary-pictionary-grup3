@@ -1,0 +1,73 @@
+.pincel {
+    cursor: url(./pincel.png), auto;
+}
+
+body {
+    background: linear-gradient(-45deg, #F97D36, #EF5D9A);
+    background-size: 150% 150%;
+    -webkit-animation: gradient 7s ease infinite;
+    animation: gradient 7s ease infinite;
+}
+
+@-webkit-keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.loader {
+    width: 38px;
+    height: 38px;
+    border: 5px solid #313131;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.opacity-animation {
+    animation: opacity 0.8s;
+}
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .pink-to-orange-gr{
+        @apply bg-gradient-to-r from-rose-500 to-orange-500
+    }
+
+    .default-button{
+        @apply rounded-lg px-3.5 py-2.5 outline outline-2
+    }
+
+    .input-join{
+        @apply rounded-lg p-1 block m-2 ml-0
+    }
+
+    .users{
+        @apply inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2
+    }
+
+    .login-register-input{
+        @apply mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2 m-1 caret-rose-500 focus:outline-rose-500
+    }
+
+    .addWordsInput{
+        @apply rounded-lg caret-rose-500 p-1 focus:outline-rose-500 w-full mt-0.5
+    }
+
+    .leave-lobby-btn{
+        @apply default-button mt-4 bg-gray-900 text-gray-100 hover:text-gray-900 hover:bg-transparent font-semibold h-fit w-fit mx-[auto]
+    }
+}
