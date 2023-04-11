@@ -3,5 +3,5 @@
  * Nom del projecte: Pictoboom
  * Descripció: ¡Pictoboom, donde tus imágenes cobran vida! Explota tu imaginación
  * Adreça del prototip del Penpot
- * URL de producció (quan la tingueu)
- * Estat: (explicació de en quin punt està)
+ * URL de producció: http://tr3-g3.alumnes.inspedralbes.cat/
+ * Estat: Finalitzat
